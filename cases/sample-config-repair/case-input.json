@@ -1,0 +1,9 @@
+{
+  "case_id": "sample-config-repair-001",
+  "target_id": "sample-service-config",
+  "allowed_scope": ["retry_limit"],
+  "excluded_scope": ["service_name", "enabled"],
+  "dependency_policy": "off",
+  "decision_recipient": "demo-user",
+  "successful_result": {"retry_limit": 3}
+}

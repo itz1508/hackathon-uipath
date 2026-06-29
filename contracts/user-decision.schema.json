@@ -1,0 +1,6 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://nextflow.local/contracts/user-decision.schema.json","type":"object","additionalProperties":false,
+  "required":["decision","approved_result_id","approved_result_hash","target_id"],
+  "properties":{"decision":{"enum":["apply","cancel","preserve_for_later"]},"approved_result_id":{"type":"string"},"approved_result_hash":{"type":"string"},"target_id":{"type":"string"}},
+  "allOf":[{"if":{"properties":{"decision":{"const":"apply"}}},"then":{"properties":{"approved_result_id":{"minLength":1},"approved_result_hash":{"pattern":"^[a-f0-9]{64}$"},"target_id":{"minLength":1}}}}]
+}

@@ -1,0 +1,4 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://nextflow.local/contracts/post-apply-verification.schema.json","type":"object","additionalProperties":false,
+  "required":["status"],"properties":{"status":{"enum":["verified_match","drift_detected","application_failure","unexpected_mutation","incomplete_verification","not_run"]},"live_hash":{"type":"string"},"expected_hash":{"type":"string"}}
+}

@@ -1,0 +1,13 @@
+{
+  "run_id": "c967bad1-5735-40aa-a9d2-30584ad765b8",
+  "created_at": "2026-06-28T16:29:45.853388+00:00",
+  "phase": "analysis_handoff",
+  "artifacts": [
+    "02_analysis_handoff.json",
+    "02_raw_statement.json",
+    "02_handoff_statement.json",
+    "02_llm_statement.json",
+    "artifact_index.json",
+    "run_manifest.json"
+  ]
+}

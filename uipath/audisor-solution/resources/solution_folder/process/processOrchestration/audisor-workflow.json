@@ -1,0 +1,37 @@
+{
+  "docVersion": "1.0.0",
+  "resource": {
+    "name": "audisor-workflow",
+    "kind": "process",
+    "type": "processOrchestration",
+    "apiVersion": "orchestrator.uipath.com/v1",
+    "projectKey": "4f07a622-3506-4f37-a443-212e3315c4c5",
+    "dependencies": [
+      {
+        "kind": "package",
+        "name": "audisor-workflow"
+      }
+    ],
+    "runtimeDependencies": [],
+    "folders": [
+      {
+        "fullyQualifiedName": "solution_folder"
+      }
+    ],
+    "spec": {
+      "type": "ProcessOrchestration",
+      "name": "audisor-workflow",
+      "package": {
+        "key": "07363910-bc97-4357-aa17-d62f5fbbe2c8"
+      },
+      "targetFrameworkValue": "Portable",
+      "retentionAction": "Delete",
+      "retentionPeriod": 30,
+      "staleRetentionAction": "Delete",
+      "staleRetentionPeriod": 180
+    },
+    "locks": [],
+    "key": "59d85f26-13bf-46e3-ae6f-082b0f100f98",
+    "files": []
+  }
+}

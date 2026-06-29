@@ -1,0 +1,54 @@
+[project]
+name = "nextflow"
+version = "0.1.0"
+description = "NextFlow — Deterministic Pipeline Processing for AI-Generated Configuration Repairs"
+authors = [{name = "Minh Le", email = "cs1508.4ever@gmail.com"}]
+license = {text = "Apache-2.0"}
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "starlette>=1.3.1",
+    "uvicorn>=0.30.0",
+    "pydantic>=2.7.0",
+    "httpx>=0.27.0",
+    "PySide6>=6.7.0",
+    "sse-starlette>=2.0.0",
+    "PyJWT>=2.13,<3",
+    "opentelemetry-api",
+    "opentelemetry-sdk",
+    "opentelemetry-instrumentation-fastapi",
+]
+
+[project.optional-dependencies]
+dev = [
+    "hypothesis>=6.100.0",
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-httpx>=0.30.0",
+    "pyright>=1.1.400",
+    "ruff>=0.15.0",
+]
+
+[project.scripts]
+nextflow = "nextflow.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "maestro-backend/tests", "workbench_backend/tests"]
+asyncio_mode = "auto"
+addopts = ["--import-mode=importlib"]
+markers = [
+    "property: Property-based tests (Hypothesis)",
+    "unit: Unit tests",
+    "integration: Integration tests",
+    "migration: Migration validation tests",
+]
+
+[tool.hypothesis]
+max_examples = 100
+
+[tool.hatch.build.targets.wheel]
+packages = ["nextflow", "models", "maestro_backend_bridge", "operator_dashboard", "workbench_backend"]

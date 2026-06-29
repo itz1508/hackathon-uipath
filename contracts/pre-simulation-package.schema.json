@@ -1,0 +1,6 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://nextflow.local/contracts/pre-simulation-package.schema.json","type":"object","additionalProperties":false,
+  "required":["package_id","handoff_hash","simulation_ready","required_grader_failures","isolation_required","reattempt_required","confidence_score","required_dependencies_available","admission_failures"],
+  "properties":{"package_id":{"type":"string","minLength":1},"handoff_hash":{"type":"string","pattern":"^[a-f0-9]{64}$"},"simulation_ready":{"type":"boolean"},"required_grader_failures":{"type":"array","maxItems":0},"isolation_required":{"type":"boolean"},"reattempt_required":{"type":"boolean"},"confidence_score":{"type":"number","minimum":0,"maximum":100},"required_dependencies_available":{"type":"boolean"},"admission_failures":{"type":"array","items":{"type":"string"},"uniqueItems":true}},
+  "allOf":[{"if":{"properties":{"simulation_ready":{"const":true}},"required":["simulation_ready"]},"then":{"properties":{"required_grader_failures":{"maxItems":0},"isolation_required":{"const":false},"reattempt_required":{"const":false},"confidence_score":{"minimum":93.91},"required_dependencies_available":{"const":true},"admission_failures":{"maxItems":0}}}}]
+}

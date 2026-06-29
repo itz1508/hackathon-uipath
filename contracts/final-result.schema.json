@@ -1,0 +1,5 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://nextflow.local/contracts/final-result.schema.json","type":"object","additionalProperties":false,
+  "required":["case_id","run_id","snapshot_ref","handoff_ref","package_ref","simulation_result_ref","proof_result","user_decision","apply_status","post_apply_verification","unresolved_items","drift_status","provenance","locked"],
+  "properties":{"case_id":{"type":"string","minLength":1},"run_id":{"type":"string","minLength":1},"snapshot_ref":{"type":"object"},"handoff_ref":{"type":"object"},"package_ref":{"type":"object"},"simulation_result_ref":{"type":"object"},"proof_result":{"type":"object"},"user_decision":{"enum":["apply","cancel","preserve_for_later"]},"apply_status":{"enum":["applied","blocked","failed","not_applied","not_run"]},"post_apply_verification":{"type":"object"},"unresolved_items":{"type":"array"},"drift_status":{"type":"string"},"provenance":{"type":"object"},"locked":{"const":true}}
+}

@@ -1,0 +1,5 @@
+# Project dependencies
+flask==99.0.0
+sqlalchemy==1.2  # requires sqlalchemy>=2.0
+requests>=2.28
+pydantic>=2.0

@@ -1,0 +1,13 @@
+{
+  "run_id": "c967bad1-5735-40aa-a9d2-30584ad765b8",
+  "phase": "llm_statement",
+  "consumed_run_id": "ad82c2ad-cac2-427b-b566-aac5fd52d39a",
+  "consumed_artifact": "ad82c2ad-cac2-427b-b566-aac5fd52d39a/01_scan_snapshot.json",
+  "created_at": "2026-06-28T16:29:45.853388+00:00",
+  "explanations": [],
+  "fix_hypotheses": [],
+  "supported_claims": [],
+  "unsupported_claims": [],
+  "overall_summary": "Scan found 15 actionable findings and 14 non-actionable policy notes across 169 files",
+  "artifact_index_ref": "artifact_index.json"
+}

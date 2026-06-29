@@ -1,0 +1,5 @@
+pipeline:
+  - stage: scan
+    enabled: true
+  - stage: simulation
+    enabled: "YESSS"

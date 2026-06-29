@@ -1,0 +1,23 @@
+flowchart TD
+  A([Start]) --> B[01 Scan / Snapshot]
+  B --> C[02 Analysis / Classification / Recalibration / Output]
+  C --> D[Build Handoff State]
+  D --> E[02.5 Pre-Simulation Package]
+  E --> F{Ready?}
+  F -->|Isolation required| G[Isolation Add-On]
+  G --> D
+  F -->|Reattempt required| E
+  F -->|Ready: all six conditions| H[03 Simulation Environment]
+  H --> I{Simulation result}
+  I -->|Transient| H
+  I -->|Unresolved| G
+  I -->|Passed| J[04 Replay / Proof]
+  J --> K{Proof passed?}
+  K -->|No| P[Preserve Result]
+  K -->|Yes| L[05 User Apply / Cancel / Preserve]
+  L -->|Cancel or preserve| P
+  L -->|Apply| M[06 Explicit Apply Relay]
+  M --> N[07 Post-Apply Verification]
+  N --> O[08 Final Result Locked]
+  P --> O
+  O --> Z([End])

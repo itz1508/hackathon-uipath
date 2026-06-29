@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/uipath/schemas/pre-simulation-package.schema.json",
+  "title": "Pre-Simulation Package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "package_id", "handoff_ref", "simulation_ready", "required_grader_failures", "isolation_required", "reattempt_required", "confidence_score", "required_dependencies_available", "admission_failures", "next_action"],
+  "properties": {
+    "$schema_ref": {"const": "../../uipath/schemas/pre-simulation-package.schema.json"},
+    "schema_version": {"const": "1.0.0"}, "package_id": {"type": "string", "minLength": 1},
+    "handoff_ref": {"type": "string", "minLength": 1}, "simulation_ready": {"type": "boolean"},
+    "required_grader_failures": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "isolation_required": {"type": "boolean"}, "reattempt_required": {"type": "boolean"},
+    "confidence_score": {"type": "number", "minimum": 0, "maximum": 100},
+    "required_dependencies_available": {"type": "boolean"},
+    "admission_failures": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "next_action": {"enum": ["enter_simulation", "request_required_dependency", "prepare_declared_dependency", "build_isolation_addon", "rebuild_pre_simulation_package", "resolve_grader_failures"]}
+  },
+  "allOf": [
+    {"if": {"properties": {"simulation_ready": {"const": true}}, "required": ["simulation_ready"]}, "then": {"properties": {"required_grader_failures": {"maxItems": 0}, "isolation_required": {"const": false}, "reattempt_required": {"const": false}, "confidence_score": {"minimum": 93.91}, "required_dependencies_available": {"const": true}, "admission_failures": {"maxItems": 0}, "next_action": {"const": "enter_simulation"}}}},
+    {"if": {"properties": {"required_dependencies_available": {"const": false}}, "required": ["required_dependencies_available"]}, "then": {"properties": {"simulation_ready": {"const": false}}}},
+    {"if": {"properties": {"isolation_required": {"const": true}}, "required": ["isolation_required"]}, "then": {"properties": {"simulation_ready": {"const": false}, "next_action": {"const": "build_isolation_addon"}}}},
+    {"if": {"properties": {"reattempt_required": {"const": true}}, "required": ["reattempt_required"]}, "then": {"properties": {"simulation_ready": {"const": false}, "next_action": {"const": "rebuild_pre_simulation_package"}}}}
+  ]
+}

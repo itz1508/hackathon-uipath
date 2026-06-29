@@ -1,0 +1,86 @@
+{
+  "score": 72.5,
+  "threshold": 93.91,
+  "simulation_ready": false,
+  "ready_parts": 3,
+  "isolated_parts": 3,
+  "resolved": 3,
+  "unresolved": 3,
+  "status": "partially_resolved",
+  "resolved_items": [
+    {
+      "item_id": "F-001",
+      "root_cause": "Python parser cannot compile this file.",
+      "resolution": "Fixed via simulation on candidate copy",
+      "validation": "compileall validation passed",
+      "released": true
+    },
+    {
+      "item_id": "F-005",
+      "root_cause": "No lock file present despite having a dependency manifest.",
+      "resolution": "Fixed via simulation on candidate copy",
+      "validation": "compileall validation passed",
+      "released": true
+    },
+    {
+      "item_id": "F-006",
+      "root_cause": "No Python version constraint declared in the project.",
+      "resolution": "Fixed via simulation on candidate copy",
+      "validation": "compileall validation passed",
+      "released": true
+    }
+  ],
+  "unresolved_items": [
+    {
+      "item_id": "F-002",
+      "root_cause": "Installed version 1.4 does not satisfy requirement >=2.0.",
+      "why_unresolved": "Missing information prevents safe one-shot resolution",
+      "what_was_tried": [
+        "Automated analysis",
+        "Targeted research"
+      ],
+      "missing_information": [
+        "External information required for safe resolution"
+      ],
+      "next_steps": [
+        "Provide missing information",
+        "Re-run pipeline with additional context"
+      ],
+      "retry_guidance": "Re-run after providing the missing information identified above"
+    },
+    {
+      "item_id": "F-003",
+      "root_cause": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_imports.py",
+      "why_unresolved": "Missing information prevents safe one-shot resolution",
+      "what_was_tried": [
+        "Automated analysis",
+        "Targeted research"
+      ],
+      "missing_information": [
+        "External information required for safe resolution"
+      ],
+      "next_steps": [
+        "Provide missing information",
+        "Re-run pipeline with additional context"
+      ],
+      "retry_guidance": "Re-run after providing the missing information identified above"
+    },
+    {
+      "item_id": "F-004",
+      "root_cause": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_imports.py",
+      "why_unresolved": "Missing information prevents safe one-shot resolution",
+      "what_was_tried": [
+        "Automated analysis",
+        "Targeted research"
+      ],
+      "missing_information": [
+        "External information required for safe resolution"
+      ],
+      "next_steps": [
+        "Provide missing information",
+        "Re-run pipeline with additional context"
+      ],
+      "retry_guidance": "Re-run after providing the missing information identified above"
+    }
+  ]
+}

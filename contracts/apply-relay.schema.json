@@ -1,0 +1,4 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://nextflow.local/contracts/apply-relay.schema.json","type":"object",
+  "required":["status"],"properties":{"status":{"enum":["applied","blocked","failed","not_applied"]},"target_id":{"type":"string"},"applied_result_id":{"type":"string"},"applied_result_hash":{"type":"string"},"preconditions":{"type":"object"}}
+}

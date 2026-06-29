@@ -1,0 +1,14 @@
+{
+  "before": {
+    "score": 72.5,
+    "isolated": 3,
+    "resolved": 3,
+    "unresolved": 3
+  },
+  "after": {
+    "score": 100.0,
+    "isolated": 0,
+    "resolved": 3,
+    "unresolved": 0
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "cloud_run_proof": {
+    "bpmn_process_instance_id": "<to be filled after cloud run>",
+    "api_workflow_run_id": "<to be filled after cloud run>",
+    "edge_execution_id": "<to be filled after cloud run>",
+    "correlation_id": "<must match across all three>",
+    "terminal_status": "succeeded|failed",
+    "timestamp": "<ISO 8601>",
+    "service_task_output": {
+      "note": "This must contain REAL response data, not mocked",
+      "execution_status": "<succeeded|failed|faulted|cancelled|timed_out>",
+      "success": "<true|false>",
+      "backend_result": "<actual result payload from Edge pipeline>",
+      "gateway_evaluation": {
+        "condition_checked": "success == true && execution_status == 'succeeded'",
+        "route_taken": "<Successful End|Failed End>"
+      }
+    },
+    "correlation_id_verification": {
+      "bpmn_layer": "<correlation_id from process instance job arguments>",
+      "bridge_layer": "<X-Correlation-Id header on outbound HTTP request>",
+      "edge_layer": "<X-Correlation-Id received and logged by Edge Backend>",
+      "all_match": "<true|false>"
+    },
+    "pipeline_phases_completed": {
+      "phase_0_snapshot": "<completed|skipped>",
+      "phase_1_scan_analysis": "<completed|skipped>",
+      "phase_2_presimulation": "<completed|skipped>",
+      "phase_3_simulation": "<completed|skipped>",
+      "phase_4_inspection": "<completed|skipped>",
+      "phase_5_relay": "<completed|skipped>",
+      "phase_6_final_output": "<completed|skipped>"
+    }
+  }
+}

@@ -1,0 +1,257 @@
+{
+  "report_id": "2cf10d99-dcb7-4a3f-b886-0002aac68062",
+  "fixture": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\fixture-large-demo",
+  "fixture_hash": "9fc2ede5b95548b5a7baf9196406a891ea24a65403b1ee3970fe3bccc2e05ac6",
+  "run_config": {
+    "isolation_enabled_a": false,
+    "isolation_enabled_b": true,
+    "mode": "A_B_COMPARISON"
+  },
+  "summary": {
+    "initial_score": 80.0,
+    "final_score": 95.0,
+    "delta_score": 15.0,
+    "total_issues": 16,
+    "resolved": 15,
+    "unresolved": 1,
+    "status": "partially_resolved"
+  },
+  "runs": {
+    "A": {
+      "isolation": false,
+      "score": 80.0,
+      "simulation_ready": false,
+      "ready_count": 11,
+      "isolated_count": 5,
+      "resolved_count": 11,
+      "unresolved_count": 5,
+      "final_state": "partially_resolved"
+    },
+    "B": {
+      "isolation": true,
+      "score": 95.0,
+      "simulation_ready": true,
+      "ready_count": 15,
+      "isolated_count": 1,
+      "resolved_count": 15,
+      "unresolved_count": 1,
+      "final_state": "failed"
+    }
+  },
+  "diff": {
+    "score_delta": {
+      "before": 80.0,
+      "after": 95.0
+    },
+    "behavioral_delta": {
+      "ready_a": 11,
+      "ready_b": 15,
+      "isolated_a": 5,
+      "isolated_b": 1
+    },
+    "resolution_delta": [
+      {
+        "item_id": "F-001",
+        "status_a": "resolved",
+        "status_b": "resolved"
+      },
+      {
+        "item_id": "F-002",
+        "status_a": "resolved",
+        "status_b": "resolved"
+      },
+      {
+        "item_id": "F-003",
+        "status_a": "unresolved",
+        "status_b": "isolated"
+      },
+      {
+        "item_id": "F-004",
+        "status_a": "unresolved",
+        "status_b": "resolved"
+      },
+      {
+        "item_id": "F-005",
+        "status_a": "unresolved",
+        "status_b": "resolved"
+      },
+      {
+        "item_id": "F-006",
+        "status_a": "unresolved",
+        "status_b": "resolved"
+      },
+      {
+        "item_id": "F-007",
+        "status_a": "unresolved",
+        "status_b": "resolved"
+      },
+      {
+        "item_id": "F-008",
+        "status_a": "resolved",
+        "status_b": "resolved"
+      },
+      {
+        "item_id": "F-009",
+        "status_a": "resolved",
+        "status_b": "resolved"
+      },
+      {
+        "item_id": "F-010",
+        "status_a": "resolved",
+        "status_b": "resolved"
+      },
+      {
+        "item_id": "F-011",
+        "status_a": "resolved",
+        "status_b": "resolved"
+      },
+      {
+        "item_id": "F-012",
+        "status_a": "resolved",
+        "status_b": "resolved"
+      },
+      {
+        "item_id": "F-013",
+        "status_a": "resolved",
+        "status_b": "resolved"
+      },
+      {
+        "item_id": "F-014",
+        "status_a": "resolved",
+        "status_b": "resolved"
+      },
+      {
+        "item_id": "F-015",
+        "status_a": "resolved",
+        "status_b": "resolved"
+      },
+      {
+        "item_id": "F-016",
+        "status_a": "resolved",
+        "status_b": "resolved"
+      }
+    ]
+  },
+  "resolution": [
+    {
+      "issue_id": "F-001",
+      "type": "syntax_error",
+      "cause": "Python parser cannot compile this file.",
+      "action": "resolved via isolation pipeline",
+      "result": "resolved"
+    },
+    {
+      "issue_id": "F-002",
+      "type": "broken_dependency",
+      "cause": "Package 'flask' is pinned to a non-existent version.",
+      "action": "resolved via isolation pipeline",
+      "result": "resolved"
+    },
+    {
+      "issue_id": "F-008",
+      "type": "missing_dependency",
+      "cause": "Module 'pandas' is imported but not declared as a dependency.",
+      "action": "resolved via isolation pipeline",
+      "result": "resolved"
+    },
+    {
+      "issue_id": "F-009",
+      "type": "missing_dependency",
+      "cause": "Module 'matplotlib' is imported but not declared as a dependency.",
+      "action": "resolved via isolation pipeline",
+      "result": "resolved"
+    },
+    {
+      "issue_id": "F-010",
+      "type": "missing_dependency",
+      "cause": "Module 'utlis' is imported but not declared as a dependency.",
+      "action": "resolved via isolation pipeline",
+      "result": "resolved"
+    },
+    {
+      "issue_id": "F-011",
+      "type": "missing_dependency",
+      "cause": "Module 'confg' is imported but not declared as a dependency.",
+      "action": "resolved via isolation pipeline",
+      "result": "resolved"
+    },
+    {
+      "issue_id": "F-012",
+      "type": "missing_dependency",
+      "cause": "Module 'modles' is imported but not declared as a dependency.",
+      "action": "resolved via isolation pipeline",
+      "result": "resolved"
+    },
+    {
+      "issue_id": "F-013",
+      "type": "missing_dependency",
+      "cause": "Module 'celery' is imported but not declared as a dependency.",
+      "action": "resolved via isolation pipeline",
+      "result": "resolved"
+    },
+    {
+      "issue_id": "F-014",
+      "type": "missing_dependency",
+      "cause": "Module 'redis' is imported but not declared as a dependency.",
+      "action": "resolved via isolation pipeline",
+      "result": "resolved"
+    },
+    {
+      "issue_id": "F-015",
+      "type": "configuration_missing",
+      "cause": "No lock file present despite having a dependency manifest.",
+      "action": "resolved via isolation pipeline",
+      "result": "resolved"
+    },
+    {
+      "issue_id": "F-016",
+      "type": "configuration_missing",
+      "cause": "No Python version constraint declared in the project.",
+      "action": "resolved via isolation pipeline",
+      "result": "resolved"
+    },
+    {
+      "issue_id": "F-004",
+      "type": "ambiguous_import",
+      "cause": "[FindingCategory.AMBIGUOUS_IMPORT] in api_handler.py",
+      "action": "resolved via isolation pipeline",
+      "result": "resolved"
+    },
+    {
+      "issue_id": "F-005",
+      "type": "ambiguous_import",
+      "cause": "[FindingCategory.AMBIGUOUS_IMPORT] in auth_module.py",
+      "action": "resolved via isolation pipeline",
+      "result": "resolved"
+    },
+    {
+      "issue_id": "F-006",
+      "type": "ambiguous_import",
+      "cause": "[FindingCategory.AMBIGUOUS_IMPORT] in data_layer.py",
+      "action": "resolved via isolation pipeline",
+      "result": "resolved"
+    },
+    {
+      "issue_id": "F-007",
+      "type": "ambiguous_import",
+      "cause": "[FindingCategory.AMBIGUOUS_IMPORT] in event_bus.py",
+      "action": "resolved via isolation pipeline",
+      "result": "resolved"
+    },
+    {
+      "issue_id": "F-003",
+      "type": "dependency_conflict",
+      "cause": "Installed version 1.2 does not satisfy requirement >=2.0.",
+      "action": "isolated \u2014 requires external review",
+      "result": "isolated"
+    }
+  ],
+  "metrics": {
+    "scan_coverage": 93.75,
+    "analysis_confidence": 95.0,
+    "simulation_success_rate": 93.75,
+    "isolation_effectiveness": 75.0,
+    "pipeline_stability": 100.0
+  },
+  "timestamp": "2026-06-28T16:44:41.627568+00:00"
+}

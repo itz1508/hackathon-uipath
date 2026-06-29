@@ -1,0 +1,150 @@
+{
+  "execution_id": "2296a636-0ad4-4f66-afaf-b03afe6d4c26",
+  "case_id": "e2e-repo-run",
+  "started_at": "2026-06-29T09:56:20.812870+00:00",
+  "ended_at": "2026-06-29T09:59:24.409792+00:00",
+  "total_steps": 8,
+  "execution_narrative": [
+    {
+      "step": 1,
+      "type": "before",
+      "phase": 0,
+      "intent": "Capture SHA-256 snapshot of target folder for restore point",
+      "timestamp": "2026-06-29T09:56:20.813249+00:00"
+    },
+    {
+      "step": 1,
+      "type": "after",
+      "phase": 0,
+      "result": "Snapshot captured: 1102 files hashed",
+      "confidence": 1.0,
+      "duration_ms": 1664,
+      "evidence": "snapshot_id=4758a013-d91",
+      "timestamp": "2026-06-29T09:56:22.477753+00:00"
+    },
+    {
+      "step": 2,
+      "type": "before",
+      "phase": 1,
+      "intent": "Scan target folder: detect code issues via compileall, AST, dependency analysis",
+      "timestamp": "2026-06-29T09:56:22.477769+00:00"
+    },
+    {
+      "step": 2,
+      "type": "after",
+      "phase": 1,
+      "result": "Scan complete: 0 issues found (0 critical)",
+      "confidence": 1.0,
+      "duration_ms": 11176,
+      "evidence": "",
+      "timestamp": "2026-06-29T09:56:33.653953+00:00"
+    },
+    {
+      "step": 3,
+      "type": "before",
+      "phase": 2,
+      "intent": "Analyze raw scan results: produce statements and classification",
+      "timestamp": "2026-06-29T09:56:33.653968+00:00"
+    },
+    {
+      "step": 3,
+      "type": "after",
+      "phase": 2,
+      "result": "Scored 0%. 0 ready, 0 isolated",
+      "confidence": 0,
+      "duration_ms": 5009,
+      "evidence": "threshold=93.91%, simulation_ready=False",
+      "timestamp": "2026-06-29T09:56:38.663951+00:00"
+    },
+    {
+      "step": 4,
+      "type": "before",
+      "phase": 3,
+      "intent": "Score information completeness against 93.91% threshold, partition into ready/isolated",
+      "timestamp": "2026-06-29T09:56:38.663960+00:00"
+    },
+    {
+      "step": 4,
+      "type": "after",
+      "phase": 3,
+      "result": "Simulation: 0 resolved, 0 failed",
+      "confidence": 0.5,
+      "duration_ms": 62935,
+      "evidence": "candidate_path=N/A",
+      "timestamp": "2026-06-29T09:57:41.599204+00:00"
+    },
+    {
+      "step": 5,
+      "type": "before",
+      "phase": 4,
+      "intent": "Execute fixes on candidate copy only \u2014 never touch real target",
+      "timestamp": "2026-06-29T09:57:41.599245+00:00"
+    },
+    {
+      "step": 5,
+      "type": "after",
+      "phase": 4,
+      "result": "Inspection: convergence=unknown",
+      "confidence": 0.7,
+      "duration_ms": 70264,
+      "evidence": "exit_status=completed",
+      "timestamp": "2026-06-29T09:58:51.863591+00:00"
+    },
+    {
+      "step": 6,
+      "type": "before",
+      "phase": 5,
+      "intent": "Wait for all branches to converge, validate results, compute hashes",
+      "timestamp": "2026-06-29T09:58:51.863626+00:00"
+    },
+    {
+      "step": 6,
+      "type": "after",
+      "phase": 5,
+      "result": "Relay decision: unknown",
+      "confidence": 1.0,
+      "duration_ms": 8782,
+      "evidence": "decision=unknown",
+      "timestamp": "2026-06-29T09:59:00.645639+00:00"
+    },
+    {
+      "step": 7,
+      "type": "before",
+      "phase": 6,
+      "intent": "Auto-mode: apply decision immediately without human pause",
+      "timestamp": "2026-06-29T09:59:00.645655+00:00"
+    },
+    {
+      "step": 7,
+      "type": "after",
+      "phase": 6,
+      "result": "Final: 0 resolved, 0 unresolved",
+      "confidence": 1.0,
+      "duration_ms": 22512,
+      "evidence": "final_output produced",
+      "timestamp": "2026-06-29T09:59:23.157964+00:00",
+      "details": {
+        "resolved_count": 0,
+        "unresolved_count": 0
+      }
+    },
+    {
+      "step": 8,
+      "type": "before",
+      "phase": 7,
+      "intent": "Produce final report: resolved items, root causes, documentation",
+      "timestamp": "2026-06-29T09:59:23.157985+00:00"
+    },
+    {
+      "step": 8,
+      "type": "after",
+      "phase": 7,
+      "result": "Phase 7 completed: completed",
+      "confidence": 1.0,
+      "duration_ms": 1251,
+      "evidence": "duration_ms=1246",
+      "timestamp": "2026-06-29T09:59:24.409571+00:00"
+    }
+  ],
+  "human_readable_summary": "Phase 0: Capture SHA-256 snapshot of target folder for restore point\n  \u2192 Snapshot captured: 1102 files hashed (confidence=1.0, 1664ms)\nPhase 1: Scan target folder: detect code issues via compileall, AST, dependency analysis\n  \u2192 Scan complete: 0 issues found (0 critical) (confidence=1.0, 11176ms)\nPhase 2: Analyze raw scan results: produce statements and classification\n  \u2192 Scored 0%. 0 ready, 0 isolated (confidence=0, 5009ms)\nPhase 3: Score information completeness against 93.91% threshold, partition into ready/isolated\n  \u2192 Simulation: 0 resolved, 0 failed (confidence=0.5, 62935ms)\nPhase 4: Execute fixes on candidate copy only \u2014 never touch real target\n  \u2192 Inspection: convergence=unknown (confidence=0.7, 70264ms)\nPhase 5: Wait for all branches to converge, validate results, compute hashes\n  \u2192 Relay decision: unknown (confidence=1.0, 8782ms)\nPhase 6: Auto-mode: apply decision immediately without human pause\n  \u2192 Final: 0 resolved, 0 unresolved (confidence=1.0, 22512ms)\nPhase 7: Produce final report: resolved items, root causes, documentation\n  \u2192 Phase 7 completed: completed (confidence=1.0, 1251ms)"
+}

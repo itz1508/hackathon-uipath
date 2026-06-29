@@ -1,0 +1,6 @@
+{
+  "ProjectType": "Function",
+  "Name": "audisor-coding-agent",
+  "Description": "Audisor Coding Agent — Claude Code wrapper for Phase 3 Simulation (UiPath for Coding Agents bonus)",
+  "MainFile": null
+}

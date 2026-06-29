@@ -1,0 +1,6 @@
+{
+  "tool": "dependency-validator",
+  "input": "module_x",
+  "expected": "ok",
+  "actual": null
+}

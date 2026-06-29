@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:uipath="http://uipath.com/bpmn/extensions"
+                  id="Definitions_1"
+                  targetNamespace="http://bpmn.io/schema/bpmn">
+
+  <bpmn:process id="MaestroBackendProcess" isExecutable="true">
+
+    <!-- Start Event: API trigger from Maestro -->
+    <bpmn:startEvent id="Event_start" name="Maestro Task Received">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+      <uipath:extensionElements>
+        <uipath:trigger type="api" />
+      </uipath:extensionElements>
+    </bpmn:startEvent>
+
+    <!-- Service Task: Validate and Accept Submission -->
+    <bpmn:serviceTask id="Task_ValidateSubmission" name="Validate &amp; Accept Submission">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+      <uipath:extensionElements>
+        <uipath:task type="script">
+          <uipath:script language="python">
+            # Validate input schema, check auth, create execution record
+            # Returns executionId and 202 Accepted
+          </uipath:script>
+        </uipath:task>
+      </uipath:extensionElements>
+    </bpmn:serviceTask>
+
+    <!-- Exclusive Gateway: Sync vs Async -->
+    <bpmn:exclusiveGateway id="Gateway_SyncAsync" name="Execution Mode?">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_Sync</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Async</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <!-- Sync Path: Execute Agent Inline -->
+    <bpmn:serviceTask id="Task_RunAgentSync" name="Run Agent (Sync)">
+      <bpmn:incoming>Flow_Sync</bpmn:incoming>
+      <bpmn:outgoing>Flow_SyncResult</bpmn:outgoing>
+      <uipath:extensionElements>
+        <uipath:task type="agent-execution">
+          <uipath:agentRef binding="Binding_BackendAgent" />
+        </uipath:task>
+      </uipath:extensionElements>
+    </bpmn:serviceTask>
+
+    <!-- Async Path: Queue and Start Agent -->
+    <bpmn:serviceTask id="Task_QueueExecution" name="Queue Execution">
+      <bpmn:incoming>Flow_Async</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+      <uipath:extensionElements>
+        <uipath:task type="queue-add">
+          <uipath:queueRef name="BackendExecutionQueue" />
+        </uipath:task>
+      </uipath:extensionElements>
+    </bpmn:serviceTask>
+
+    <!-- Service Task: Run Agent Async -->
+    <bpmn:serviceTask id="Task_RunAgentAsync" name="Run Agent (Async)">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+      <uipath:extensionElements>
+        <uipath:task type="agent-execution">
+          <uipath:agentRef binding="Binding_BackendAgent" />
+          <uipath:async callbackEnabled="true" />
+        </uipath:task>
+      </uipath:extensionElements>
+    </bpmn:serviceTask>
+
+    <!-- Exclusive Gateway: Verify Result -->
+    <bpmn:exclusiveGateway id="Gateway_Verify" name="Verification Required?">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:incoming>Flow_SyncResult</bpmn:incoming>
+      <bpmn:outgoing>Flow_Verify</bpmn:outgoing>
+      <bpmn:outgoing>Flow_NoVerify</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <!-- Service Task: Verification -->
+    <bpmn:serviceTask id="Task_Verify" name="Verify Result">
+      <bpmn:incoming>Flow_Verify</bpmn:incoming>
+      <bpmn:outgoing>Flow_VerifyDone</bpmn:outgoing>
+      <uipath:extensionElements>
+        <uipath:task type="script">
+          <uipath:script language="python">
+            # Run verification checks on agent output
+            # Hash validation, schema conformance, business rules
+          </uipath:script>
+        </uipath:task>
+      </uipath:extensionElements>
+    </bpmn:serviceTask>
+
+    <!-- Service Task: Deliver Callback -->
+    <bpmn:serviceTask id="Task_DeliverCallback" name="Deliver Callback">
+      <bpmn:incoming>Flow_NoVerify</bpmn:incoming>
+      <bpmn:incoming>Flow_VerifyDone</bpmn:incoming>
+      <bpmn:outgoing>Flow_End</bpmn:outgoing>
+      <uipath:extensionElements>
+        <uipath:task type="http-call">
+          <uipath:http method="POST" url="${callbackUrl}">
+            <uipath:header name="Authorization" value="Bearer ${callbackToken}" />
+          </uipath:http>
+        </uipath:task>
+      </uipath:extensionElements>
+    </bpmn:serviceTask>
+
+    <!-- End Event -->
+    <bpmn:endEvent id="Event_end" name="Execution Complete">
+      <bpmn:incoming>Flow_End</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <!-- Sequence Flows -->
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Event_start" targetRef="Task_ValidateSubmission" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_ValidateSubmission" targetRef="Gateway_SyncAsync" />
+    <bpmn:sequenceFlow id="Flow_Sync" name="Sync" sourceRef="Gateway_SyncAsync" targetRef="Task_RunAgentSync">
+      <bpmn:conditionExpression>${callbackUrl == null}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Async" name="Async" sourceRef="Gateway_SyncAsync" targetRef="Task_QueueExecution">
+      <bpmn:conditionExpression>${callbackUrl != null}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_QueueExecution" targetRef="Task_RunAgentAsync" />
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Task_RunAgentAsync" targetRef="Gateway_Verify" />
+    <bpmn:sequenceFlow id="Flow_SyncResult" sourceRef="Task_RunAgentSync" targetRef="Gateway_Verify" />
+    <bpmn:sequenceFlow id="Flow_Verify" name="Yes" sourceRef="Gateway_Verify" targetRef="Task_Verify">
+      <bpmn:conditionExpression>${verificationRequired == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_NoVerify" name="No" sourceRef="Gateway_Verify" targetRef="Task_DeliverCallback">
+      <bpmn:conditionExpression>${verificationRequired == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_VerifyDone" sourceRef="Task_Verify" targetRef="Task_DeliverCallback" />
+    <bpmn:sequenceFlow id="Flow_End" sourceRef="Task_DeliverCallback" targetRef="Event_end" />
+
+  </bpmn:process>
+
+  <!-- Diagram Layout -->
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="MaestroBackendProcess">
+      <bpmndi:BPMNShape id="Shape_Start" bpmnElement="Event_start">
+        <dc:Bounds x="180" y="280" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Validate" bpmnElement="Task_ValidateSubmission">
+        <dc:Bounds x="280" y="260" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW1" bpmnElement="Gateway_SyncAsync" isMarkerVisible="true">
+        <dc:Bounds x="500" y="275" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_SyncAgent" bpmnElement="Task_RunAgentSync">
+        <dc:Bounds x="620" y="160" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Queue" bpmnElement="Task_QueueExecution">
+        <dc:Bounds x="620" y="360" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_AsyncAgent" bpmnElement="Task_RunAgentAsync">
+        <dc:Bounds x="840" y="360" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW2" bpmnElement="Gateway_Verify" isMarkerVisible="true">
+        <dc:Bounds x="1060" y="275" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Verify" bpmnElement="Task_Verify">
+        <dc:Bounds x="1180" y="160" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Callback" bpmnElement="Task_DeliverCallback">
+        <dc:Bounds x="1180" y="360" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End" bpmnElement="Event_end">
+        <dc:Bounds x="1400" y="380" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</bpmn:definitions>

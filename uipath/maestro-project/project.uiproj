@@ -1,0 +1,6 @@
+{
+  "ProjectType": "Orchestration",
+  "Name": "maestro-backend-orchestration",
+  "Description": "Maestro orchestration project for backend execution tasks",
+  "MainFile": "orchestration.bpmn"
+}

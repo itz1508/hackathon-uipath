@@ -1,0 +1,6 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://nextflow.local/contracts/simulation-result.schema.json","type":"object",
+  "required":["result_id","target_id","sandbox_execution_completed","inspection_completed","validation_passed","result"],
+  "properties":{"result_id":{"type":"string","minLength":1},"target_id":{"type":"string","minLength":1},"sandbox_path":{"type":"string"},"sandbox_execution_completed":{"type":"boolean"},"inspection_completed":{"type":"boolean"},"validation_passed":{"type":"boolean"},"result":{"type":"object"}},
+  "allOf":[{"if":{"properties":{"validation_passed":{"const":true}}},"then":{"properties":{"sandbox_execution_completed":{"const":true},"inspection_completed":{"const":true}}}}]
+}

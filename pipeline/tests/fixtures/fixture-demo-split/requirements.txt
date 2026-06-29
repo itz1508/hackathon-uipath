@@ -1,0 +1,2 @@
+# Known bad version
+package-b==1.4  # package-a requires package-b>=2.0

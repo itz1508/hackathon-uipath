@@ -1,0 +1,11 @@
+{
+  "01-scan-snapshot": {"implementation_type":"api_workflow","resource_name":"","input_mapping":{"case_input":"workflow_state.case_input"},"output_mapping":{"snapshot":"workflow_state.snapshot","snapshot_hash":"workflow_state.snapshot_hash"},"binding_required":true},
+  "02-analysis-recalibration": {"implementation_type":"agent","resource_name":"","input_mapping":{"snapshot":"workflow_state.snapshot"},"output_mapping":{"classification":"workflow_state.classification","recalibration_findings":"workflow_state.recalibration_findings","llm_statement":"workflow_state.llm_statement"},"binding_required":true},
+  "02.5-pre-simulation": {"implementation_type":"script","resource_name":"BPMN.ScriptTask","input_mapping":{"handoff":"workflow_state.handoff_statement"},"output_mapping":{"package":"workflow_state.pre_simulation_package"},"binding_required":false},
+  "03-simulation": {"implementation_type":"rpa_workflow","resource_name":"","input_mapping":{"package":"workflow_state.pre_simulation_package"},"output_mapping":{"result":"workflow_state.simulation_result"},"binding_required":true},
+  "04-replay-proof": {"implementation_type":"api_workflow","resource_name":"","input_mapping":{"result":"workflow_state.simulation_result"},"output_mapping":{"proof":"workflow_state.replay_proof"},"binding_required":true},
+  "05-user-decision": {"implementation_type":"human_task","resource_name":"","input_mapping":{"proof":"workflow_state.replay_proof"},"output_mapping":{"decision":"workflow_state.user_decision"},"binding_required":true},
+  "06-apply-relay": {"implementation_type":"rpa_workflow","resource_name":"","input_mapping":{"approved_result_id":"workflow_state.approved_result_id","approved_result_hash":"workflow_state.approved_result_hash"},"output_mapping":{"apply_result":"workflow_state.apply_relay_result"},"binding_required":true},
+  "07-post-apply-verification": {"implementation_type":"api_workflow","resource_name":"","input_mapping":{"apply_result":"workflow_state.apply_relay_result"},"output_mapping":{"verification":"workflow_state.post_apply_verification"},"binding_required":true},
+  "08-final-result": {"implementation_type":"script","resource_name":"BPMN.ScriptTask","input_mapping":{"workflow_state":"workflow_state"},"output_mapping":{"final_result":"workflow_state.final_result"},"binding_required":false}
+}

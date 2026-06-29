@@ -1,0 +1,31 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://nextflow.local/contracts/workflow-state.schema.json",
+  "title":"NextFlow Workflow State",
+  "type":"object",
+  "required":["case_id","run_id","workflow_status","current_stage","completed_stage","destination_stage","case_input","target_state","snapshot","snapshot_hash","raw_statement","classification","recalibration_findings","handoff_statement","llm_statement","auto_dependency_enabled","auto_dependency_status","dependencies","unresolved_dependencies","required_dependencies_available","pre_simulation_package","simulation_ready","required_grader_failures","isolation_required","reattempt_required","confidence_score","simulation_result","simulation_result_hash","simulation_status","failure_capture","retry_count","replay_proof","proof_status","user_decision","approved_result_id","approved_result_hash","apply_relay_result","post_apply_verification","final_result","final_result_hash","audit_trail"],
+  "properties":{
+    "case_id":{"type":"string","minLength":1},"run_id":{"type":"string","minLength":1},
+    "workflow_status":{"enum":["running","blocked","proof_pending","completed","failed"]},
+    "current_stage":{"type":"string"},"completed_stage":{"type":"string"},"destination_stage":{"type":"string"},
+    "case_input":{"type":"object"},"target_state":{"type":"object"},"snapshot":{"type":"object"},
+    "snapshot_hash":{"$ref":"#/$defs/hash"},"raw_statement":{"type":"string"},"classification":{"type":"object"},
+    "recalibration_findings":{"type":"object"},"handoff_statement":{"type":"object"},"llm_statement":{"type":"object"},
+    "auto_dependency_enabled":{"type":"boolean"},"auto_dependency_status":{"enum":["on","off"]},
+    "dependencies":{"type":"array"},"unresolved_dependencies":{"type":"array","items":{"type":"string"},"uniqueItems":true},
+    "required_dependencies_available":{"type":"boolean"},"pre_simulation_package":{"type":"object"},
+    "simulation_ready":{"type":"boolean"},"required_grader_failures":{"type":"array"},"isolation_required":{"type":"boolean"},
+    "reattempt_required":{"type":"boolean"},"confidence_score":{"type":"number","minimum":0,"maximum":100},
+    "simulation_result":{"type":"object"},"simulation_result_hash":{"type":"string"},
+    "simulation_status":{"enum":["not_run","passed","failed"]},"failure_capture":{},"retry_count":{"type":"integer","minimum":0},
+    "replay_proof":{"type":"object"},"proof_status":{"enum":["not_run","passed","failed"]},
+    "user_decision":{"enum":["apply","cancel","preserve_for_later"]},"approved_result_id":{"type":"string"},
+    "approved_result_hash":{"type":"string"},"apply_relay_result":{"type":"object"},"post_apply_verification":{"type":"object"},
+    "final_result":{"type":"object"},"final_result_hash":{"type":"string"},"audit_trail":{"type":"array","items":{"type":"string"}}
+  },
+  "allOf":[
+    {"if":{"properties":{"auto_dependency_enabled":{"const":true}}},"then":{"properties":{"auto_dependency_status":{"const":"on"}}}},
+    {"if":{"properties":{"auto_dependency_enabled":{"const":false}}},"then":{"properties":{"auto_dependency_status":{"const":"off"}}}}
+  ],
+  "$defs":{"hash":{"type":"string","pattern":"^[a-f0-9]{64}$"}}
+}

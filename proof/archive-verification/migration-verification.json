@@ -1,0 +1,42 @@
+{
+  "lastModified": "2026-06-24T07:20:00Z",
+  "migration_verification": {
+    "directory_rename": {
+      "from": "workflow-control/",
+      "to": "pipeline/",
+      "status": "completed",
+      "verification": "workflow-control directory no longer exists, pipeline directory contains all expected files"
+    },
+    "reference_updates": {
+      "internal_imports": "All import paths updated from workflow-control to pipeline",
+      "test_paths": "Test sys.path inserts updated to reference pipeline/",
+      "documentation": "AGENTS.md and other documentation references updated",
+      "verification": "All Python files parse correctly with new import structure"
+    },
+    "backward_compatibility": {
+      "legacy_path_support": "Existing callers without tool_candidates continue using mutation path",
+      "api_stability": "Public interfaces maintained, only internal implementation enhanced",
+      "verification": "596 tests pass including legacy fixture scenarios"
+    },
+    "architectural_improvement": {
+      "before": "workflow-driven mutation",
+      "after": "issue-driven toolkit execution", 
+      "control_plane": "pipeline acts as control plane",
+      "execution_plane": "toolkit acts as execution plane",
+      "boundaries": {
+        "simulation": "proof boundary",
+        "inspection": "promotion boundary"
+      }
+    }
+  },
+  "evidence_artifacts": [
+    "test-results/fixture-regression.txt",
+    "test-results/pytest-596-pass.txt", 
+    "proof/pipeline-structure-report.json",
+    "proof/toolkit-verification.json",
+    "proof/scoring-gate-verification.json",
+    "proof/git-commit-hash.txt",
+    "proof/git-diff-files.txt"
+  ],
+  "verification_timestamp": "2026-06-24T07:20:00Z"
+}

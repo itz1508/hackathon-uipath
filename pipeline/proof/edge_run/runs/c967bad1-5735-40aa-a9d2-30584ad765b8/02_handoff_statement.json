@@ -1,0 +1,197 @@
+{
+  "run_id": "c967bad1-5735-40aa-a9d2-30584ad765b8",
+  "phase": "handoff_statement",
+  "consumed_run_id": "ad82c2ad-cac2-427b-b566-aac5fd52d39a",
+  "consumed_artifact": "ad82c2ad-cac2-427b-b566-aac5fd52d39a/01_scan_snapshot.json",
+  "created_at": "2026-06-28T16:29:45.853388+00:00",
+  "scope": "Analysis of scan findings and preparation for simulation",
+  "issue_groups": [
+    {
+      "group_id": "group_python_editable_install_policy_needed",
+      "category": "python_editable_install_policy_needed",
+      "severity": "medium",
+      "issue_count": 1,
+      "affected_files": [
+        "pyproject.toml"
+      ],
+      "description": "1 findings in category 'python_editable_install_policy_needed'"
+    },
+    {
+      "group_id": "group_python_editable_build_hooks_detected_later",
+      "category": "python_editable_build_hooks_detected_later",
+      "severity": "low",
+      "issue_count": 1,
+      "affected_files": [
+        "pyproject.toml"
+      ],
+      "description": "1 findings in category 'python_editable_build_hooks_detected_later'"
+    },
+    {
+      "group_id": "group_python_editable_runtime_dependency_policy_needed",
+      "category": "python_editable_runtime_dependency_policy_needed",
+      "severity": "medium",
+      "issue_count": 1,
+      "affected_files": [
+        "pyproject.toml"
+      ],
+      "description": "1 findings in category 'python_editable_runtime_dependency_policy_needed'"
+    },
+    {
+      "group_id": "group_python_simple_api_policy_needed",
+      "category": "python_simple_api_policy_needed",
+      "severity": "medium",
+      "issue_count": 1,
+      "affected_files": [
+        ""
+      ],
+      "description": "1 findings in category 'python_simple_api_policy_needed'"
+    },
+    {
+      "group_id": "group_python_simple_api_yanked_record_supported_later",
+      "category": "python_simple_api_yanked_record_supported_later",
+      "severity": "low",
+      "issue_count": 1,
+      "affected_files": [
+        ""
+      ],
+      "description": "1 findings in category 'python_simple_api_yanked_record_supported_later'"
+    },
+    {
+      "group_id": "group_python_simple_api_dist_info_metadata_supported_later",
+      "category": "python_simple_api_dist_info_metadata_supported_later",
+      "severity": "low",
+      "issue_count": 1,
+      "affected_files": [
+        ""
+      ],
+      "description": "1 findings in category 'python_simple_api_dist_info_metadata_supported_later'"
+    },
+    {
+      "group_id": "group_python_simple_api_freshness_policy_required",
+      "category": "python_simple_api_freshness_policy_required",
+      "severity": "medium",
+      "issue_count": 1,
+      "affected_files": [
+        ""
+      ],
+      "description": "1 findings in category 'python_simple_api_freshness_policy_required'"
+    },
+    {
+      "group_id": "group_python_simple_api_upload_time_freshness_policy_required",
+      "category": "python_simple_api_upload_time_freshness_policy_required",
+      "severity": "medium",
+      "issue_count": 1,
+      "affected_files": [
+        ""
+      ],
+      "description": "1 findings in category 'python_simple_api_upload_time_freshness_policy_required'"
+    },
+    {
+      "group_id": "group_python_simple_api_private_underscore_keys_ignored_later",
+      "category": "python_simple_api_private_underscore_keys_ignored_later",
+      "severity": "low",
+      "issue_count": 1,
+      "affected_files": [
+        ""
+      ],
+      "description": "1 findings in category 'python_simple_api_private_underscore_keys_ignored_later'"
+    },
+    {
+      "group_id": "group_python_package_freshness_metadata_supported_later",
+      "category": "python_package_freshness_metadata_supported_later",
+      "severity": "low",
+      "issue_count": 1,
+      "affected_files": [
+        ""
+      ],
+      "description": "1 findings in category 'python_package_freshness_metadata_supported_later'"
+    },
+    {
+      "group_id": "group_python_package_attestation_policy_needed",
+      "category": "python_package_attestation_policy_needed",
+      "severity": "medium",
+      "issue_count": 1,
+      "affected_files": [
+        ""
+      ],
+      "description": "1 findings in category 'python_package_attestation_policy_needed'"
+    },
+    {
+      "group_id": "group_python_index_hosted_attestation_supported_later",
+      "category": "python_index_hosted_attestation_supported_later",
+      "severity": "medium",
+      "issue_count": 1,
+      "affected_files": [
+        ""
+      ],
+      "description": "1 findings in category 'python_index_hosted_attestation_supported_later'"
+    },
+    {
+      "group_id": "group_python_provenance_url_policy_needed",
+      "category": "python_provenance_url_policy_needed",
+      "severity": "medium",
+      "issue_count": 1,
+      "affected_files": [
+        ""
+      ],
+      "description": "1 findings in category 'python_provenance_url_policy_needed'"
+    },
+    {
+      "group_id": "group_tool_unreferenced_candidate",
+      "category": "tool_unreferenced_candidate",
+      "severity": "low",
+      "issue_count": 2,
+      "affected_files": [
+        "tools/demo/live_server.py",
+        "tools/demo/live_pipeline_demo.py"
+      ],
+      "description": "2 findings in category 'tool_unreferenced_candidate'"
+    },
+    {
+      "group_id": "group_scan_policy_notes",
+      "category": "scan_policy_notes",
+      "severity": "medium",
+      "issue_count": 0,
+      "affected_files": [
+        "",
+        "pyproject.toml"
+      ],
+      "description": "14 non-actionable scan policy notes retained as raw facts"
+    }
+  ],
+  "allowed_actions": [
+    {
+      "action_id": "review_findings",
+      "description": "Review detected findings",
+      "scope": "read-only",
+      "rationale": "Understanding issues before action"
+    },
+    {
+      "action_id": "group_issues",
+      "description": "Group related findings",
+      "scope": "analysis",
+      "rationale": "Better issue management"
+    }
+  ],
+  "blocked_actions": [
+    {
+      "action_id": "execute_scripts",
+      "description": "Execute any scripts",
+      "reason": "Execution not allowed during analysis phase",
+      "alternative": "Mark for simulation phase"
+    },
+    {
+      "action_id": "install_packages",
+      "description": "Install dependencies",
+      "reason": "Package installation not allowed",
+      "alternative": "Add to runtime requirements"
+    }
+  ],
+  "expected_output_shape": {
+    "analysis_handoff": "02_analysis_handoff.json",
+    "raw_statement": "02_raw_statement.json",
+    "handoff_statement": "02_handoff_statement.json",
+    "llm_statement": "02_llm_statement.json"
+  },
+  "artifact_index_ref": "artifact_index.json"
+}

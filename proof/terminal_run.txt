@@ -1,0 +1,31 @@
+﻿python.exe : Traceback (most recent call last):
+At line:1 char:72
++ ... nextflow" ; & "d:\Dev\hackaton-uipath-jun29
+-workbench\pipeline\.venv\ ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Tra 
+   ceback (most recent call last)::String) [],   
+  RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "D:\Dev\hackaton-uipath-jun29-workbench\pi
+peline\tools\demo\live_pipeline_demo.py", line 
+259, in <module>
+    run_demo(sys.argv[1])
+    ~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Dev\hackaton-uipath-jun29-workbench\pi
+peline\tools\demo\live_pipeline_demo.py", line 
+97, in run_demo
+    print("\033[1;33m" + "\u2550" * 70 + 
+"\033[0m")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\encodings\cp1252.py", 
+line 19, in encode
+    return codecs.charmap_encode(input,self.error
+s,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode 
+characters in position 7-76: character maps to 
+<undefined>

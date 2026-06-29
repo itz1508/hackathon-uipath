@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:uipath="http://uipath.org/schema/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://uipath.org/bpmn" exporter="UiPath Studio Web (https://uipath.com)" exporterVersion="b52d90e7">
+  <bpmn:process id="isolated-integration" name="audisor-workflow-normal">
+    <bpmn:extensionElements>
+      <uipath:variables version="v1">
+        <uipath:input id="retry_count" name="retry_count" type="integer" default="0" />
+        <uipath:input id="confidence_score" name="confidence_score" type="double" default="95.0" />
+        <uipath:input id="simulation_status" name="simulation_status" type="string" default="passed" />
+        <uipath:input id="user_decision" name="user_decision" type="string" default="approve" />
+      </uipath:variables>
+      <uipath:migrationVersion version="15" />
+      <uipath:intsvcActivityConfig version="v2" />
+    </bpmn:extensionElements>
+    <bpmn:startEvent id="StartEvent" name="Start">
+      <bpmn:extensionElements>
+        <uipath:entryPointId value="98a3fafc-4265-4b9d-aa2b-3951145b975d" />
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_Start_Phase0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Phase0" name="Phase 0: Snapshot">
+      <bpmn:extensionElements>
+        <uipath:activity version="v1">
+          <uipath:type value="LogMessage" version="v1" />
+          <uipath:context>
+            <uipath:inputSchema type="jsonSchema"><![CDATA[{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"body":{"type":"object"}},"required":[]}]]></uipath:inputSchema>
+          </uipath:context>
+          <uipath:input name="body" type="json" target="body"><![CDATA[{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"message":"[PHASE 0] snapshot — capturing workspace baseline","level":"Info"}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}]]></uipath:input>
+        </uipath:activity>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Start_Phase0</bpmn:incoming>
+      <bpmn:outgoing>Flow_Phase0_Phase1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Phase1" name="Phase 1: Scan + Analysis">
+      <bpmn:extensionElements>
+        <uipath:activity version="v1">
+          <uipath:type value="LogMessage" version="v1" />
+          <uipath:context>
+            <uipath:inputSchema type="jsonSchema"><![CDATA[{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"body":{"type":"object"}},"required":[]}]]></uipath:inputSchema>
+          </uipath:context>
+          <uipath:input name="body" type="json" target="body"><![CDATA[{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"message":"[PHASE 1] scan_analysis — file structure and dependency analysis","level":"Info"}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}]]></uipath:input>
+        </uipath:activity>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Phase0_Phase1</bpmn:incoming>
+      <bpmn:outgoing>Flow_Phase1_Phase2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Phase2" name="Phase 2: Pre-Simulation Package">
+      <bpmn:extensionElements>
+        <uipath:activity version="v1">
+          <uipath:type value="LogMessage" version="v1" />
+          <uipath:context>
+            <uipath:inputSchema type="jsonSchema"><![CDATA[{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"body":{"type":"object"}},"required":[]}]]></uipath:inputSchema>
+          </uipath:context>
+          <uipath:input name="body" type="json" target="body"><![CDATA[{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"message":"[PHASE 2] pre_simulation — evaluating completeness (93.91% threshold)","level":"Info"}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}]]></uipath:input>
+        </uipath:activity>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Phase1_Phase2</bpmn:incoming>
+      <bpmn:incoming>Flow_1niya5d</bpmn:incoming>
+      <bpmn:incoming>Flow_1fvrr4b</bpmn:incoming>
+      <bpmn:outgoing>Flow_Phase2_GW1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway1" name="Isolation Issue" default="Flow_1fvrr4b">
+      <bpmn:outgoing>Flow_1niya5d</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1fvrr4b</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Phase3" name="Phase 3: Simulation">
+      <bpmn:extensionElements>
+        <uipath:activity version="v1">
+          <uipath:type value="LogMessage" version="v1" />
+          <uipath:context>
+            <uipath:inputSchema type="jsonSchema"><![CDATA[{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"body":{"type":"object"}},"required":[]}]]></uipath:inputSchema>
+          </uipath:context>
+          <uipath:input name="body" type="json" target="body"><![CDATA[{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"message":"[PHASE 3] simulation — executing fixes on candidate copy","level":"Info"}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}]]></uipath:input>
+        </uipath:activity>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Phase2_GW1</bpmn:incoming>
+      <bpmn:outgoing>edge_6FbEag</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Phase4" name="Phase 4: Inspection">
+      <bpmn:extensionElements>
+        <uipath:activity version="v1">
+          <uipath:type value="LogMessage" version="v1" />
+          <uipath:context>
+            <uipath:inputSchema type="jsonSchema"><![CDATA[{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"body":{"type":"object"}},"required":[]}]]></uipath:inputSchema>
+          </uipath:context>
+          <uipath:input name="body" type="json" target="body"><![CDATA[{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"message":"[PHASE 4] inspection — verifying all branches converged","level":"Info"}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}]]></uipath:input>
+        </uipath:activity>
+      </bpmn:extensionElements>
+      <bpmn:incoming>edge_6FbEag</bpmn:incoming>
+      <bpmn:outgoing>edge_4vmlHz</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Phase5" name="Phase 5: Relay">
+      <bpmn:extensionElements>
+        <uipath:activity version="v1">
+          <uipath:type value="LogMessage" version="v1" />
+          <uipath:context>
+            <uipath:inputSchema type="jsonSchema"><![CDATA[{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"body":{"type":"object"}},"required":[]}]]></uipath:inputSchema>
+          </uipath:context>
+          <uipath:input name="body" type="json" target="body"><![CDATA[{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"message":"[PHASE 5] relay — human decision gate (approve/reject)","level":"Info"}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}]]></uipath:input>
+        </uipath:activity>
+      </bpmn:extensionElements>
+      <bpmn:incoming>edge_4vmlHz</bpmn:incoming>
+      <bpmn:outgoing>edge_cmvJQc</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="EndRelayRejected" name="Restore">
+      <bpmn:incoming>edge_Ddy2Q6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Phase6" name="Phase 6: Final Result">
+      <bpmn:extensionElements>
+        <uipath:activity version="v1">
+          <uipath:type value="LogMessage" version="v1" />
+          <uipath:context>
+            <uipath:inputSchema type="jsonSchema"><![CDATA[{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"body":{"type":"object"}},"required":[]}]]></uipath:inputSchema>
+          </uipath:context>
+          <uipath:input name="body" type="json" target="body"><![CDATA[{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"message":"[PHASE 6] final_result — assembling deterministic output report","level":"Info"}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}]]></uipath:input>
+        </uipath:activity>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_GW4_Approve</bpmn:incoming>
+      <bpmn:outgoing>Flow_Phase6_EndSuccess</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="EndSuccess" name="Successful End">
+      <bpmn:incoming>Flow_Phase6_EndSuccess</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Activity_OhEzQR" name="user decision ">
+      <bpmn:extensionElements>
+        <uipath:activity version="v1">
+          <uipath:type value="LogMessage" version="v1" />
+          <uipath:context>
+            <uipath:inputSchema type="jsonSchema"><![CDATA[{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"body":{"type":"object"}},"required":[]}]]></uipath:inputSchema>
+          </uipath:context>
+          <uipath:input name="body" type="json" target="body"><![CDATA[{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"body":{"message":"\"[RELAY] User decision: auto-approve\"","level":"Info"}}}}}}}}}}}}}}}}}}}}}}}}}}}}]]></uipath:input>
+        </uipath:activity>
+      </bpmn:extensionElements>
+      <bpmn:incoming>edge_cmvJQc</bpmn:incoming>
+      <bpmn:outgoing>edge_UFm45j</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway4" name="" default="Flow_GW4_Approve">
+      <bpmn:incoming>edge_UFm45j</bpmn:incoming>
+      <bpmn:outgoing>Flow_GW4_Approve</bpmn:outgoing>
+      <bpmn:outgoing>edge_Ddy2Q6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:dataStoreReference id="DataStoreReference_0m67kbb" name="file.snapshot" />
+    <bpmn:association id="edge_EndRelayRejected-Text_Vu8e7v" sourceRef="EndRelayRejected" targetRef="Text_Vu8e7v" />
+    <bpmn:association id="Association_1iamh9d" associationDirection="None" sourceRef="DataStoreReference_0m67kbb" targetRef="Text_Vu8e7v" />
+    <bpmn:sequenceFlow id="Flow_Start_Phase0" sourceRef="StartEvent" targetRef="Phase0" />
+    <bpmn:sequenceFlow id="Flow_Phase0_Phase1" sourceRef="Phase0" targetRef="Phase1" />
+    <bpmn:sequenceFlow id="Flow_Phase1_Phase2" sourceRef="Phase1" targetRef="Phase2" />
+    <bpmn:sequenceFlow id="Flow_Phase2_GW1" sourceRef="Phase2" targetRef="Phase3" />
+    <bpmn:sequenceFlow id="Flow_GW4_Approve" name="User Applied" sourceRef="Gateway4" targetRef="Phase6" />
+    <bpmn:sequenceFlow id="Flow_Phase6_EndSuccess" sourceRef="Phase6" targetRef="EndSuccess" />
+    <bpmn:sequenceFlow id="edge_6FbEag" sourceRef="Phase3" targetRef="Phase4" />
+    <bpmn:sequenceFlow id="edge_cmvJQc" sourceRef="Phase5" targetRef="Activity_OhEzQR" />
+    <bpmn:sequenceFlow id="edge_4vmlHz" sourceRef="Phase4" targetRef="Phase5" />
+    <bpmn:sequenceFlow id="edge_UFm45j" sourceRef="Activity_OhEzQR" targetRef="Gateway4" />
+    <bpmn:sequenceFlow id="edge_Ddy2Q6" name="Not to Apply" sourceRef="Gateway4" targetRef="EndRelayRejected">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1niya5d" sourceRef="Gateway1" targetRef="Phase2">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1fvrr4b" sourceRef="Gateway1" targetRef="Phase2" />
+    <bpmn:association id="Assoc_Phase6_Input" sourceRef="Gateway4" targetRef="Phase6_Input" />
+    <bpmn:association id="Assoc_Phase6_Output" sourceRef="Gateway4" targetRef="Phase6_Output" />
+    <bpmn:association id="Assoc_Phase6_Transition" sourceRef="Gateway4" targetRef="Phase6_Transition" />
+    <bpmn:textAnnotation id="Phase6_Input">
+      <bpmn:text>INPUT: user_decision, inspection_report</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Phase6_Output">
+      <bpmn:text>OUTPUT: output_status, output_execution_id, output_last_phase</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Phase6_Transition">
+      <bpmn:text>TRANSITION: -&gt; End Event (Successful End)</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_Vu8e7v">
+      <bpmn:text>Restore the Snapshot</bpmn:text>
+    </bpmn:textAnnotation>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="isolated-integration">
+      <bpmndi:BPMNShape id="S_StartEvent" bpmnElement="StartEvent">
+        <dc:Bounds x="-384" y="96" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-384" y="137" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Phase0" bpmnElement="Phase0">
+        <dc:Bounds x="-448" y="166" width="160" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-448" y="221" width="160" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Phase1" bpmnElement="Phase1">
+        <dc:Bounds x="-448" y="256" width="160" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-448" y="311" width="160" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Phase2" bpmnElement="Phase2">
+        <dc:Bounds x="-448" y="400" width="160" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-448" y="455" width="160" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Gateway1" bpmnElement="Gateway1">
+        <dc:Bounds x="-528" y="336" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-528" y="391" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Phase3" bpmnElement="Phase3">
+        <dc:Bounds x="-448" y="528" width="160" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-448" y="583" width="160" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Phase4" bpmnElement="Phase4">
+        <dc:Bounds x="-224" y="160" width="160" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-224" y="215" width="160" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Phase5" bpmnElement="Phase5">
+        <dc:Bounds x="-224" y="256" width="160" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-224" y="311" width="160" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_EndRelayRejected" bpmnElement="EndRelayRejected">
+        <dc:Bounds x="-640" y="592" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-640" y="633" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Phase6" bpmnElement="Phase6">
+        <dc:Bounds x="-224" y="704" width="160" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-224" y="759" width="160" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_EndSuccess" bpmnElement="EndSuccess">
+        <dc:Bounds x="-162" y="848" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-162" y="889" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_OhEzQR" bpmnElement="Activity_OhEzQR">
+        <dc:Bounds x="-194" y="384" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-194" y="469" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Gateway4" bpmnElement="Gateway4">
+        <dc:Bounds x="-169" y="585" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-169" y="640" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_DataStoreReference_0m67kbb" bpmnElement="DataStoreReference_0m67kbb">
+        <dc:Bounds x="-647" y="185" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-647" y="240" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Phase6_Input" bpmnElement="Phase6_Input">
+        <dc:Bounds x="-80" y="528" width="220" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-80" y="579" width="220" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Phase6_Output" bpmnElement="Phase6_Output">
+        <dc:Bounds x="-80" y="576" width="220" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-80" y="627" width="220" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Phase6_Transition" bpmnElement="Phase6_Transition">
+        <dc:Bounds x="-80" y="630" width="220" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-80" y="681" width="220" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_Vu8e7v" bpmnElement="Text_Vu8e7v">
+        <dc:Bounds x="-672" y="360" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-672" y="445" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_EndRelayRejected-Text_Vu8e7v" bpmnElement="edge_EndRelayRejected-Text_Vu8e7v">
+        <di:waypoint x="-622" y="592" />
+        <di:waypoint x="-622" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Association_1iamh9d" bpmnElement="Association_1iamh9d">
+        <di:waypoint x="-622" y="235" />
+        <di:waypoint x="-622" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_Start_Phase0" bpmnElement="Flow_Start_Phase0">
+        <di:waypoint x="-366" y="132" />
+        <di:waypoint x="-368" y="166" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_Phase0_Phase1" bpmnElement="Flow_Phase0_Phase1">
+        <di:waypoint x="-368" y="216" />
+        <di:waypoint x="-368" y="256" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_Phase1_Phase2" bpmnElement="Flow_Phase1_Phase2">
+        <di:waypoint x="-368" y="306" />
+        <di:waypoint x="-368" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_Phase2_GW1" bpmnElement="Flow_Phase2_GW1">
+        <di:waypoint x="-368" y="450" />
+        <di:waypoint x="-368" y="528" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_GW4_Approve" bpmnElement="Flow_GW4_Approve">
+        <di:waypoint x="-144" y="635" />
+        <di:waypoint x="-144" y="704" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_Phase6_EndSuccess" bpmnElement="Flow_Phase6_EndSuccess">
+        <di:waypoint x="-144" y="754" />
+        <di:waypoint x="-144" y="848" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_6FbEag" bpmnElement="edge_6FbEag">
+        <di:waypoint x="-288" y="553" />
+        <di:waypoint x="-256" y="553" />
+        <di:waypoint x="-256" y="185" />
+        <di:waypoint x="-224" y="185" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_cmvJQc" bpmnElement="edge_cmvJQc">
+        <di:waypoint x="-144" y="306" />
+        <di:waypoint x="-144" y="384" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_4vmlHz" bpmnElement="edge_4vmlHz">
+        <di:waypoint x="-144" y="210" />
+        <di:waypoint x="-144" y="256" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_UFm45j" bpmnElement="edge_UFm45j">
+        <di:waypoint x="-144" y="464" />
+        <di:waypoint x="-144" y="585" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Ddy2Q6" bpmnElement="edge_Ddy2Q6">
+        <di:waypoint x="-169" y="610" />
+        <di:waypoint x="-604" y="610" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_1niya5d" bpmnElement="Flow_1niya5d">
+        <di:waypoint x="-478" y="361" />
+        <di:waypoint x="-368" y="361" />
+        <di:waypoint x="-368" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_1fvrr4b" bpmnElement="Flow_1fvrr4b">
+        <di:waypoint x="-503" y="386" />
+        <di:waypoint x="-503" y="425" />
+        <di:waypoint x="-448" y="425" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Assoc_Phase6_Input" bpmnElement="Assoc_Phase6_Input">
+        <di:waypoint x="-125" y="604" />
+        <di:waypoint x="-38" y="574" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Assoc_Phase6_Output" bpmnElement="Assoc_Phase6_Output">
+        <di:waypoint x="-120" y="609" />
+        <di:waypoint x="-80" y="606" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Assoc_Phase6_Transition" bpmnElement="Assoc_Phase6_Transition">
+        <di:waypoint x="-124" y="615" />
+        <di:waypoint x="-63" y="630" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

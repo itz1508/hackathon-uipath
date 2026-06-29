@@ -1,0 +1,7 @@
+{
+  "ProjectType": "Function",
+  "Name": "pipeline",
+  "Description": "Audisor pipeline — 7-phase execution chain (Phases 0–6). Standalone workflow runtime.",
+  "MainFile": null,
+  "lastModified": "2026-06-27T20:10:00Z"
+}

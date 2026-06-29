@@ -1,0 +1,5 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://nextflow.local/contracts/replay-proof.schema.json","type":"object","additionalProperties":false,
+  "required":["snapshot_identity","package_identity","execution_identity","simulation_result_identity","simulation_result_hash","validation_result","replay_equivalence"],
+  "properties":{"snapshot_identity":{"type":"string"},"package_identity":{"type":"string"},"execution_identity":{"type":"string"},"simulation_result_identity":{"type":"string"},"simulation_result_hash":{"type":"string"},"validation_result":{"type":"boolean"},"replay_equivalence":{"type":"boolean"}}
+}

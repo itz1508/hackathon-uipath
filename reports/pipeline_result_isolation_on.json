@@ -1,0 +1,726 @@
+{
+  "run_id": "b4e41f14caa4",
+  "fixture_path": "D:\\Dev\\hackaton-uipath-jun29-workbench\\Dashboard\\nextflow\\fixture-g-mixed",
+  "isolation_mode": true,
+  "started_at": 1782704392.6556027,
+  "phases": [
+    {
+      "phase_id": 0,
+      "phase_name": "SNAPSHOT",
+      "status": "success",
+      "duration_ms": 1.83,
+      "output": {
+        "snapshot_id": "ecf24601c4a64514",
+        "fixture_hash": "ecf24601c4a645143b3509296eb7bd9a8d28d23c4b7ad5f0691c3508d082136e",
+        "file_hashes": {
+          "module_ambiguous_import.py": "4ebe39a7d2cdbaa45eec44e40f91d256364023257af84484bc3ce437fde46139",
+          "module_config_error.py": "0d117bc760af902014e9873e7dbd4f653bb0a35685ba156a075ca59a51d52495",
+          "module_missing_dep.py": "b6972e9652e1e44b306c6a6792747646bb4af8287b3c37383c847290d8664437",
+          "module_syntax_error.py": "9f12a740ef2732729c7dde4cbea9b7fd0d7300107f4b75eb53449dfba222b783",
+          "module_syntax_error2.py": "3fdcf47c3a536a63f7c9837cdafaccd7f9c1e353eb528f18bcb02ecddda9338a",
+          "module_valid.py": "e52cf5c0f398baf147ef75243250c66c2530de1afd3daae90185dce38da4bebd",
+          "module_valid2.py": "117c65c49a30cf0c48af2fcde35a9fd17262df2d9b550d30d2c6bc60919545bb"
+        },
+        "total_files": 7,
+        "files": [
+          "module_ambiguous_import.py",
+          "module_config_error.py",
+          "module_missing_dep.py",
+          "module_syntax_error.py",
+          "module_syntax_error2.py",
+          "module_valid.py",
+          "module_valid2.py"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "phase_id": 1,
+      "phase_name": "SCAN",
+      "status": "success",
+      "duration_ms": 7.192,
+      "output": {
+        "total_files_scanned": 7,
+        "findings_count": 8,
+        "counts": {
+          "SYNTAX_ERROR": 2,
+          "MISSING_DEPENDENCY": 2,
+          "CONFIG_ERROR": 1,
+          "AMBIGUOUS_IMPORT": 1,
+          "VALID": 2
+        },
+        "findings": [
+          {
+            "file": "module_ambiguous_import.py",
+            "issue_type": "MISSING_DEPENDENCY",
+            "severity": "high",
+            "packages": [
+              "local_helper",
+              "utils"
+            ],
+            "detail": "Missing packages: local_helper, utils"
+          },
+          {
+            "file": "module_ambiguous_import.py",
+            "issue_type": "AMBIGUOUS_IMPORT",
+            "severity": "medium",
+            "imports": [
+              ".config",
+              ".",
+              ". import utils",
+              ".config import settings"
+            ],
+            "detail": "Relative/ambiguous imports: .config, ., . import utils"
+          },
+          {
+            "file": "module_config_error.py",
+            "issue_type": "CONFIG_ERROR",
+            "severity": "medium",
+            "detail": "Hardcoded absolute path: \"/etc/myapp/production.json\"; Unsafe os.environ access (no default): \"MY_SECRET_KEY\"",
+            "config_issues": [
+              "Hardcoded absolute path: \"/etc/myapp/production.json\"",
+              "Unsafe os.environ access (no default): \"MY_SECRET_KEY\""
+            ]
+          },
+          {
+            "file": "module_missing_dep.py",
+            "issue_type": "MISSING_DEPENDENCY",
+            "severity": "high",
+            "packages": [
+              "another_fake_lib",
+              "nonexistent_package_xyz"
+            ],
+            "detail": "Missing packages: another_fake_lib, nonexistent_package_xyz"
+          },
+          {
+            "file": "module_syntax_error.py",
+            "issue_type": "SYNTAX_ERROR",
+            "severity": "critical",
+            "detail": "expected ':' (module_syntax_error.py, line 5)",
+            "line": 5
+          },
+          {
+            "file": "module_syntax_error2.py",
+            "issue_type": "SYNTAX_ERROR",
+            "severity": "critical",
+            "detail": "expected ':' (module_syntax_error2.py, line 4)",
+            "line": 4
+          },
+          {
+            "file": "module_valid.py",
+            "issue_type": "VALID",
+            "severity": "none",
+            "detail": "No issues found"
+          },
+          {
+            "file": "module_valid2.py",
+            "issue_type": "VALID",
+            "severity": "none",
+            "detail": "No issues found"
+          }
+        ],
+        "file_results": [
+          {
+            "file": "module_ambiguous_import.py",
+            "syntax_ok": true,
+            "imports": {
+              "regular": [
+                "utils"
+              ],
+              "from_imports": [
+                "local_helper"
+              ],
+              "relative": [
+                ".config",
+                ".",
+                ". import utils",
+                ".config import settings"
+              ],
+              "all_packages": [
+                "local_helper",
+                "utils"
+              ],
+              "parse_failed": false
+            },
+            "findings": [
+              {
+                "file": "module_ambiguous_import.py",
+                "issue_type": "MISSING_DEPENDENCY",
+                "severity": "high",
+                "packages": [
+                  "local_helper",
+                  "utils"
+                ],
+                "detail": "Missing packages: local_helper, utils"
+              },
+              {
+                "file": "module_ambiguous_import.py",
+                "issue_type": "AMBIGUOUS_IMPORT",
+                "severity": "medium",
+                "imports": [
+                  ".config",
+                  ".",
+                  ". import utils",
+                  ".config import settings"
+                ],
+                "detail": "Relative/ambiguous imports: .config, ., . import utils"
+              }
+            ]
+          },
+          {
+            "file": "module_config_error.py",
+            "syntax_ok": true,
+            "imports": {
+              "regular": [
+                "json",
+                "os"
+              ],
+              "from_imports": [],
+              "relative": [],
+              "all_packages": [
+                "json",
+                "os"
+              ],
+              "parse_failed": false
+            },
+            "findings": [
+              {
+                "file": "module_config_error.py",
+                "issue_type": "CONFIG_ERROR",
+                "severity": "medium",
+                "detail": "Hardcoded absolute path: \"/etc/myapp/production.json\"; Unsafe os.environ access (no default): \"MY_SECRET_KEY\"",
+                "config_issues": [
+                  "Hardcoded absolute path: \"/etc/myapp/production.json\"",
+                  "Unsafe os.environ access (no default): \"MY_SECRET_KEY\""
+                ]
+              }
+            ]
+          },
+          {
+            "file": "module_missing_dep.py",
+            "syntax_ok": true,
+            "imports": {
+              "regular": [
+                "nonexistent_package_xyz",
+                "numpy",
+                "pandas"
+              ],
+              "from_imports": [
+                "another_fake_lib"
+              ],
+              "relative": [],
+              "all_packages": [
+                "another_fake_lib",
+                "nonexistent_package_xyz",
+                "numpy",
+                "pandas"
+              ],
+              "parse_failed": false
+            },
+            "findings": [
+              {
+                "file": "module_missing_dep.py",
+                "issue_type": "MISSING_DEPENDENCY",
+                "severity": "high",
+                "packages": [
+                  "another_fake_lib",
+                  "nonexistent_package_xyz"
+                ],
+                "detail": "Missing packages: another_fake_lib, nonexistent_package_xyz"
+              }
+            ]
+          },
+          {
+            "file": "module_syntax_error.py",
+            "syntax_ok": false,
+            "imports": {
+              "regular": [],
+              "from_imports": [],
+              "relative": [],
+              "all_packages": [],
+              "parse_failed": true
+            },
+            "findings": [
+              {
+                "file": "module_syntax_error.py",
+                "issue_type": "SYNTAX_ERROR",
+                "severity": "critical",
+                "detail": "expected ':' (module_syntax_error.py, line 5)",
+                "line": 5
+              }
+            ]
+          },
+          {
+            "file": "module_syntax_error2.py",
+            "syntax_ok": false,
+            "imports": {
+              "regular": [],
+              "from_imports": [],
+              "relative": [],
+              "all_packages": [],
+              "parse_failed": true
+            },
+            "findings": [
+              {
+                "file": "module_syntax_error2.py",
+                "issue_type": "SYNTAX_ERROR",
+                "severity": "critical",
+                "detail": "expected ':' (module_syntax_error2.py, line 4)",
+                "line": 4
+              }
+            ]
+          },
+          {
+            "file": "module_valid.py",
+            "syntax_ok": true,
+            "imports": {
+              "regular": [
+                "sys",
+                "json",
+                "os"
+              ],
+              "from_imports": [],
+              "relative": [],
+              "all_packages": [
+                "sys",
+                "json",
+                "os"
+              ],
+              "parse_failed": false
+            },
+            "findings": [
+              {
+                "file": "module_valid.py",
+                "issue_type": "VALID",
+                "severity": "none",
+                "detail": "No issues found"
+              }
+            ]
+          },
+          {
+            "file": "module_valid2.py",
+            "syntax_ok": true,
+            "imports": {
+              "regular": [
+                "hashlib",
+                "datetime"
+              ],
+              "from_imports": [
+                "typing"
+              ],
+              "relative": [],
+              "all_packages": [
+                "typing",
+                "hashlib",
+                "datetime"
+              ],
+              "parse_failed": false
+            },
+            "findings": [
+              {
+                "file": "module_valid2.py",
+                "issue_type": "VALID",
+                "severity": "none",
+                "detail": "No issues found"
+              }
+            ]
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "phase_id": 2,
+      "phase_name": "ANALYSIS",
+      "status": "success",
+      "duration_ms": 0.19,
+      "output": {
+        "classification_results": [
+          {
+            "file": "module_ambiguous_import.py",
+            "severity": "high",
+            "issue_types": [
+              "MISSING_DEPENDENCY",
+              "AMBIGUOUS_IMPORT"
+            ],
+            "ready_for_simulation": true,
+            "llm_statements": [
+              "File 'module_ambiguous_import.py' references 2 unresolved package(s): local_helper, utils. These packages are not available in the current environment. Isolation mode can attempt local resolution for known packages.",
+              "File 'module_ambiguous_import.py' uses 4 relative or ambiguous import(s). These imports may fail when the module is executed outside its package context. Isolation mode will attempt to remap these to absolute paths."
+            ]
+          },
+          {
+            "file": "module_config_error.py",
+            "severity": "medium",
+            "issue_types": [
+              "CONFIG_ERROR"
+            ],
+            "ready_for_simulation": true,
+            "llm_statements": [
+              "File 'module_config_error.py' contains 2 configuration issue(s): Hardcoded absolute path: \"/etc/myapp/production.json\"; Unsafe os.environ access (no default): \"MY_SECRET_KEY\". These may cause runtime failures in isolated or containerized environments."
+            ]
+          },
+          {
+            "file": "module_missing_dep.py",
+            "severity": "high",
+            "issue_types": [
+              "MISSING_DEPENDENCY"
+            ],
+            "ready_for_simulation": true,
+            "llm_statements": [
+              "File 'module_missing_dep.py' references 2 unresolved package(s): another_fake_lib, nonexistent_package_xyz. These packages are not available in the current environment. Isolation mode can attempt local resolution for known packages."
+            ]
+          },
+          {
+            "file": "module_syntax_error.py",
+            "severity": "critical",
+            "issue_types": [
+              "SYNTAX_ERROR"
+            ],
+            "ready_for_simulation": false,
+            "llm_statements": [
+              "File 'module_syntax_error.py' contains a syntax error at line 5. This prevents the module from being compiled or imported. Resolution requires manual correction of the syntax before pipeline can proceed."
+            ]
+          },
+          {
+            "file": "module_syntax_error2.py",
+            "severity": "critical",
+            "issue_types": [
+              "SYNTAX_ERROR"
+            ],
+            "ready_for_simulation": false,
+            "llm_statements": [
+              "File 'module_syntax_error2.py' contains a syntax error at line 4. This prevents the module from being compiled or imported. Resolution requires manual correction of the syntax before pipeline can proceed."
+            ]
+          },
+          {
+            "file": "module_valid.py",
+            "severity": "low",
+            "issue_types": [
+              "VALID"
+            ],
+            "ready_for_simulation": true,
+            "llm_statements": [
+              "File 'module_valid.py' passed all checks. No issues detected. This file is ready for simulation without modification."
+            ]
+          },
+          {
+            "file": "module_valid2.py",
+            "severity": "low",
+            "issue_types": [
+              "VALID"
+            ],
+            "ready_for_simulation": true,
+            "llm_statements": [
+              "File 'module_valid2.py' passed all checks. No issues detected. This file is ready for simulation without modification."
+            ]
+          }
+        ],
+        "handoff_statement": {
+          "total_files": 7,
+          "critical_files": [
+            "module_syntax_error.py",
+            "module_syntax_error2.py"
+          ],
+          "ready_files": [
+            "module_ambiguous_import.py",
+            "module_config_error.py",
+            "module_missing_dep.py",
+            "module_valid.py",
+            "module_valid2.py"
+          ],
+          "blocked_files": [
+            "module_syntax_error.py",
+            "module_syntax_error2.py"
+          ],
+          "items": [
+            {
+              "file": "module_ambiguous_import.py",
+              "severity": "high",
+              "issue_types": [
+                "MISSING_DEPENDENCY",
+                "AMBIGUOUS_IMPORT"
+              ],
+              "ready_for_simulation": true,
+              "action_required": true,
+              "findings_detail": [
+                {
+                  "file": "module_ambiguous_import.py",
+                  "issue_type": "MISSING_DEPENDENCY",
+                  "severity": "high",
+                  "packages": [
+                    "local_helper",
+                    "utils"
+                  ],
+                  "detail": "Missing packages: local_helper, utils"
+                },
+                {
+                  "file": "module_ambiguous_import.py",
+                  "issue_type": "AMBIGUOUS_IMPORT",
+                  "severity": "medium",
+                  "imports": [
+                    ".config",
+                    ".",
+                    ". import utils",
+                    ".config import settings"
+                  ],
+                  "detail": "Relative/ambiguous imports: .config, ., . import utils"
+                }
+              ]
+            },
+            {
+              "file": "module_config_error.py",
+              "severity": "medium",
+              "issue_types": [
+                "CONFIG_ERROR"
+              ],
+              "ready_for_simulation": true,
+              "action_required": false,
+              "findings_detail": [
+                {
+                  "file": "module_config_error.py",
+                  "issue_type": "CONFIG_ERROR",
+                  "severity": "medium",
+                  "detail": "Hardcoded absolute path: \"/etc/myapp/production.json\"; Unsafe os.environ access (no default): \"MY_SECRET_KEY\"",
+                  "config_issues": [
+                    "Hardcoded absolute path: \"/etc/myapp/production.json\"",
+                    "Unsafe os.environ access (no default): \"MY_SECRET_KEY\""
+                  ]
+                }
+              ]
+            },
+            {
+              "file": "module_missing_dep.py",
+              "severity": "high",
+              "issue_types": [
+                "MISSING_DEPENDENCY"
+              ],
+              "ready_for_simulation": true,
+              "action_required": true,
+              "findings_detail": [
+                {
+                  "file": "module_missing_dep.py",
+                  "issue_type": "MISSING_DEPENDENCY",
+                  "severity": "high",
+                  "packages": [
+                    "another_fake_lib",
+                    "nonexistent_package_xyz"
+                  ],
+                  "detail": "Missing packages: another_fake_lib, nonexistent_package_xyz"
+                }
+              ]
+            },
+            {
+              "file": "module_syntax_error.py",
+              "severity": "critical",
+              "issue_types": [
+                "SYNTAX_ERROR"
+              ],
+              "ready_for_simulation": false,
+              "action_required": true,
+              "findings_detail": [
+                {
+                  "file": "module_syntax_error.py",
+                  "issue_type": "SYNTAX_ERROR",
+                  "severity": "critical",
+                  "detail": "expected ':' (module_syntax_error.py, line 5)",
+                  "line": 5
+                }
+              ]
+            },
+            {
+              "file": "module_syntax_error2.py",
+              "severity": "critical",
+              "issue_types": [
+                "SYNTAX_ERROR"
+              ],
+              "ready_for_simulation": false,
+              "action_required": true,
+              "findings_detail": [
+                {
+                  "file": "module_syntax_error2.py",
+                  "issue_type": "SYNTAX_ERROR",
+                  "severity": "critical",
+                  "detail": "expected ':' (module_syntax_error2.py, line 4)",
+                  "line": 4
+                }
+              ]
+            },
+            {
+              "file": "module_valid.py",
+              "severity": "low",
+              "issue_types": [
+                "VALID"
+              ],
+              "ready_for_simulation": true,
+              "action_required": false,
+              "findings_detail": [
+                {
+                  "file": "module_valid.py",
+                  "issue_type": "VALID",
+                  "severity": "none",
+                  "detail": "No issues found"
+                }
+              ]
+            },
+            {
+              "file": "module_valid2.py",
+              "severity": "low",
+              "issue_types": [
+                "VALID"
+              ],
+              "ready_for_simulation": true,
+              "action_required": false,
+              "findings_detail": [
+                {
+                  "file": "module_valid2.py",
+                  "issue_type": "VALID",
+                  "severity": "none",
+                  "detail": "No issues found"
+                }
+              ]
+            }
+          ]
+        },
+        "critical_count": 2,
+        "ready_count": 5
+      },
+      "errors": []
+    },
+    {
+      "phase_id": 3,
+      "phase_name": "PRE_SIMULATION",
+      "status": "success",
+      "duration_ms": 0.066,
+      "output": {
+        "package_confidence_score": 10,
+        "simulation_ready": false,
+        "base_score": 100,
+        "score_breakdown": [
+          {
+            "file": "module_ambiguous_import.py",
+            "reason": "MISSING_DEPENDENCY",
+            "delta": -15
+          },
+          {
+            "file": "module_ambiguous_import.py",
+            "reason": "AMBIGUOUS_IMPORT (isolation=ON, no penalty)",
+            "delta": 0
+          },
+          {
+            "file": "module_config_error.py",
+            "reason": "CONFIG_ERROR",
+            "delta": -10
+          },
+          {
+            "file": "module_missing_dep.py",
+            "reason": "MISSING_DEPENDENCY",
+            "delta": -15
+          },
+          {
+            "file": "module_syntax_error.py",
+            "reason": "SYNTAX_ERROR",
+            "delta": -30
+          },
+          {
+            "file": "module_syntax_error2.py",
+            "reason": "SYNTAX_ERROR",
+            "delta": -30
+          },
+          {
+            "file": "module_valid.py",
+            "reason": "VALID_FILE",
+            "delta": 5
+          },
+          {
+            "file": "module_valid2.py",
+            "reason": "VALID_FILE",
+            "delta": 5
+          }
+        ],
+        "issue_counts": {
+          "syntax_errors": 2,
+          "missing_deps": 2,
+          "config_errors": 1,
+          "ambiguous_imports": 1,
+          "valid_files": 2
+        },
+        "isolation_mode": true,
+        "routing_decision": "REJECT"
+      },
+      "errors": []
+    },
+    {
+      "phase_id": 4,
+      "phase_name": "SIMULATION",
+      "status": "success",
+      "duration_ms": 0.081,
+      "output": {
+        "candidate_path": "",
+        "resolved_items": [],
+        "failed_items": [
+          {
+            "file": "module_ambiguous_import.py",
+            "reason": "REJECT \u2014 routing decision skipped simulation",
+            "status": "failed"
+          },
+          {
+            "file": "module_config_error.py",
+            "reason": "REJECT \u2014 routing decision skipped simulation",
+            "status": "failed"
+          },
+          {
+            "file": "module_missing_dep.py",
+            "reason": "REJECT \u2014 routing decision skipped simulation",
+            "status": "failed"
+          },
+          {
+            "file": "module_syntax_error.py",
+            "reason": "REJECT \u2014 routing decision skipped simulation",
+            "status": "failed"
+          },
+          {
+            "file": "module_syntax_error2.py",
+            "reason": "REJECT \u2014 routing decision skipped simulation",
+            "status": "failed"
+          },
+          {
+            "file": "module_valid.py",
+            "reason": "REJECT \u2014 routing decision skipped simulation",
+            "status": "failed"
+          },
+          {
+            "file": "module_valid2.py",
+            "reason": "REJECT \u2014 routing decision skipped simulation",
+            "status": "failed"
+          }
+        ],
+        "isolation_resolved": [],
+        "isolation_unresolved": [
+          "module_ambiguous_import.py",
+          "module_config_error.py",
+          "module_missing_dep.py",
+          "module_syntax_error.py",
+          "module_syntax_error2.py",
+          "module_valid.py",
+          "module_valid2.py"
+        ],
+        "isolation_mode": true
+      },
+      "errors": []
+    },
+    {
+      "phase_id": 5,
+      "phase_name": "INSPECTION",
+      "status": "failed",
+      "duration_ms": 1.172,
+      "output": {},
+      "errors": [
+        "Candidate path not found \u2014 Phase 4 (SIMULATION) must complete before INSPECTION can proceed",
+        "Traceback (most recent call last):\n  File \"D:\\Dev\\hackaton-uipath-jun29-workbench\\Dashboard\\nextflow\\pipeline\\core\\engine.py\", line 160, in run\n    result = handler(current_sv)\n  File \"D:\\Dev\\hackaton-uipath-jun29-workbench\\Dashboard\\nextflow\\pipeline\\phases\\phase_5_inspection.py\", line 49, in run\n    return _run_statevector(state, start, bus=bus)\n  File \"D:\\Dev\\hackaton-uipath-jun29-workbench\\Dashboard\\nextflow\\pipeline\\phases\\phase_5_inspection.py\", line 67, in _run_statevector\n    raise RuntimeError(\n        \"Candidate path not found \u2014 Phase 4 (SIMULATION) must complete before INSPECTION can proceed\"\n    )\nRuntimeError: Candidate path not found \u2014 Phase 4 (SIMULATION) must complete before INSPECTION can proceed\n"
+      ]
+    }
+  ],
+  "shared": {},
+  "final_output": {}
+}

@@ -1,0 +1,6 @@
+{
+  "snapshot_id": "abc123",
+  "scan_complete": true,
+  "analysis_complete": false,
+  "simulation_ready": null
+}

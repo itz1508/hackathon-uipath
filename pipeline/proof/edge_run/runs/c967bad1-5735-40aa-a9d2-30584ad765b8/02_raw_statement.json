@@ -1,0 +1,377 @@
+{
+  "run_id": "c967bad1-5735-40aa-a9d2-30584ad765b8",
+  "phase": "raw_statement",
+  "consumed_run_id": "ad82c2ad-cac2-427b-b566-aac5fd52d39a",
+  "consumed_artifact": "ad82c2ad-cac2-427b-b566-aac5fd52d39a/01_scan_snapshot.json",
+  "created_at": "2026-06-28T16:29:45.853388+00:00",
+  "findings": [
+    {
+      "finding_id": "python_editable_install_policy_needed",
+      "severity": "medium",
+      "category": "python_editable_install_policy_needed",
+      "relative_path": "pyproject.toml",
+      "message": "Project may use editable install - policy validation needed later",
+      "details": {
+        "build_backend": "hatchling.build",
+        "backend_supports_editable": true,
+        "tool_editable_configured": false
+      }
+    },
+    {
+      "finding_id": "python_editable_build_hooks_detected_later",
+      "severity": "low",
+      "category": "python_editable_build_hooks_detected_later",
+      "relative_path": "pyproject.toml",
+      "message": "Editable build hooks may be required for this backend",
+      "details": {
+        "build_backend": "hatchling.build",
+        "expected_hooks": [
+          "build_editable",
+          "get_requires_for_build_editable",
+          "prepare_metadata_for_build_editable"
+        ]
+      }
+    },
+    {
+      "finding_id": "python_editable_build_execution_disabled_in_scan",
+      "severity": "info",
+      "category": "python_editable_build_execution_disabled_in_scan",
+      "relative_path": "pyproject.toml",
+      "message": "Editable build backend execution is disabled during scan phase",
+      "details": {
+        "disabled_in_scan": true,
+        "reason": "Scan-only policy - no build backend execution"
+      }
+    },
+    {
+      "finding_id": "python_editable_install_disabled_in_scan",
+      "severity": "info",
+      "category": "python_editable_install_disabled_in_scan",
+      "relative_path": "pyproject.toml",
+      "message": "Editable install is disabled during scan phase",
+      "details": {
+        "disabled_in_scan": true,
+        "reason": "Scan-only policy - no editable install"
+      }
+    },
+    {
+      "finding_id": "python_editable_runtime_dependency_policy_needed",
+      "severity": "medium",
+      "category": "python_editable_runtime_dependency_policy_needed",
+      "relative_path": "pyproject.toml",
+      "message": "Editable install may require runtime dependency policy validation",
+      "details": {
+        "policy_required": true,
+        "validation_later": true
+      }
+    },
+    {
+      "finding_id": "python_simple_api_policy_needed",
+      "severity": "medium",
+      "category": "python_simple_api_policy_needed",
+      "relative_path": "",
+      "message": "Simple API JSON policy validation required for later package-index checks",
+      "details": {
+        "policy_fields": {
+          "meta_version_required": true,
+          "api_version_check_required": true,
+          "file_url_required": true,
+          "file_hashes_required": true,
+          "requires_python_record_required": true,
+          "yanked_record_supported": true,
+          "dist_info_metadata_supported": true
+        },
+        "requires_validation_later": true
+      }
+    },
+    {
+      "finding_id": "python_simple_api_meta_version_required_later",
+      "severity": "medium",
+      "category": "python_simple_api_meta_version_required_later",
+      "relative_path": "",
+      "message": "Simple API meta version check required later",
+      "details": {
+        "field": "meta._api-version",
+        "required_later": true
+      }
+    },
+    {
+      "finding_id": "python_simple_api_files_required_later",
+      "severity": "medium",
+      "category": "python_simple_api_files_required_later",
+      "relative_path": "",
+      "message": "Simple API files array required for package-index validation later",
+      "details": {
+        "field": "projects[*].files",
+        "required_later": true
+      }
+    },
+    {
+      "finding_id": "python_simple_api_file_url_required_later",
+      "severity": "medium",
+      "category": "python_simple_api_file_url_required_later",
+      "relative_path": "",
+      "message": "Simple API file URL required for download verification later",
+      "details": {
+        "field": "projects[*].files[*].url",
+        "required_later": true
+      }
+    },
+    {
+      "finding_id": "python_simple_api_file_hashes_required_later",
+      "severity": "medium",
+      "category": "python_simple_api_file_hashes_required_later",
+      "relative_path": "",
+      "message": "Simple API file hashes required for integrity verification later",
+      "details": {
+        "field": "projects[*].files[*].hashes",
+        "hash_algorithms": [
+          "sha256"
+        ],
+        "required_later": true
+      }
+    },
+    {
+      "finding_id": "python_simple_api_requires_python_record_required_later",
+      "severity": "medium",
+      "category": "python_simple_api_requires_python_record_required_later",
+      "relative_path": "",
+      "message": "Simple API requires-python record required for compatibility check later",
+      "details": {
+        "field": "projects[*].files[*].requires-python",
+        "required_later": true
+      }
+    },
+    {
+      "finding_id": "python_simple_api_yanked_record_supported_later",
+      "severity": "low",
+      "category": "python_simple_api_yanked_record_supported_later",
+      "relative_path": "",
+      "message": "Simple API yanked record support required for security checks later",
+      "details": {
+        "field": "projects[*].files[*].yanked",
+        "supported_later": true
+      }
+    },
+    {
+      "finding_id": "python_simple_api_dist_info_metadata_supported_later",
+      "severity": "low",
+      "category": "python_simple_api_dist_info_metadata_supported_later",
+      "relative_path": "",
+      "message": "Simple API dist-info metadata support required later",
+      "details": {
+        "field": "projects[*].files[*].dist-info-metadata",
+        "supported_later": true
+      }
+    },
+    {
+      "finding_id": "python_simple_api_fetch_disabled_in_scan",
+      "severity": "info",
+      "category": "python_simple_api_fetch_disabled_in_scan",
+      "relative_path": "",
+      "message": "Simple API JSON fetch is disabled during scan phase",
+      "details": {
+        "disabled_in_scan": true,
+        "reason": "Scan-only policy - no package index queries"
+      }
+    },
+    {
+      "finding_id": "python_simple_api_freshness_policy_required",
+      "severity": "medium",
+      "category": "python_simple_api_freshness_policy_required",
+      "relative_path": "",
+      "message": "Simple API freshness policy required for later package-index validation",
+      "details": {
+        "policy_fields": {
+          "versions_required": true,
+          "file_size_required": true,
+          "upload_time_required": true,
+          "upload_time_freshness_policy": "configurable",
+          "private_underscore_keys_ignored": true
+        },
+        "requires_validation_later": true
+      }
+    },
+    {
+      "finding_id": "python_simple_api_versions_required_later",
+      "severity": "medium",
+      "category": "python_simple_api_versions_required_later",
+      "relative_path": "",
+      "message": "Simple API versions field required for freshness check later",
+      "details": {
+        "field": "projects[*].files[*].version",
+        "required_later": true
+      }
+    },
+    {
+      "finding_id": "python_simple_api_file_size_required_later",
+      "severity": "medium",
+      "category": "python_simple_api_file_size_required_later",
+      "relative_path": "",
+      "message": "Simple API file size field required for size validation later",
+      "details": {
+        "field": "projects[*].files[*].size",
+        "required_later": true
+      }
+    },
+    {
+      "finding_id": "python_simple_api_upload_time_required_later",
+      "severity": "medium",
+      "category": "python_simple_api_upload_time_required_later",
+      "relative_path": "",
+      "message": "Simple API upload time field required for freshness calculation later",
+      "details": {
+        "field": "projects[*].files[*].upload-time",
+        "required_later": true
+      }
+    },
+    {
+      "finding_id": "python_simple_api_upload_time_freshness_policy_required",
+      "severity": "medium",
+      "category": "python_simple_api_upload_time_freshness_policy_required",
+      "relative_path": "",
+      "message": "Upload time freshness policy required for package staleness checks later",
+      "details": {
+        "default_policies": {
+          "max_age_hours": 24,
+          "check_upload_time": true,
+          "warn_if_old": true,
+          "block_if_too_old": false
+        },
+        "configurable": true,
+        "required_later": true
+      }
+    },
+    {
+      "finding_id": "python_simple_api_private_underscore_keys_ignored_later",
+      "severity": "low",
+      "category": "python_simple_api_private_underscore_keys_ignored_later",
+      "relative_path": "",
+      "message": "Simple API private underscore keys to be ignored per PEP 700",
+      "details": {
+        "field_pattern": "_*",
+        "ignored_later": true
+      }
+    },
+    {
+      "finding_id": "python_package_freshness_metadata_supported_later",
+      "severity": "low",
+      "category": "python_package_freshness_metadata_supported_later",
+      "relative_path": "",
+      "message": "Package freshness metadata support required later",
+      "details": {
+        "metadata_types": [
+          "upload-time",
+          "version",
+          "file-size"
+        ],
+        "supported_later": true
+      }
+    },
+    {
+      "finding_id": "python_simple_api_freshness_fetch_disabled_in_scan",
+      "severity": "info",
+      "category": "python_simple_api_freshness_fetch_disabled_in_scan",
+      "relative_path": "",
+      "message": "Simple API freshness check is disabled during scan phase",
+      "details": {
+        "disabled_in_scan": true,
+        "reason": "Scan-only policy - no package index queries for freshness"
+      }
+    },
+    {
+      "finding_id": "python_package_attestation_policy_needed",
+      "severity": "medium",
+      "category": "python_package_attestation_policy_needed",
+      "relative_path": "",
+      "message": "Package attestation policy validation required for later isolated runtime",
+      "details": {
+        "attestation_types": {
+          "provenance": "Provenance attestation",
+          "signature": "Package signature",
+          "sbom": "Software Bill of Materials",
+          "vulnerability": "Vulnerability scan",
+          "build": "Build attestation"
+        },
+        "requires_validation_later": true
+      }
+    },
+    {
+      "finding_id": "python_index_hosted_attestation_supported_later",
+      "severity": "medium",
+      "category": "python_index_hosted_attestation_supported_later",
+      "relative_path": "",
+      "message": "Index-hosted attestation support required later",
+      "details": {
+        "supported_later": true
+      }
+    },
+    {
+      "finding_id": "python_provenance_url_policy_needed",
+      "severity": "medium",
+      "category": "python_provenance_url_policy_needed",
+      "relative_path": "",
+      "message": "Provenance URL policy required for later validation",
+      "details": {
+        "requires_validation_later": true
+      }
+    },
+    {
+      "finding_id": "python_attestation_fetch_disabled_in_scan",
+      "severity": "info",
+      "category": "python_attestation_fetch_disabled_in_scan",
+      "relative_path": "",
+      "message": "Attestation fetch is disabled during scan phase",
+      "details": {
+        "disabled_in_scan": true,
+        "reason": "Scan-only policy - no attestation fetch"
+      }
+    },
+    {
+      "finding_id": "python_attestation_verification_disabled_in_scan",
+      "severity": "info",
+      "category": "python_attestation_verification_disabled_in_scan",
+      "relative_path": "",
+      "message": "Attestation signature verification is disabled during scan phase",
+      "details": {
+        "disabled_in_scan": true,
+        "reason": "Scan-only policy - no signature verification"
+      }
+    },
+    {
+      "finding_id": "tool_unreferenced_candidate_tools_demo_live_pipeline_demo.py",
+      "severity": "low",
+      "category": "tool_unreferenced_candidate",
+      "relative_path": "tools/demo/live_pipeline_demo.py",
+      "message": "Tool file has no static repository reference",
+      "details": {
+        "classification": "usage_uncertainty",
+        "references_checked": 156,
+        "what_wrong": "No config, code, test, or documentation reference to this tool file was found.",
+        "why_it_matters": "The file may be an externally invoked tool, historical residue, or an unused implementation.",
+        "how_to_fix": "Check external automation and operator usage before retaining, documenting, archiving, or deleting it.",
+        "limitation": "Absence of a repo reference does not prove the tool is unused.",
+        "mutation_allowed": false
+      }
+    },
+    {
+      "finding_id": "tool_unreferenced_candidate_tools_demo_live_server.py",
+      "severity": "low",
+      "category": "tool_unreferenced_candidate",
+      "relative_path": "tools/demo/live_server.py",
+      "message": "Tool file has no static repository reference",
+      "details": {
+        "classification": "usage_uncertainty",
+        "references_checked": 156,
+        "what_wrong": "No config, code, test, or documentation reference to this tool file was found.",
+        "why_it_matters": "The file may be an externally invoked tool, historical residue, or an unused implementation.",
+        "how_to_fix": "Check external automation and operator usage before retaining, documenting, archiving, or deleting it.",
+        "limitation": "Absence of a repo reference does not prove the tool is unused.",
+        "mutation_allowed": false
+      }
+    }
+  ],
+  "file_count": 169,
+  "finding_count": 29,
+  "artifact_index_ref": "artifact_index.json"
+}

@@ -1,0 +1,18 @@
+{
+  "before": {
+    "findings_count": 3,
+    "score": 100.0,
+    "simulation_ready": true,
+    "confidence_status": "ready_for_simulation",
+    "ready_parts": 3,
+    "isolated_parts": 0
+  },
+  "after": {
+    "resolved_count": 3,
+    "unresolved_count": 0,
+    "completion_status": "fully_resolved",
+    "resolution_rate": 100.0,
+    "sandbox_isolated": true,
+    "target_unchanged": true
+  }
+}

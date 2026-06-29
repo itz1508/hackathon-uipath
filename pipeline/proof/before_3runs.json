@@ -1,0 +1,340 @@
+{
+  "runs": [
+    {
+      "run": 1,
+      "score": 63.58,
+      "simulation_ready": false,
+      "ready_parts": 7,
+      "isolated_parts": 10,
+      "resolved": 7,
+      "unresolved": 10,
+      "status": "partially_resolved"
+    },
+    {
+      "run": 2,
+      "score": 63.58,
+      "simulation_ready": false,
+      "ready_parts": 7,
+      "isolated_parts": 10,
+      "resolved": 7,
+      "unresolved": 10,
+      "status": "partially_resolved"
+    },
+    {
+      "run": 3,
+      "score": 63.58,
+      "simulation_ready": false,
+      "ready_parts": 7,
+      "isolated_parts": 10,
+      "resolved": 7,
+      "unresolved": 10,
+      "status": "partially_resolved"
+    }
+  ],
+  "deterministic": true,
+  "isolated_items": [
+    {
+      "item_id": "F-002",
+      "readiness": "awaiting_information",
+      "isolation_reason": "missing_information",
+      "category": "dependency_conflict",
+      "file": "requirements.txt",
+      "description": "Installed version 1.2 does not satisfy requirement >=1.20."
+    },
+    {
+      "item_id": "F-003",
+      "readiness": "awaiting_information",
+      "isolation_reason": "missing_information",
+      "category": "dependency_conflict",
+      "file": "requirements.txt",
+      "description": "Installed version 0.1 does not satisfy requirement >=1.0."
+    },
+    {
+      "item_id": "F-004",
+      "readiness": "awaiting_information",
+      "isolation_reason": "unconfirmed_root_cause",
+      "category": "ambiguous_import",
+      "file": "ambiguous_1.py",
+      "description": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_1.py"
+    },
+    {
+      "item_id": "F-005",
+      "readiness": "awaiting_information",
+      "isolation_reason": "unconfirmed_root_cause",
+      "category": "ambiguous_import",
+      "file": "ambiguous_1.py",
+      "description": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_1.py"
+    },
+    {
+      "item_id": "F-006",
+      "readiness": "awaiting_information",
+      "isolation_reason": "unconfirmed_root_cause",
+      "category": "ambiguous_import",
+      "file": "ambiguous_2.py",
+      "description": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_2.py"
+    },
+    {
+      "item_id": "F-007",
+      "readiness": "awaiting_information",
+      "isolation_reason": "unconfirmed_root_cause",
+      "category": "ambiguous_import",
+      "file": "ambiguous_2.py",
+      "description": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_2.py"
+    },
+    {
+      "item_id": "F-008",
+      "readiness": "awaiting_information",
+      "isolation_reason": "unconfirmed_root_cause",
+      "category": "ambiguous_import",
+      "file": "ambiguous_3.py",
+      "description": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_3.py"
+    },
+    {
+      "item_id": "F-009",
+      "readiness": "awaiting_information",
+      "isolation_reason": "unconfirmed_root_cause",
+      "category": "ambiguous_import",
+      "file": "ambiguous_3.py",
+      "description": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_3.py"
+    },
+    {
+      "item_id": "F-010",
+      "readiness": "awaiting_information",
+      "isolation_reason": "unconfirmed_root_cause",
+      "category": "ambiguous_import",
+      "file": "ambiguous_4.py",
+      "description": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_4.py"
+    },
+    {
+      "item_id": "F-011",
+      "readiness": "awaiting_information",
+      "isolation_reason": "unconfirmed_root_cause",
+      "category": "ambiguous_import",
+      "file": "ambiguous_4.py",
+      "description": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_4.py"
+    }
+  ],
+  "ready_items": [
+    {
+      "item_id": "F-001",
+      "readiness": "ready",
+      "category": "syntax_error",
+      "file": "syntax_error_1.py",
+      "description": "Python parser cannot compile this file."
+    },
+    {
+      "item_id": "F-012",
+      "readiness": "ready",
+      "category": "missing_dependency",
+      "file": "needs_dep_1.py",
+      "description": "Module 'requests' is imported but not declared as a dependency."
+    },
+    {
+      "item_id": "F-013",
+      "readiness": "ready",
+      "category": "missing_dependency",
+      "file": "needs_dep_2.py",
+      "description": "Module 'flask' is imported but not declared as a dependency."
+    },
+    {
+      "item_id": "F-014",
+      "readiness": "ready",
+      "category": "missing_dependency",
+      "file": "needs_dep_3.py",
+      "description": "Module 'celery' is imported but not declared as a dependency."
+    },
+    {
+      "item_id": "F-015",
+      "readiness": "ready",
+      "category": "configuration_missing",
+      "file": "pyproject.toml",
+      "description": "pyproject.toml does not declare requires-python."
+    },
+    {
+      "item_id": "F-016",
+      "readiness": "ready",
+      "category": "configuration_missing",
+      "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\fixture-large-demo",
+      "description": "No lock file present despite having a dependency manifest."
+    },
+    {
+      "item_id": "F-017",
+      "readiness": "ready",
+      "category": "configuration_missing",
+      "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\fixture-large-demo",
+      "description": "No Python version constraint declared in the project."
+    }
+  ],
+  "unresolved_items": [
+    {
+      "item_id": "F-002",
+      "root_cause": "Installed version 1.2 does not satisfy requirement >=1.20.",
+      "why_unresolved": "Missing information prevents safe one-shot resolution",
+      "what_was_tried": [
+        "Automated analysis",
+        "Targeted research"
+      ],
+      "missing_information": [
+        "External information required for safe resolution"
+      ],
+      "next_steps": [
+        "Provide missing information",
+        "Re-run pipeline with additional context"
+      ],
+      "retry_guidance": "Re-run after providing the missing information identified above"
+    },
+    {
+      "item_id": "F-003",
+      "root_cause": "Installed version 0.1 does not satisfy requirement >=1.0.",
+      "why_unresolved": "Missing information prevents safe one-shot resolution",
+      "what_was_tried": [
+        "Automated analysis",
+        "Targeted research"
+      ],
+      "missing_information": [
+        "External information required for safe resolution"
+      ],
+      "next_steps": [
+        "Provide missing information",
+        "Re-run pipeline with additional context"
+      ],
+      "retry_guidance": "Re-run after providing the missing information identified above"
+    },
+    {
+      "item_id": "F-004",
+      "root_cause": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_1.py",
+      "why_unresolved": "Missing information prevents safe one-shot resolution",
+      "what_was_tried": [
+        "Automated analysis",
+        "Targeted research"
+      ],
+      "missing_information": [
+        "External information required for safe resolution"
+      ],
+      "next_steps": [
+        "Provide missing information",
+        "Re-run pipeline with additional context"
+      ],
+      "retry_guidance": "Re-run after providing the missing information identified above"
+    },
+    {
+      "item_id": "F-005",
+      "root_cause": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_1.py",
+      "why_unresolved": "Missing information prevents safe one-shot resolution",
+      "what_was_tried": [
+        "Automated analysis",
+        "Targeted research"
+      ],
+      "missing_information": [
+        "External information required for safe resolution"
+      ],
+      "next_steps": [
+        "Provide missing information",
+        "Re-run pipeline with additional context"
+      ],
+      "retry_guidance": "Re-run after providing the missing information identified above"
+    },
+    {
+      "item_id": "F-006",
+      "root_cause": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_2.py",
+      "why_unresolved": "Missing information prevents safe one-shot resolution",
+      "what_was_tried": [
+        "Automated analysis",
+        "Targeted research"
+      ],
+      "missing_information": [
+        "External information required for safe resolution"
+      ],
+      "next_steps": [
+        "Provide missing information",
+        "Re-run pipeline with additional context"
+      ],
+      "retry_guidance": "Re-run after providing the missing information identified above"
+    },
+    {
+      "item_id": "F-007",
+      "root_cause": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_2.py",
+      "why_unresolved": "Missing information prevents safe one-shot resolution",
+      "what_was_tried": [
+        "Automated analysis",
+        "Targeted research"
+      ],
+      "missing_information": [
+        "External information required for safe resolution"
+      ],
+      "next_steps": [
+        "Provide missing information",
+        "Re-run pipeline with additional context"
+      ],
+      "retry_guidance": "Re-run after providing the missing information identified above"
+    },
+    {
+      "item_id": "F-008",
+      "root_cause": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_3.py",
+      "why_unresolved": "Missing information prevents safe one-shot resolution",
+      "what_was_tried": [
+        "Automated analysis",
+        "Targeted research"
+      ],
+      "missing_information": [
+        "External information required for safe resolution"
+      ],
+      "next_steps": [
+        "Provide missing information",
+        "Re-run pipeline with additional context"
+      ],
+      "retry_guidance": "Re-run after providing the missing information identified above"
+    },
+    {
+      "item_id": "F-009",
+      "root_cause": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_3.py",
+      "why_unresolved": "Missing information prevents safe one-shot resolution",
+      "what_was_tried": [
+        "Automated analysis",
+        "Targeted research"
+      ],
+      "missing_information": [
+        "External information required for safe resolution"
+      ],
+      "next_steps": [
+        "Provide missing information",
+        "Re-run pipeline with additional context"
+      ],
+      "retry_guidance": "Re-run after providing the missing information identified above"
+    },
+    {
+      "item_id": "F-010",
+      "root_cause": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_4.py",
+      "why_unresolved": "Missing information prevents safe one-shot resolution",
+      "what_was_tried": [
+        "Automated analysis",
+        "Targeted research"
+      ],
+      "missing_information": [
+        "External information required for safe resolution"
+      ],
+      "next_steps": [
+        "Provide missing information",
+        "Re-run pipeline with additional context"
+      ],
+      "retry_guidance": "Re-run after providing the missing information identified above"
+    },
+    {
+      "item_id": "F-011",
+      "root_cause": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_4.py",
+      "why_unresolved": "Missing information prevents safe one-shot resolution",
+      "what_was_tried": [
+        "Automated analysis",
+        "Targeted research"
+      ],
+      "missing_information": [
+        "External information required for safe resolution"
+      ],
+      "next_steps": [
+        "Provide missing information",
+        "Re-run pipeline with additional context"
+      ],
+      "retry_guidance": "Re-run after providing the missing information identified above"
+    }
+  ]
+}

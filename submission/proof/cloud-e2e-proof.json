@@ -1,0 +1,88 @@
+{
+  "proof_type": "cloud_end_to_end_execution",
+  "project": "Audisor",
+  "timestamp": "2026-06-22T18:09:00Z",
+  "org": "theoneshot",
+  "tenant": "DefaultTenant",
+  "folder": "Debug_hackaton",
+  "folder_key": "2f0c3af7-b80b-4131-8494-279321b54711",
+
+  "bpmn_execution": {
+    "process_name": "Agentic Process",
+    "process_key": "4FBE2950-3B67-4DD6-803E-074776736898",
+    "process_version": "1.0.0-debug.63917665013",
+    "job_key": "139a9fab-28e3-48f7-9158-6a94b0944cda",
+    "job_state": "Successful",
+    "source": "Manual",
+    "start_time": "2026-06-22T18:09:01.530Z",
+    "end_time": "2026-06-22T18:09:04.260Z",
+    "duration_ms": 2730
+  },
+
+  "api_workflow": {
+    "process_name": "API Workflow",
+    "process_key": "BEA8BB41-AE4D-433E-82F8-F3640634948B",
+    "package": "Solution.api.API.Workflow",
+    "version": "1.0.0-debug.63917665013",
+    "role": "Submit-and-poll bridge between BPMN and Edge backend"
+  },
+
+  "edge_workflow": {
+    "process_name": "Audisor.Edge.Workflow",
+    "process_key": "DC0F0FDB-9255-47AC-A88E-758F0DB935A7",
+    "package": "audisor_api_workflow",
+    "version": "0.2.0",
+    "phases_executed": "0-6 (Snapshot → Scan → PreSim → Simulation → Inspection → Relay → Final Output)",
+    "role": "Edge WorkflowControl pipeline — Phase 0 through Phase 6"
+  },
+
+  "infrastructure": {
+    "backend": "maestro-backend (uvicorn port 8790)",
+    "tunnel": "${TUNNEL_URL}",
+    "tunnel_type": "Cloudflare quick tunnel (ephemeral)",
+    "cli": "uip v1.195.0",
+    "python": "3.14.4"
+  },
+
+  "execution_flow": [
+    "1. Maestro BPMN instance started (Agentic Process)",
+    "2. BPMN service task invoked API Workflow bridge",
+    "3. API Workflow POSTed to tunnel → backend → /v1/executions",
+    "4. Backend resolved taskRef 'WorkflowControl' → audisor_api_workflow/ dir",
+    "5. UiPath CLI executed: uipath run main <json> --output-file <path>",
+    "6. WorkflowControl v0.2.0 ran Phase 0-6 pipeline",
+    "7. Output written → backend completed execution",
+    "8. API Workflow polled status → received 'succeeded'",
+    "9. Normalized response returned to BPMN",
+    "10. BPMN gateway evaluated success=true → Successful End"
+  ],
+
+  "contract_verification": {
+    "execution_lifecycle": "aligned",
+    "polling_schema": "aligned",
+    "terminal_states": "aligned",
+    "payload_normalization": "aligned",
+    "task_ref_resolution": "filesystem-bound (not Orchestrator-name-bound)"
+  },
+
+  "agent_definition": {
+    "name": "PreSimulation Evaluator Agent",
+    "id": "presimulation-evaluator-agent",
+    "model": "claude-sonnet-4-20250514",
+    "scoring_threshold": "93.91% (PASS_THRESHOLD = 9391)",
+    "scoring_formula": "completeness*0.25 + traceability*0.20 + scope_and_boundary*0.15 + simulation_executability*0.20 + safety_and_reversibility*0.15 + determinism*0.05",
+    "evaluation_set_cases": 6,
+    "tool_allowlist": "read-only (lookup_artifact, validate_schema)",
+    "denied_operations": "simulation, mutation, approval, phase_advance",
+    "scope": "Bounded PreSimulation Evaluator — Phase 2 only"
+  },
+
+  "test_coverage": {
+    "phase_4_assertions": 16,
+    "phase_5_assertions": 36,
+    "phase_6_assertions": 59,
+    "fixture_regression": "A, G, J, K — auto + manual modes (6 runs, all pass)",
+    "contract_verification": 71,
+    "total_assertions": 184
+  }
+}

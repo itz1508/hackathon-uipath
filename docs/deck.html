@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NextFlow — Presentation Deck</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #c9d1d9; }
+.slide { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 4rem; border-bottom: 2px solid #21262d; text-align: center; }
+.slide h1 { color: #58a6ff; font-size: 3rem; margin-bottom: 1rem; }
+.slide h2 { color: #7ee787; font-size: 2rem; margin-bottom: 1.5rem; }
+.slide h3 { color: #d2a8ff; font-size: 1.4rem; margin-bottom: 1rem; }
+.slide p, .slide li { font-size: 1.2rem; line-height: 1.8; max-width: 900px; }
+.slide ul { text-align: left; max-width: 800px; margin: 0 auto; }
+.slide li { margin-bottom: 0.5rem; }
+.slide .big { font-size: 4rem; font-weight: 800; }
+.slide .cyan { color: #58a6ff; }
+.slide .green { color: #3fb950; }
+.slide .orange { color: #f0883e; }
+.slide .dim { color: #8b949e; font-size: 0.9rem; }
+.slide table { border-collapse: collapse; margin: 1rem auto; }
+.slide th { background: #21262d; color: #58a6ff; padding: 0.6rem 1rem; text-align: left; }
+.slide td { padding: 0.5rem 1rem; border-top: 1px solid #21262d; }
+.slide .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; background: rgba(63,185,80,0.15); color: #3fb950; margin: 0.2rem; }
+.slide .badge-warn { background: rgba(240,136,62,0.15); color: #f0883e; }
+.nav { position: fixed; bottom: 1rem; right: 1rem; background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 0.5rem 1rem; font-size: 0.8rem; color: #8b949e; z-index: 999; }
+.nav a { color: #58a6ff; text-decoration: none; margin: 0 0.3rem; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+<a href="#slide1">1</a> <a href="#slide2">2</a> <a href="#slide3">3</a>
+<a href="#slide4">4</a> <a href="#slide5">5</a> <a href="#slide6">6</a>
+<a href="#slide7">7</a> <a href="#slide8">8</a> <a href="#slide9">9</a>
+<a href="#slide10">10</a>
+</div>
+
+<!-- SLIDE 1: Title -->
+<div class="slide" id="slide1">
+<h1 class="big">NextFlow</h1>
+<p style="font-size:1.5rem; color:#c9d1d9; margin-bottom:1rem;">See the result before you apply it. No guessing. No surprises.</p>
+<p class="dim">Deterministic Pipeline Processing &middot; UiPath AgentHack Track 2: Maestro BPMN</p>
+<p class="dim" style="margin-top:2rem;">Team: The OneShot &middot; Minh Le &middot; cs1508.4ever@gmail.com</p>
+</div>
+
+<!-- SLIDE 2: Problem -->
+<div class="slide" id="slide2">
+<h2>The Problem</h2>
+<p style="font-size:1.6rem; margin-bottom:2rem;">AI generates configuration fixes <span class="cyan">fast</span>.</p>
+<p style="font-size:1.6rem; margin-bottom:2rem;">But proving one exact result is safe? <span class="orange">That's the bottleneck.</span></p>
+<ul>
+<li>Teams can't verify which AI output to trust</li>
+<li>No proof that simulation matches production</li>
+<li>No audit trail binding approval to exact result</li>
+<li>Silent repairs mask failures</li>
+</ul>
+</div>
+
+<!-- SLIDE 3: Solution -->
+<div class="slide" id="slide3">
+<h2>The Solution</h2>
+<p style="font-size:1.4rem; margin-bottom:2rem;">Separate <span class="cyan">advisory reasoning</span> from <span class="green">mutation authority</span></p>
+<ul>
+<li><strong>AI analyzes and recommends</strong> — but carries zero authority</li>
+<li><strong>Deterministic gates</strong> — control admission into simulation</li>
+<li><strong>Cryptographic hashing</strong> — proves identity and equivalence</li>
+<li><strong>Human decision</strong> — the sole Apply authority (Action Center)</li>
+<li><strong>Exact replay</strong> — applies only the approved result, nothing more</li>
+<li><strong>Verification</strong> — detects drift without silent repair</li>
+</ul>
+</div>
+
+<!-- SLIDE 4: 8-Phase Pipeline -->
+<div class="slide" id="slide4">
+<h2>8-Phase Deterministic Pipeline</h2>
+<table>
+<tr><th>#</th><th>Phase</th><th>Authority</th></tr>
+<tr><td>0</td><td>Snapshot</td><td>Read-only hash capture</td></tr>
+<tr><td>1</td><td>Scan</td><td>Issue detection</td></tr>
+<tr><td>2</td><td>Analysis</td><td>Advisory classification (AI)</td></tr>
+<tr><td>3</td><td>Pre-Simulation</td><td>Deterministic admission gate</td></tr>
+<tr><td>4</td><td>Simulation</td><td>Isolated sandbox execution</td></tr>
+<tr><td>5</td><td>Inspection</td><td>Convergence verification</td></tr>
+<tr><td>6</td><td>Relay</td><td>Human decision (Apply/Cancel)</td></tr>
+<tr><td>7</td><td>Final Output</td><td>Locked immutable record</td></tr>
+</table>
+<p class="dim">Phase Controller enforces strict sequential ordering. No phase can skip.</p>
+</div>
+
+<!-- SLIDE 5: Safety Contract -->
+<div class="slide" id="slide5">
+<h2>Safety Contract</h2>
+<p style="margin-bottom:1.5rem;">Six conditions must hold before simulation proceeds:</p>
+<div>
+<span class="badge">Confidence ≥ 93.91%</span>
+<span class="badge">All code graders pass</span>
+<span class="badge">Dependencies available</span>
+<span class="badge">No admission failures</span>
+<span class="badge">Hash integrity verified</span>
+<span class="badge">Classification complete</span>
+</div>
+<p style="margin-top:2rem; font-size:1.1rem;">Threshold: <code>⌊C × 100 + 0.5⌋ ≥ 9391</code></p>
+<p class="dim">Integer hundredths eliminates floating-point ambiguity across platforms.</p>
+</div>
+
+<!-- SLIDE 6: Demo Case -->
+<div class="slide" id="slide6">
+<h2>Demo: Configuration Repair</h2>
+<p style="margin-bottom:1.5rem;">Sample case: <code>retry_limit: -1</code> → <code>retry_limit: 3</code></p>
+<table>
+<tr><th>Metric</th><th>Result</th></tr>
+<tr><td>Phases completed</td><td><span class="green">8/8</span></td></tr>
+<tr><td>Resolved items</td><td>1</td></tr>
+<tr><td>Unresolved items</td><td>0</td></tr>
+<tr><td>Status</td><td><span class="green">fully_resolved</span></td></tr>
+<tr><td>Source unchanged</td><td>✓ (hash verified)</td></tr>
+<tr><td>Deterministic</td><td>✓ (same hash on repeat)</td></tr>
+</table>
+<p class="dim">Source file and unrelated fields remain cryptographically unchanged.</p>
+</div>
+
+<!-- SLIDE 7: UiPath Architecture -->
+<div class="slide" id="slide7">
+<h2>UiPath Components</h2>
+<table>
+<tr><th>Component</th><th>Role</th></tr>
+<tr><td>Maestro BPMN</td><td>End-to-end orchestration & gateways</td></tr>
+<tr><td>Agent Builder</td><td>Advisory classification</td></tr>
+<tr><td>API Workflows</td><td>Snapshot, replay proof, verification</td></tr>
+<tr><td>RPA Workflows</td><td>Isolated simulation & exact apply</td></tr>
+<tr><td>Action Center</td><td>Human Apply/Cancel/Preserve decision</td></tr>
+<tr><td>UiPath Storage</td><td>Immutable artifacts & proof</td></tr>
+<tr><td>Coded Agents</td><td>CLI authoring & validation</td></tr>
+</table>
+</div>
+
+<!-- SLIDE 8: Failure Handling -->
+<div class="slide" id="slide8">
+<h2>Failure Handling</h2>
+<ul>
+<li><strong>Admission rejected:</strong> Below threshold → isolation branch or halt</li>
+<li><strong>Simulation failure:</strong> Reported, not silently retried</li>
+<li><strong>Cancel decision:</strong> First-class outcome, state preserved</li>
+<li><strong>Apply failure:</strong> Drift detected, reported, no silent repair</li>
+<li><strong>Preserve for later:</strong> State frozen for future review</li>
+</ul>
+<p style="margin-top:1.5rem;" class="dim">Every failure path produces an execution trace with full provenance.</p>
+</div>
+
+<!-- SLIDE 9: Evidence -->
+<div class="slide" id="slide9">
+<h2>Validated Evidence</h2>
+<ul>
+<li><span class="green">✓</span> 28 execution traces (proof/)</li>
+<li><span class="green">✓</span> 6 fixture types tested (clean, mixed, chaos, large, overlapping, duplicate)</li>
+<li><span class="green">✓</span> Deterministic: same input → same snapshot hash</li>
+<li><span class="green">✓</span> Isolation A/B experiment: proves research value</li>
+<li><span class="green">✓</span> BPMN validated and packaged via UiPath CLI</li>
+<li><span class="green">✓</span> Zero hardcoded paths — fully portable</li>
+<li><span class="green">✓</span> JSON Schema contracts (Draft 2020-12) for all interfaces</li>
+</ul>
+</div>
+
+<!-- SLIDE 10: Try It -->
+<div class="slide" id="slide10">
+<h2>Try It</h2>
+<pre style="background:#161b22; padding:1.5rem; border-radius:8px; text-align:left; font-size:1rem; margin-bottom:1.5rem;">
+git clone https://github.com/itz1508/hackathon-uipath.git
+cd hackathon-uipath
+uv venv .venv --python 3.11
+uv pip install pydantic --python .venv\Scripts\python.exe
+.venv\Scripts\python.exe pipeline\_run_e2e.py cases\sample-config-repair\source
+</pre>
+<p>Expected: <span class="green">Status: succeeded</span>, 8/8 phases, <span class="green">fully_resolved</span></p>
+<p style="margin-top:2rem;" class="dim">
+Team: The OneShot &middot; Minh Le &middot; Apache License 2.0<br>
+github.com/itz1508/hackathon-uipath
+</p>
+</div>
+
+</body>
+</html>

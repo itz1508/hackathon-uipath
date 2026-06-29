@@ -1,0 +1,609 @@
+{
+  "_schema": "https://cloud.uipath.com/draft/2024-12/agent",
+  "id": "presimulation-evaluator-agent",
+  "name": "PreSimulation Evaluator Agent",
+  "lastModified": "2026-06-27T20:20:00Z",
+  "description": "Claude-based coded agent that scores package completeness against the 93.91% information completeness threshold, detects critical blockers, and partitions items into ready_parts (proceed to Simulation) and isolated_parts (information gap requiring targeted research). Implements Phase 2 (Pre-simulation / Package Preparation) of the standalone pipeline.",
+  "model": {
+    "provider": "anthropic",
+    "name": "claude-sonnet-4-20250514",
+    "temperature": 0.0,
+    "maxTokens": 4096
+  },
+  "scoringFormula": {
+    "description": "package_confidence_score = completeness×0.25 + traceability×0.20 + scope_and_boundary×0.15 + simulation_executability×0.20 + safety_and_reversibility×0.15 + determinism×0.05",
+    "weights": {
+      "completeness": 0.25,
+      "traceability": 0.20,
+      "scope_and_boundary": 0.15,
+      "simulation_executability": 0.20,
+      "safety_and_reversibility": 0.15,
+      "determinism": 0.05
+    },
+    "passThreshold": 93.91,
+    "passThresholdHundredths": 9391,
+    "boundaryRule": "Score >= 93.91% passes (integer hundredth-points: round(score*100) >= 9391). Exactly 93.91% passes. 93.90% does NOT pass."
+  },
+  "criticalBlockers": {
+    "description": "Critical blockers override any numeric score — simulation_ready=false regardless of package_confidence_score",
+    "blockers": [
+      {
+        "id": "missing_snapshot_hash",
+        "description": "Input snapshot must contain 'file_hashes' key with a non-empty value",
+        "detection": "snapshot.file_hashes is missing or empty"
+      },
+      {
+        "id": "undefined_scope",
+        "description": "Input scope must be non-empty and contain at least 'target' or 'boundary' keys",
+        "detection": "scope is empty OR lacks both 'target' and 'boundary' keys"
+      },
+      {
+        "id": "operation_outside_scope",
+        "description": "All proposed_change operations must target paths within the defined scope boundary",
+        "detection": "Any operation target_path is not a prefix-match of any boundary path"
+      },
+      {
+        "id": "missing_simulation_plan",
+        "description": "proposed_change must include a 'simulation_plan' key",
+        "detection": "'simulation_plan' key absent from proposed_change"
+      },
+      {
+        "id": "missing_required_checks",
+        "description": "All items in required_checks must be addressed in proposed_change",
+        "detection": "Any required_check name not found in proposed_change.checks or simulation_plan.checks"
+      },
+      {
+        "id": "fabricated_proof",
+        "description": "proof_artifacts referenced in proposed_change must exist in snapshot file_hashes",
+        "detection": "Any proof_artifact path not present in snapshot.file_hashes keys"
+      }
+    ]
+  },
+  "systemPrompt": "You are the PreSimulation Evaluator Agent operating at Phase 2 (Pre-simulation / Package Preparation) of the standalone pipeline. Your role is to score a prepared package against the 93.91% information completeness threshold and decide whether it proceeds to Simulation or requires isolation for targeted research.\n\nYou MUST:\n1. Detect critical blockers FIRST (these override any numeric score).\n2. Score six component dimensions (completeness, traceability, scope_and_boundary, simulation_executability, safety_and_reversibility, determinism) each in range [0, 100].\n3. Compute package_confidence_score using the weighted formula: completeness*0.25 + traceability*0.20 + scope_and_boundary*0.15 + simulation_executability*0.20 + safety_and_reversibility*0.15 + determinism*0.05\n4. Use integer hundredth-point comparison: round(score * 100) >= 9391 passes.\n5. Partition items individually by information readiness.\n6. Isolation means 'information gap' — NOT failure.\n\nCritical Blockers (override any score):\n- missing_snapshot_hash\n- undefined_scope\n- operation_outside_scope\n- missing_simulation_plan\n- missing_required_checks\n- fabricated_proof\n\nThreshold: >= 93.91% passes. Exactly 93.91% passes. 93.90% does NOT pass.\n\nTool Allowlist: read-only artifact lookup, schema validation ONLY. Cannot invoke simulation, mutation, approval, or phase-advance operations.",
+  "inputArguments": {
+    "type": "object",
+    "properties": {
+      "run_id": {
+        "type": "string",
+        "description": "Unique execution run identifier",
+        "minLength": 1
+      },
+      "snapshot": {
+        "type": "object",
+        "description": "Original file state capture from Phase 0. Must contain 'file_hashes' with non-empty value.",
+        "properties": {
+          "file_hashes": {
+            "type": "object",
+            "description": "Map of file_path -> SHA-256 hash"
+          },
+          "storage_path": {
+            "type": "string",
+            "description": "Path to the stored snapshot copy"
+          }
+        },
+        "required": ["file_hashes"]
+      },
+      "scope": {
+        "type": "object",
+        "description": "Mutation boundary definition. Must contain 'target' or 'boundary'.",
+        "properties": {
+          "target": {
+            "type": "string",
+            "description": "Primary target path"
+          },
+          "boundary": {
+            "description": "Boundary paths constraining operations",
+            "oneOf": [
+              { "type": "array", "items": { "type": "string" } },
+              { "type": "object" },
+              { "type": "string" }
+            ]
+          },
+          "includes": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "excludes": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      },
+      "proposed_change": {
+        "type": "object",
+        "description": "What the analysis produced. Must include 'simulation_plan'.",
+        "properties": {
+          "simulation_plan": {
+            "type": "object",
+            "description": "The simulation execution plan"
+          },
+          "items": {
+            "type": "array",
+            "description": "Individual proposed change items for readiness partitioning"
+          },
+          "operations": {
+            "type": "array",
+            "description": "List of proposed operations with target_path"
+          },
+          "checks": {
+            "type": "array",
+            "description": "Addressed required checks"
+          },
+          "proof_artifacts": {
+            "type": "array",
+            "description": "Referenced proof artifacts"
+          }
+        },
+        "required": ["simulation_plan"]
+      },
+      "constraints": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Operational constraints for the execution"
+      },
+      "required_checks": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Must-pass validations that must be addressed in proposed_change"
+      },
+      "handoff_statement": {
+        "type": "string",
+        "description": "Handoff statement from Phase 1 Analysis Agent — what gets handed off for processing",
+        "minLength": 1
+      },
+      "llm_statement": {
+        "type": "string",
+        "description": "LLM statement from Phase 1 Analysis Agent — advisory and AI-generated content",
+        "minLength": 1
+      },
+      "pre_calibration_statement": {
+        "type": "string",
+        "description": "Pre-calibration statement from Phase 1 Analysis Agent — the calibration baseline",
+        "minLength": 1
+      },
+      "tool_selections": {
+        "type": "array",
+        "items": { "type": "object" },
+        "description": "Selected tools with identifiers and usage context"
+      }
+    },
+    "required": [
+      "run_id", "snapshot", "scope", "proposed_change",
+      "constraints", "required_checks",
+      "handoff_statement", "llm_statement", "pre_calibration_statement",
+      "tool_selections"
+    ]
+  },
+  "outputArguments": {
+    "type": "object",
+    "properties": {
+      "component_scores": {
+        "type": "object",
+        "description": "Six component scores, each 0-100 with 2 decimal places",
+        "properties": {
+          "completeness": { "type": "number", "minimum": 0, "maximum": 100 },
+          "traceability": { "type": "number", "minimum": 0, "maximum": 100 },
+          "scope_and_boundary": { "type": "number", "minimum": 0, "maximum": 100 },
+          "simulation_executability": { "type": "number", "minimum": 0, "maximum": 100 },
+          "safety_and_reversibility": { "type": "number", "minimum": 0, "maximum": 100 },
+          "determinism": { "type": "number", "minimum": 0, "maximum": 100 }
+        },
+        "required": [
+          "completeness", "traceability", "scope_and_boundary",
+          "simulation_executability", "safety_and_reversibility", "determinism"
+        ]
+      },
+      "confidence_score": {
+        "type": "number",
+        "description": "Weighted composite package_confidence_score, rounded to 2 decimal places",
+        "minimum": 0,
+        "maximum": 100
+      },
+      "confidence_status": {
+        "type": "string",
+        "enum": ["pass", "fail"],
+        "description": "Gate decision: 'pass' if score >= 93.91 and no critical blockers"
+      },
+      "simulation_ready": {
+        "type": "boolean",
+        "description": "True only when score >= 93.91% AND no critical blockers exist"
+      },
+      "blocking_reasons": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "List of critical blocker IDs detected. Empty if none."
+      },
+      "regeneration_instructions": {
+        "type": "string",
+        "description": "Actionable instructions for what needs to be fixed when not ready"
+      },
+      "ready_parts": {
+        "type": "array",
+        "items": { "type": "object" },
+        "description": "Items independently meeting 93.91% threshold — proceed to Simulation"
+      },
+      "isolated_parts": {
+        "type": "array",
+        "items": { "type": "object" },
+        "description": "Items below threshold (information gap) — routed to Isolation Agent"
+      }
+    },
+    "required": [
+      "component_scores", "confidence_score", "confidence_status",
+      "simulation_ready", "blocking_reasons", "regeneration_instructions",
+      "ready_parts", "isolated_parts"
+    ]
+  },
+  "evaluationSet": {
+    "description": "UiPath Agent Builder Evaluation Set — test cases for validating agent scoring behavior. Target agent_evaluation_score >= 93.91%.",
+    "testCases": [
+      {
+        "id": "eval-001-passing-high-score",
+        "name": "Passing case — score above threshold (95.00%)",
+        "description": "All component scores are high, no critical blockers. Package should pass with simulation_ready=true.",
+        "input": {
+          "run_id": "run-eval-001",
+          "snapshot": {
+            "file_hashes": { "src/main.py": "abc123def456", "src/utils.py": "789fed321cba" },
+            "storage_path": "/tmp/snapshots/eval-001"
+          },
+          "scope": {
+            "target": "/project/src",
+            "boundary": ["/project/src"],
+            "includes": ["/project/src/main.py", "/project/src/utils.py"]
+          },
+          "proposed_change": {
+            "simulation_plan": {
+              "steps": ["validate_input", "apply_fix", "run_tests"],
+              "expected_outcome": "all_tests_pass",
+              "rollback": "restore_from_snapshot",
+              "parameters": { "timeout": 60 }
+            },
+            "items": [
+              { "id": "item-1", "description": "Fix import ordering", "scores": { "completeness": 96.0, "traceability": 95.0, "scope_and_boundary": 94.0, "simulation_executability": 95.0, "safety_and_reversibility": 94.0, "determinism": 93.0 } }
+            ],
+            "operations": [{ "target_path": "/project/src/main.py", "type": "modify" }],
+            "checks": [{ "name": "lint_check" }, { "name": "type_check" }],
+            "run_id": "run-eval-001",
+            "change_id": "chg-001",
+            "target_type": "candidate_copy"
+          },
+          "constraints": ["no_production_mutation", "candidate_copy_only"],
+          "required_checks": ["lint_check", "type_check"],
+          "handoff_statement": "Handoff: Fix import ordering in main.py. All dependencies identified and traceable.",
+          "llm_statement": "LLM advisory: Standard import reordering using isort conventions. No side effects expected.",
+          "pre_calibration_statement": "Pre-calibration baseline: 2 files in scope, both well-structured Python modules with existing test coverage.",
+          "tool_selections": [{ "tool_id": "isort", "name": "isort", "context": "import ordering" }]
+        },
+        "expectedOutput": {
+          "confidence_score_min": 93.91,
+          "confidence_status": "pass",
+          "simulation_ready": true,
+          "blocking_reasons": [],
+          "ready_parts_count_min": 1,
+          "isolated_parts_count": 0
+        }
+      },
+      {
+        "id": "eval-002-boundary-exact-threshold",
+        "name": "Boundary case — score exactly at threshold (93.91%)",
+        "description": "Component scores yield exactly 93.91% weighted. Boundary rule: exactly 93.91% passes. Integer comparison: round(93.91*100)=9391 >= 9391.",
+        "input": {
+          "run_id": "run-eval-002",
+          "snapshot": {
+            "file_hashes": { "lib/handler.js": "aaa111bbb222" },
+            "storage_path": "/tmp/snapshots/eval-002"
+          },
+          "scope": {
+            "target": "/project/lib",
+            "boundary": ["/project/lib"]
+          },
+          "proposed_change": {
+            "simulation_plan": {
+              "steps": ["parse_ast", "transform", "validate"],
+              "expected_outcome": "transform_success",
+              "rollback": "revert_candidate",
+              "seed": 42
+            },
+            "items": [
+              { "id": "item-boundary", "description": "AST transform" }
+            ],
+            "operations": [{ "target_path": "/project/lib/handler.js", "type": "modify" }],
+            "checks": [{ "name": "syntax_check" }],
+            "source_run": "run-eval-002",
+            "version": "1.0.0",
+            "target_type": "candidate_copy"
+          },
+          "constraints": ["candidate_copy_only"],
+          "required_checks": ["syntax_check"],
+          "handoff_statement": "Handoff: AST transform on handler.js to modernize syntax.",
+          "llm_statement": "LLM advisory: Safe AST-level transform with deterministic output.",
+          "pre_calibration_statement": "Pre-calibration: Single file, well-tested module, deterministic transform.",
+          "tool_selections": [{ "tool_id": "jscodeshift", "name": "jscodeshift", "context": "AST transform" }]
+        },
+        "expectedOutput": {
+          "confidence_score_exact": 93.91,
+          "confidence_status": "pass",
+          "simulation_ready": true,
+          "blocking_reasons": [],
+          "ready_parts_count_min": 1,
+          "isolated_parts_count": 0
+        },
+        "notes": "Verifies boundary: exactly 93.91% PASSES. Integer hundredths: 9391 >= 9391 = true."
+      },
+      {
+        "id": "eval-003-failing-below-threshold",
+        "name": "Failing case — score at 93.90% (one hundredth below threshold)",
+        "description": "Component scores yield 93.90% weighted. Boundary rule: 93.90% does NOT pass. Integer comparison: round(93.90*100)=9390 >= 9391 is false.",
+        "input": {
+          "run_id": "run-eval-003",
+          "snapshot": {
+            "file_hashes": { "app/service.py": "def456abc789" },
+            "storage_path": "/tmp/snapshots/eval-003"
+          },
+          "scope": {
+            "target": "/project/app",
+            "boundary": ["/project/app"]
+          },
+          "proposed_change": {
+            "simulation_plan": {
+              "steps": ["refactor_service"],
+              "expected_outcome": "service_refactored",
+              "rollback": "restore_candidate"
+            },
+            "items": [
+              { "id": "item-below", "description": "Service layer refactor" }
+            ],
+            "operations": [{ "target_path": "/project/app/service.py", "type": "modify" }],
+            "checks": [{ "name": "unit_tests" }],
+            "run_id": "run-eval-003",
+            "target_type": "candidate_copy"
+          },
+          "constraints": ["candidate_copy_only"],
+          "required_checks": ["unit_tests"],
+          "handoff_statement": "Handoff: Refactor service layer to use async patterns.",
+          "llm_statement": "LLM advisory: Async refactor is straightforward but traceability gaps exist in dependency chain.",
+          "pre_calibration_statement": "Pre-calibration: Service has partial test coverage, some dependency chains not fully traced.",
+          "tool_selections": [{ "tool_id": "asyncio", "name": "asyncio" }]
+        },
+        "expectedOutput": {
+          "confidence_score_exact": 93.90,
+          "confidence_status": "fail",
+          "simulation_ready": false,
+          "blocking_reasons": [],
+          "ready_parts_count": 0,
+          "isolated_parts_count_min": 1
+        },
+        "notes": "Verifies boundary: 93.90% does NOT pass. Integer hundredths: 9390 >= 9391 = false. Item goes to isolated_parts."
+      },
+      {
+        "id": "eval-004-critical-blocker-overrides-high-score",
+        "name": "Critical blocker despite high score — operation_outside_scope",
+        "description": "All component scores are 98+ (would yield ~98% score) but a proposed operation targets a path outside the scope boundary. Critical blocker overrides the numeric score.",
+        "input": {
+          "run_id": "run-eval-004",
+          "snapshot": {
+            "file_hashes": { "src/core.py": "111222333444", "config/settings.yaml": "555666777888" },
+            "storage_path": "/tmp/snapshots/eval-004"
+          },
+          "scope": {
+            "target": "/project/src",
+            "boundary": ["/project/src"]
+          },
+          "proposed_change": {
+            "simulation_plan": {
+              "steps": ["update_core", "update_config"],
+              "expected_outcome": "both_updated",
+              "rollback": "restore_candidate",
+              "parameters": { "validate": true }
+            },
+            "items": [
+              { "id": "item-core", "description": "Update core module" },
+              { "id": "item-config", "description": "Update config outside boundary" }
+            ],
+            "operations": [
+              { "target_path": "/project/src/core.py", "type": "modify" },
+              { "target_path": "/project/config/settings.yaml", "type": "modify" }
+            ],
+            "checks": [{ "name": "integration_test" }],
+            "run_id": "run-eval-004",
+            "change_id": "chg-004",
+            "version": "2.0.0",
+            "target_type": "candidate_copy"
+          },
+          "constraints": ["candidate_copy_only", "no_external_calls"],
+          "required_checks": ["integration_test"],
+          "handoff_statement": "Handoff: Update core module and config settings for new feature.",
+          "llm_statement": "LLM advisory: Core update requires config change — config is outside declared scope boundary.",
+          "pre_calibration_statement": "Pre-calibration: Core module well-traced, config file has full coverage.",
+          "tool_selections": [{ "tool_id": "pyyaml", "name": "pyyaml" }, { "tool_id": "ast_rewrite", "name": "ast_rewrite" }]
+        },
+        "expectedOutput": {
+          "confidence_status": "fail",
+          "simulation_ready": false,
+          "blocking_reasons_contains": ["operation_outside_scope"],
+          "notes": "Even though numeric score would be ~98%, the critical blocker forces simulation_ready=false"
+        }
+      },
+      {
+        "id": "eval-005-missing-snapshot-hash",
+        "name": "Critical blocker — missing_snapshot_hash",
+        "description": "Snapshot has empty file_hashes. This is a critical blocker that overrides any score. The evaluator cannot validate traceability without the original file state.",
+        "input": {
+          "run_id": "run-eval-005",
+          "snapshot": {
+            "file_hashes": {},
+            "storage_path": "/tmp/snapshots/eval-005"
+          },
+          "scope": {
+            "target": "/project/src",
+            "boundary": ["/project/src"]
+          },
+          "proposed_change": {
+            "simulation_plan": {
+              "steps": ["apply_patch"],
+              "expected_outcome": "patch_applied",
+              "rollback": "restore_candidate"
+            },
+            "items": [
+              { "id": "item-patch", "description": "Apply security patch" }
+            ],
+            "operations": [{ "target_path": "/project/src/auth.py", "type": "modify" }],
+            "checks": [{ "name": "security_scan" }],
+            "run_id": "run-eval-005",
+            "target_type": "candidate_copy"
+          },
+          "constraints": ["candidate_copy_only"],
+          "required_checks": ["security_scan"],
+          "handoff_statement": "Handoff: Apply security patch to auth module.",
+          "llm_statement": "LLM advisory: Critical security fix for authentication bypass.",
+          "pre_calibration_statement": "Pre-calibration: Auth module has comprehensive tests.",
+          "tool_selections": [{ "tool_id": "bandit", "name": "bandit" }]
+        },
+        "expectedOutput": {
+          "confidence_status": "fail",
+          "simulation_ready": false,
+          "blocking_reasons_contains": ["missing_snapshot_hash"],
+          "notes": "Empty file_hashes triggers missing_snapshot_hash blocker regardless of how good the package looks otherwise"
+        }
+      },
+      {
+        "id": "eval-006-ready-parts-isolated-parts-separation",
+        "name": "Item-level partitioning — ready_parts and isolated_parts separation",
+        "description": "Overall score is below threshold, but individual items have per-item score overrides. Item A independently meets 93.91%+ and goes to ready_parts. Item B is below threshold and goes to isolated_parts (information gap). Demonstrates that a low overall score does NOT block independently ready items.",
+        "input": {
+          "run_id": "run-eval-006",
+          "snapshot": {
+            "file_hashes": {
+              "modules/auth.py": "aaa111",
+              "modules/cache.py": "bbb222",
+              "modules/config.py": "ccc333"
+            },
+            "storage_path": "/tmp/snapshots/eval-006"
+          },
+          "scope": {
+            "target": "/project/modules",
+            "boundary": ["/project/modules"]
+          },
+          "proposed_change": {
+            "simulation_plan": {
+              "steps": ["fix_auth", "fix_cache"],
+              "expected_outcome": "both_fixed",
+              "rollback": "restore_candidate",
+              "seed": 100
+            },
+            "items": [
+              {
+                "id": "item-auth",
+                "description": "Fix authentication token refresh — fully traced and documented",
+                "scores": {
+                  "completeness": 96.00,
+                  "traceability": 95.00,
+                  "scope_and_boundary": 94.00,
+                  "simulation_executability": 95.00,
+                  "safety_and_reversibility": 94.00,
+                  "determinism": 92.00
+                }
+              },
+              {
+                "id": "item-cache",
+                "description": "Fix cache invalidation — missing dependency information",
+                "scores": {
+                  "completeness": 70.00,
+                  "traceability": 65.00,
+                  "scope_and_boundary": 80.00,
+                  "simulation_executability": 60.00,
+                  "safety_and_reversibility": 75.00,
+                  "determinism": 50.00
+                }
+              }
+            ],
+            "operations": [
+              { "target_path": "/project/modules/auth.py", "type": "modify" },
+              { "target_path": "/project/modules/cache.py", "type": "modify" }
+            ],
+            "checks": [{ "name": "auth_test" }, { "name": "cache_test" }],
+            "run_id": "run-eval-006",
+            "change_id": "chg-006",
+            "target_type": "candidate_copy"
+          },
+          "constraints": ["candidate_copy_only"],
+          "required_checks": ["auth_test", "cache_test"],
+          "handoff_statement": "Handoff: Fix auth token refresh and cache invalidation in modules.",
+          "llm_statement": "LLM advisory: Auth fix is well-understood. Cache fix has dependency chain gaps — needs research.",
+          "pre_calibration_statement": "Pre-calibration: Auth module fully traced. Cache module has undocumented external dependency.",
+          "tool_selections": [
+            { "tool_id": "pytest", "name": "pytest", "context": "auth testing" },
+            { "tool_id": "redis_cli", "name": "redis_cli", "context": "cache validation" }
+          ]
+        },
+        "expectedOutput": {
+          "simulation_ready": false,
+          "confidence_status": "fail",
+          "blocking_reasons": [],
+          "ready_parts": [
+            {
+              "id": "item-auth",
+              "item_readiness_status": "ready",
+              "notes": "Independently meets 93.91% — proceeds to Simulation without waiting"
+            }
+          ],
+          "isolated_parts": [
+            {
+              "id": "item-cache",
+              "item_readiness_status": "awaiting_information",
+              "isolation_reason": "information_gap",
+              "notes": "Below threshold — routed to Isolation Agent for targeted research. NOT a failure."
+            }
+          ],
+          "notes": "Demonstrates item-level partitioning: ready items proceed, below-threshold items get targeted research. Pipeline never stops — good parts continue forward."
+        }
+      }
+    ]
+  },
+  "tools": [
+    {
+      "id": "lookup-artifact",
+      "name": "LookupArtifact",
+      "type": "function",
+      "description": "Read-only lookup of artifacts from the snapshot or proposed change. Phase 2 Tool_Allowlist: permitted.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "artifact_path": { "type": "string", "description": "Path to the artifact to look up" },
+          "artifact_type": { "type": "string", "enum": ["snapshot_file", "proposed_change", "statement"] }
+        },
+        "required": ["artifact_path", "artifact_type"]
+      }
+    },
+    {
+      "id": "validate-schema",
+      "name": "ValidateSchema",
+      "type": "function",
+      "description": "Validate a JSON object against a schema definition. Phase 2 Tool_Allowlist: permitted.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "data": { "type": "object", "description": "The JSON data to validate" },
+          "schema_ref": { "type": "string", "description": "Schema reference identifier" }
+        },
+        "required": ["data", "schema_ref"]
+      }
+    }
+  ],
+  "toolAllowlist": {
+    "phase": 2,
+    "executor": "PreSimulation_Evaluator_Agent",
+    "permitted_operations": ["lookup_artifact", "validate_schema", "read_snapshot", "read_scope"],
+    "denied_categories": ["simulation", "mutation", "approval", "phase_advance", "write", "delete", "execute"]
+  },
+  "agentNode": {
+    "position": { "x": 400, "y": 275 }
+  },
+  "layout": {
+    "engine": "dagre",
+    "direction": "TB",
+    "nodeSpacing": 80,
+    "rankSpacing": 150
+  }
+}

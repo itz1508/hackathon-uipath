@@ -1,0 +1,6 @@
+{
+  "name": "maestro-backend-orchestration",
+  "version": "0.1.0",
+  "description": "Maestro orchestration package for backend execution tasks",
+  "type": "process-orchestration"
+}

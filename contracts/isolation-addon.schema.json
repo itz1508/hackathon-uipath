@@ -1,0 +1,5 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://nextflow.local/contracts/isolation-addon.schema.json","type":"object","additionalProperties":false,
+  "required":["unresolved_issue","failure_location","supported_cause","missing_information","missing_requirements","missing_dependencies","normal_tool_limitation","successful_result_definition","successful_execution_definition","required_execution_order","required_validation","required_participant","next_stage","next_action"],
+  "properties":{"unresolved_issue":{"type":"string"},"failure_location":{"type":"string"},"supported_cause":{"type":"string"},"missing_information":{"type":"array"},"missing_requirements":{"type":"array"},"missing_dependencies":{"type":"array"},"normal_tool_limitation":{"type":"string"},"successful_result_definition":{"type":"string"},"successful_execution_definition":{"type":"string"},"required_execution_order":{"type":"array"},"required_validation":{"type":"array"},"required_participant":{"type":"string"},"next_stage":{"enum":["handoff_statement","02.5-pre-simulation"]},"next_action":{"enum":["correct_handoff","rebuild_pre_simulation_package"]}}
+}

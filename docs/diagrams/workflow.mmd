@@ -1,0 +1,20 @@
+flowchart TD
+  S01[01 Scan / Snapshot] --> S02[02 Analysis / Classification]
+  S02 --> S0225[02.25 Recalibration / Finding Refinement]
+  S0225 --> H[Handoff Statement]
+  H --> P[02.5 Pre-Simulation Package]
+  P --> Q{Admission conditions satisfied?}
+  Q -- Yes --> S03[03 Simulation Environment]
+  Q -- Missing declared dependency --> D{Auto-Dependency?}
+  D -- ON --> LP[Local in-scope preparation only]
+  D -- OFF --> RU[Request participant action]
+  LP --> P
+  RU --> P
+  Q -- Isolation reason --> I[Isolation Add-On]
+  Q -- Reattempt --> P
+  S03 --> S04[04 Replay / Proof]
+  S04 --> S05{05 User Apply or Cancel}
+  S05 -- Cancel --> S08[08 Final Result Locked]
+  S05 -- Apply --> S06[06 Explicit User Apply Mutation Relay]
+  S06 --> S07[07 Post-Apply Verification]
+  S07 --> S08

@@ -1,0 +1,697 @@
+{
+  "snapshot": {
+    "snapshot_id": "e13d2c6b-6836-4e7e-9612-00829c4aee67",
+    "file_hashes": {
+      "ambiguous_imports.py": "ce1e13830acb77faf71f4841b4b7d983f131a5d82eecb3c0e035822fa68ba323",
+      "fixable_syntax.py": "7af19812631e76e1f89a84a8ca45454e6d79539be60fc0a2ca5539e7b96e5c74",
+      "requirements.txt": "ba0be608c7f45ffc753309bf88e1ac4655de256dff58a9a3f88d1032c5db4f54",
+      "working.py": "a551920170ca584d2e8e946c0a8f0a9db5d7df35cf4ae6a73137adbe757a64aa"
+    },
+    "total_files": 4,
+    "storage_path": "C:\\Users\\itz15\\.audisor\\snapshots\\current",
+    "target_path": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\fixture-demo-split"
+  },
+  "findings": [
+    {
+      "finding_id": "F-001",
+      "category": "syntax_error",
+      "severity": "high",
+      "file": "fixable_syntax.py",
+      "line": 3,
+      "known_facts": [
+        "Syntax error detected in fixable_syntax.py",
+        "what_wrong: Python cannot parse this file",
+        "why_it_matters: File cannot be imported or executed",
+        "how_to_fix: Fix the syntax error at the indicated line"
+      ],
+      "root_cause": "Python parser cannot compile this file.",
+      "root_cause_confirmed": true,
+      "missing_information": [],
+      "supporting_tools": [
+        "python -m compileall"
+      ],
+      "confidence": 1.0,
+      "affected_component": ""
+    },
+    {
+      "finding_id": "F-002",
+      "category": "dependency_conflict",
+      "severity": "high",
+      "file": "requirements.txt",
+      "line": 2,
+      "known_facts": [
+        "Package 'package_b' pinned to ==1.4",
+        "Requires package_b>=2.0",
+        "what_wrong: Version 1.4 is pinned but >=2.0 is required",
+        "why_it_matters: Dependency resolution will fail",
+        "how_to_fix: Update the pinned version to satisfy the constraint >=2.0"
+      ],
+      "root_cause": "Installed version 1.4 does not satisfy requirement >=2.0.",
+      "root_cause_confirmed": true,
+      "missing_information": [
+        "No lock file \u2014 transitive dependency state unknown",
+        "Target Python version not declared"
+      ],
+      "supporting_tools": [
+        "dependency-manifest-inspection"
+      ],
+      "confidence": 0.7,
+      "affected_component": "package_b"
+    },
+    {
+      "finding_id": "F-003",
+      "category": "ambiguous_import",
+      "severity": "high",
+      "file": "ambiguous_imports.py",
+      "line": 3,
+      "known_facts": [
+        "Import 'generated_client' does not resolve",
+        "No matching module in repository or declared dependencies",
+        "what_wrong: Module 'generated_client' imported but not declared",
+        "why_it_matters: Will cause ImportError at runtime unless generated during build",
+        "how_to_fix: Add 'generated_client' to requirements.txt or pyproject.toml dependencies, or document the generation step",
+        "CONFLICT: This file also has issues: F-004"
+      ],
+      "root_cause": "",
+      "root_cause_confirmed": false,
+      "missing_information": [
+        "Whether the module is generated during build",
+        "Generation command or tool",
+        "Expected output location",
+        "Whether it should be installed from a private index"
+      ],
+      "supporting_tools": [
+        "import-validation"
+      ],
+      "confidence": 0.3,
+      "affected_component": "generated_client"
+    },
+    {
+      "finding_id": "F-004",
+      "category": "ambiguous_import",
+      "severity": "high",
+      "file": "ambiguous_imports.py",
+      "line": 4,
+      "known_facts": [
+        "Import 'internal_service_sdk' does not resolve",
+        "No matching module in repository or declared dependencies",
+        "what_wrong: Module 'internal_service_sdk' imported but not declared",
+        "why_it_matters: Will cause ImportError at runtime unless generated during build",
+        "how_to_fix: Add 'internal_service_sdk' to requirements.txt or pyproject.toml dependencies, or document the generation step",
+        "CONFLICT: This file also has issues: F-003"
+      ],
+      "root_cause": "",
+      "root_cause_confirmed": false,
+      "missing_information": [
+        "Whether the module is generated during build",
+        "Generation command or tool",
+        "Expected output location",
+        "Whether it should be installed from a private index"
+      ],
+      "supporting_tools": [
+        "import-validation"
+      ],
+      "confidence": 0.3,
+      "affected_component": "internal_service_sdk"
+    },
+    {
+      "finding_id": "F-005",
+      "category": "configuration_missing",
+      "severity": "high",
+      "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\fixture-demo-split",
+      "line": null,
+      "known_facts": [
+        "No lock file found in project root",
+        "Manifest files present: requirements.txt",
+        "what_wrong: No lock file \u2014 transitive dependency state unknown",
+        "why_it_matters: Builds are non-reproducible; different installs may get different transitive versions",
+        "how_to_fix: Generate a lock file (pip freeze > requirements.lock, poetry lock, uv lock, etc.)",
+        "CONFLICT: This file also has issues: F-006"
+      ],
+      "root_cause": "No lock file present despite having a dependency manifest.",
+      "root_cause_confirmed": true,
+      "missing_information": [],
+      "supporting_tools": [
+        "lock-file-policy"
+      ],
+      "confidence": 1.0,
+      "affected_component": "lock-file"
+    },
+    {
+      "finding_id": "F-006",
+      "category": "configuration_missing",
+      "severity": "medium",
+      "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\fixture-demo-split",
+      "line": null,
+      "known_facts": [
+        "No Python version declaration found",
+        "Checked: .python-version, runtime.txt, pyproject.toml requires-python",
+        "what_wrong: Python version not declared \u2014 environment reproducibility risk",
+        "why_it_matters: Contributors may use incompatible Python versions causing subtle bugs",
+        "how_to_fix: Add a .python-version file or set requires-python in pyproject.toml",
+        "CONFLICT: This file also has issues: F-005"
+      ],
+      "root_cause": "No Python version constraint declared in the project.",
+      "root_cause_confirmed": true,
+      "missing_information": [],
+      "supporting_tools": [
+        "python-version-policy"
+      ],
+      "confidence": 1.0,
+      "affected_component": "python-version"
+    }
+  ],
+  "analysis": {
+    "llm_statement": "LLM advisory (Mistral): ### **Concise Advisory for Python Project Scan Findings**\n\n#### **Key Risks:**\n1. **Syntax Errors** \u2013 `fixable_syntax.py` cannot be compiled, blocking execution.\n2. **Dependency Conflicts** \u2013 `requirements.txt` enforces incompatible versions (`>=2.0` but `1.4` installed).\n3. **Ambiguous Imports** \u2013 Potential runtime errors due to unresolved imports (unconfirmed).\n4. **Missing Lock File** \u2013 No `Pipfile.lock`/`poetry.lock`, risking inconsistent dependency resolution.\n5. **Missing Python Version Constraint** \u2013 Undefined Python version may cause compatibility issues.\n\n#### **Root Cause Patterns:**\n- **Syntax Errors** \u2192 Manual code errors or unsupported Python syntax.\n- **Dependency Conflicts** \u2192 Outdated or misconfigured `requirements.txt`.\n- **Ambiguous Imports** \u2192 Unclear import paths or missing `__init__.py`.\n- **Missing Lock File** \u2192 Incomplete dependency management setup.\n- **No Python Version Constraint** \u2192 Lack of environment specification.\n\n#### **Recommended Priorities:**\n1. **Fix `fixable_syntax.py`** (HIGH) \u2013 Resolve syntax errors immediately.\n2. **Update `requirements.txt`** (HIGH) \u2013 Align with `>=2.0` or adjust constraints.\n3. **Resolve Ambiguous Imports** (HIGH) \u2013 Verify import paths and package structure.\n4. **Generate Lock File** (HIGH) \u2013 Run `pipenv lock` or `poetry lock` for reproducibility.\n5. **Declare Python Version** (MEDIUM) \u2013 Add `python_version` to `Pipfile` or `pyproject.toml`.\n\n**Action Plan:**\n- **Immediate:** Fix syntax errors and dependency conflicts.\n- **Short-term:** Resolve imports and generate lock files.\n- **Long-term:** Enforce version constraints in project metadata.\n\n**Tools to Use:**\n- `pip check` (dependency conflicts)\n- `pipenv`/`poetry` (lock file generation)\n- `pyflakes`/`pylint` (import resolution)",
+    "handoff_statement": "{\n  \"total_issues\": 6,\n  \"files_affected\": [\n    \"D:\\\\Dev\\\\hackaton-uipath-jun29-workbench\\\\pipeline\\\\tests\\\\fixtures\\\\fixture-demo-split\",\n    \"ambiguous_imports.py\",\n    \"fixable_syntax.py\",\n    \"requirements.txt\"\n  ],\n  \"tools_used\": [\n    \"dependency-manifest-inspection\",\n    \"import-validation\",\n    \"lock-file-policy\",\n    \"python -m compileall\",\n    \"python-version-policy\"\n  ],\n  \"root_causes_confirmed\": 4,\n  \"root_causes_unconfirmed\": 2,\n  \"items_requiring_additional_information\": [\n    {\n      \"finding_id\": \"F-002\",\n      \"category\": \"dependency_conflict\",\n      \"missing\": [\n        \"No lock file \\u2014 transitive dependency state unknown\",\n        \"Target Python version not declared\"\n      ]\n    },\n    {\n      \"finding_id\": \"F-003\",\n      \"category\": \"ambiguous_import\",\n      \"missing\": [\n        \"Whether the module is generated during build\",\n        \"Generation command or tool\",\n        \"Expected output location\",\n        \"Whether it should be installed from a private index\"\n      ]\n    },\n    {\n      \"finding_id\": \"F-004\",\n      \"category\": \"ambiguous_import\",\n      \"missing\": [\n        \"Whether the module is generated during build\",\n        \"Generation command or tool\",\n        \"Expected output location\",\n        \"Whether it should be installed from a private index\"\n      ]\n    }\n  ],\n  \"handoff_ready\": true\n}",
+    "pre_calibration_statement": "Pre-calibration: 6 findings baseline.\n  Categories: FindingCategory.AMBIGUOUS_IMPORT(2), FindingCategory.CONFIGURATION_MISSING(2), FindingCategory.DEPENDENCY_CONFLICT(1), FindingCategory.SYNTAX_ERROR(1).\n  High confidence (>=0.9): 3. Low confidence (<0.5): 2.",
+    "classification_dossier": [
+      {
+        "id": "F-001",
+        "type": "code_quality",
+        "severity": "high",
+        "description": "Python parser cannot compile this file.",
+        "file": "fixable_syntax.py",
+        "category": "syntax_error",
+        "confidence": 1.0,
+        "root_cause_confirmed": true,
+        "missing_information": []
+      },
+      {
+        "id": "F-002",
+        "type": "dependency",
+        "severity": "high",
+        "description": "Installed version 1.4 does not satisfy requirement >=2.0.",
+        "file": "requirements.txt",
+        "category": "dependency_conflict",
+        "confidence": 0.7,
+        "root_cause_confirmed": true,
+        "missing_information": [
+          "No lock file \u2014 transitive dependency state unknown",
+          "Target Python version not declared"
+        ]
+      },
+      {
+        "id": "F-003",
+        "type": "code_quality",
+        "severity": "high",
+        "description": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_imports.py",
+        "file": "ambiguous_imports.py",
+        "category": "ambiguous_import",
+        "confidence": 0.3,
+        "root_cause_confirmed": false,
+        "missing_information": [
+          "Whether the module is generated during build",
+          "Generation command or tool",
+          "Expected output location",
+          "Whether it should be installed from a private index"
+        ]
+      },
+      {
+        "id": "F-004",
+        "type": "code_quality",
+        "severity": "high",
+        "description": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_imports.py",
+        "file": "ambiguous_imports.py",
+        "category": "ambiguous_import",
+        "confidence": 0.3,
+        "root_cause_confirmed": false,
+        "missing_information": [
+          "Whether the module is generated during build",
+          "Generation command or tool",
+          "Expected output location",
+          "Whether it should be installed from a private index"
+        ]
+      },
+      {
+        "id": "F-005",
+        "type": "configuration",
+        "severity": "high",
+        "description": "No lock file present despite having a dependency manifest.",
+        "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\fixture-demo-split",
+        "category": "configuration_missing",
+        "confidence": 1.0,
+        "root_cause_confirmed": true,
+        "missing_information": []
+      },
+      {
+        "id": "F-006",
+        "type": "configuration",
+        "severity": "medium",
+        "description": "No Python version constraint declared in the project.",
+        "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\fixture-demo-split",
+        "category": "configuration_missing",
+        "confidence": 1.0,
+        "root_cause_confirmed": true,
+        "missing_information": []
+      }
+    ],
+    "classification_results": [
+      {
+        "id": "F-001",
+        "type": "code_quality",
+        "severity": "high",
+        "description": "Python parser cannot compile this file.",
+        "file": "fixable_syntax.py",
+        "category": "syntax_error",
+        "confidence": 1.0,
+        "root_cause_confirmed": true,
+        "missing_information": []
+      },
+      {
+        "id": "F-002",
+        "type": "dependency",
+        "severity": "high",
+        "description": "Installed version 1.4 does not satisfy requirement >=2.0.",
+        "file": "requirements.txt",
+        "category": "dependency_conflict",
+        "confidence": 0.7,
+        "root_cause_confirmed": true,
+        "missing_information": [
+          "No lock file \u2014 transitive dependency state unknown",
+          "Target Python version not declared"
+        ]
+      },
+      {
+        "id": "F-003",
+        "type": "code_quality",
+        "severity": "high",
+        "description": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_imports.py",
+        "file": "ambiguous_imports.py",
+        "category": "ambiguous_import",
+        "confidence": 0.3,
+        "root_cause_confirmed": false,
+        "missing_information": [
+          "Whether the module is generated during build",
+          "Generation command or tool",
+          "Expected output location",
+          "Whether it should be installed from a private index"
+        ]
+      },
+      {
+        "id": "F-004",
+        "type": "code_quality",
+        "severity": "high",
+        "description": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_imports.py",
+        "file": "ambiguous_imports.py",
+        "category": "ambiguous_import",
+        "confidence": 0.3,
+        "root_cause_confirmed": false,
+        "missing_information": [
+          "Whether the module is generated during build",
+          "Generation command or tool",
+          "Expected output location",
+          "Whether it should be installed from a private index"
+        ]
+      },
+      {
+        "id": "F-005",
+        "type": "configuration",
+        "severity": "high",
+        "description": "No lock file present despite having a dependency manifest.",
+        "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\fixture-demo-split",
+        "category": "configuration_missing",
+        "confidence": 1.0,
+        "root_cause_confirmed": true,
+        "missing_information": []
+      },
+      {
+        "id": "F-006",
+        "type": "configuration",
+        "severity": "medium",
+        "description": "No Python version constraint declared in the project.",
+        "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\fixture-demo-split",
+        "category": "configuration_missing",
+        "confidence": 1.0,
+        "root_cause_confirmed": true,
+        "missing_information": []
+      }
+    ],
+    "total_issues": 6,
+    "critical_count": 0,
+    "high_count": 5
+  },
+  "score": 72.5,
+  "ready_parts": [
+    {
+      "item_id": "F-001",
+      "readiness": "ready",
+      "category": "syntax_error",
+      "file": "fixable_syntax.py",
+      "description": "Python parser cannot compile this file."
+    },
+    {
+      "item_id": "F-005",
+      "readiness": "ready",
+      "category": "configuration_missing",
+      "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\fixture-demo-split",
+      "description": "No lock file present despite having a dependency manifest."
+    },
+    {
+      "item_id": "F-006",
+      "readiness": "ready",
+      "category": "configuration_missing",
+      "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\fixture-demo-split",
+      "description": "No Python version constraint declared in the project."
+    }
+  ],
+  "isolated_parts": [
+    {
+      "item_id": "F-002",
+      "readiness": "awaiting_information",
+      "isolation_reason": "missing_information",
+      "category": "dependency_conflict",
+      "file": "requirements.txt",
+      "description": "Installed version 1.4 does not satisfy requirement >=2.0."
+    },
+    {
+      "item_id": "F-003",
+      "readiness": "awaiting_information",
+      "isolation_reason": "unconfirmed_root_cause",
+      "category": "ambiguous_import",
+      "file": "ambiguous_imports.py",
+      "description": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_imports.py"
+    },
+    {
+      "item_id": "F-004",
+      "readiness": "awaiting_information",
+      "isolation_reason": "unconfirmed_root_cause",
+      "category": "ambiguous_import",
+      "file": "ambiguous_imports.py",
+      "description": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_imports.py"
+    }
+  ],
+  "isolation_handoff": {
+    "packet_status": "advisory_isolation",
+    "reviewer_targets": [
+      "F-002",
+      "F-003",
+      "F-004"
+    ],
+    "authority": "advisory_isolation_only",
+    "execution_authority": false,
+    "blocked_next_phases": [
+      "simulation"
+    ],
+    "external_reviewer_task": "resolve isolation blockers before simulation",
+    "items": [
+      {
+        "item_id": "F-002",
+        "isolation_reason": "missing_information",
+        "authority": "advisory_isolation_only",
+        "execution_authority": false,
+        "what_is_missing": [],
+        "what_was_tried": [
+          "classified as 'FindingCategory.DEPENDENCY_CONFLICT'",
+          "identified: Installed version 1.4 does not satisfy requirement >=2.0."
+        ],
+        "proposed_correction": "resolve missing_information for item F-002",
+        "reviewer_goal": "isolate the unresolved blocker",
+        "required_output": [
+          "smallest reproducible blocker",
+          "cause",
+          "missing proof",
+          "proposed correction"
+        ],
+        "forbidden_output": [
+          "approval to simulate",
+          "approval to mutate"
+        ]
+      },
+      {
+        "item_id": "F-003",
+        "isolation_reason": "unconfirmed_root_cause",
+        "authority": "advisory_isolation_only",
+        "execution_authority": false,
+        "what_is_missing": [
+          "confirmed root cause"
+        ],
+        "what_was_tried": [
+          "classified as 'FindingCategory.AMBIGUOUS_IMPORT'",
+          "identified: [FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_imports.py"
+        ],
+        "proposed_correction": "resolve unconfirmed_root_cause for item F-003",
+        "reviewer_goal": "isolate the unresolved blocker",
+        "required_output": [
+          "smallest reproducible blocker",
+          "cause",
+          "missing proof",
+          "proposed correction"
+        ],
+        "forbidden_output": [
+          "approval to simulate",
+          "approval to mutate"
+        ]
+      },
+      {
+        "item_id": "F-004",
+        "isolation_reason": "unconfirmed_root_cause",
+        "authority": "advisory_isolation_only",
+        "execution_authority": false,
+        "what_is_missing": [
+          "confirmed root cause"
+        ],
+        "what_was_tried": [
+          "classified as 'FindingCategory.AMBIGUOUS_IMPORT'",
+          "identified: [FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_imports.py"
+        ],
+        "proposed_correction": "resolve unconfirmed_root_cause for item F-004",
+        "reviewer_goal": "isolate the unresolved blocker",
+        "required_output": [
+          "smallest reproducible blocker",
+          "cause",
+          "missing proof",
+          "proposed correction"
+        ],
+        "forbidden_output": [
+          "approval to simulate",
+          "approval to mutate"
+        ]
+      }
+    ]
+  },
+  "final_output": {
+    "total_issues": 6,
+    "resolved_count": 3,
+    "unresolved_count": 3,
+    "resolved_items": [
+      {
+        "item_id": "F-001",
+        "root_cause": "Python parser cannot compile this file.",
+        "resolution": "Fixed via simulation on candidate copy",
+        "validation": "compileall validation passed",
+        "released": true
+      },
+      {
+        "item_id": "F-005",
+        "root_cause": "No lock file present despite having a dependency manifest.",
+        "resolution": "Fixed via simulation on candidate copy",
+        "validation": "compileall validation passed",
+        "released": true
+      },
+      {
+        "item_id": "F-006",
+        "root_cause": "No Python version constraint declared in the project.",
+        "resolution": "Fixed via simulation on candidate copy",
+        "validation": "compileall validation passed",
+        "released": true
+      }
+    ],
+    "unresolved_items": [
+      {
+        "item_id": "F-002",
+        "root_cause": "Installed version 1.4 does not satisfy requirement >=2.0.",
+        "why_unresolved": "Missing information prevents safe one-shot resolution",
+        "what_was_tried": [
+          "Automated analysis",
+          "Targeted research"
+        ],
+        "missing_information": [
+          "External information required for safe resolution"
+        ],
+        "next_steps": [
+          "Provide missing information",
+          "Re-run pipeline with additional context"
+        ],
+        "retry_guidance": "Re-run after providing the missing information identified above"
+      },
+      {
+        "item_id": "F-003",
+        "root_cause": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_imports.py",
+        "why_unresolved": "Missing information prevents safe one-shot resolution",
+        "what_was_tried": [
+          "Automated analysis",
+          "Targeted research"
+        ],
+        "missing_information": [
+          "External information required for safe resolution"
+        ],
+        "next_steps": [
+          "Provide missing information",
+          "Re-run pipeline with additional context"
+        ],
+        "retry_guidance": "Re-run after providing the missing information identified above"
+      },
+      {
+        "item_id": "F-004",
+        "root_cause": "[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_imports.py",
+        "why_unresolved": "Missing information prevents safe one-shot resolution",
+        "what_was_tried": [
+          "Automated analysis",
+          "Targeted research"
+        ],
+        "missing_information": [
+          "External information required for safe resolution"
+        ],
+        "next_steps": [
+          "Provide missing information",
+          "Re-run pipeline with additional context"
+        ],
+        "retry_guidance": "Re-run after providing the missing information identified above"
+      }
+    ],
+    "resolved_html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Final Output Report</title>\n    <style>\n        body { font-family: sans-serif; margin: 2em; color: #222; }\n        h1 { border-bottom: 2px solid #333; padding-bottom: 0.3em; }\n        h2 { color: #444; margin-top: 1.5em; }\n        table { border-collapse: collapse; width: 100%; margin-top: 0.5em; }\n        th, td { border: 1px solid #ccc; padding: 0.5em 0.75em; text-align: left; }\n        th { background: #f5f5f5; }\n        .status { font-weight: bold; padding: 0.3em 0.6em; border-radius: 3px; }\n        .status-resolved { background: #d4edda; color: #155724; }\n        .status-partial { background: #fff3cd; color: #856404; }\n        .status-cancelled { background: #f8d7da; color: #721c24; }\n        .hash { font-family: monospace; font-size: 0.85em; word-break: break-all; }\n        section { margin-bottom: 2em; }\n    </style>\n</head>\n<body>\n    <h1>Final Output Report</h1>\n    <p class=\"status status-partial\">Partial Resolution \u2014 Continuation Required</p>\n\n    <section id=\"user-decision\">\n        <h2>User Decision</h2>\n        <p><strong>Decision:</strong> apply</p>\n    </section>\n\n    <section id=\"original-state\">\n        <h2>Original State (Snapshot)</h2>\n        <p class=\"hash\"><strong>Snapshot Hash:</strong> 5bcece0f050f0fe7310cd0ad6d1fa2ac7ca94be4f080de135b5ac255e3942584</p>\n    </section>\n\n    <section id=\"candidate-state\">\n        <h2>Candidate State</h2>\n        <p class=\"hash\"><strong>Inspection Hash:</strong> e0e60a47f34bacf0aa6c0d4831b6f7a5d3c9d71c76241c48c6ed64a288a136ba</p>\n    </section>\n\n    <section id=\"final-target-state\">\n        <h2>Final Target State</h2>\n        <p class=\"hash\"><strong>Final Target Hash:</strong> 5a3837a6fea948ff66e226dff6926a32247defd1dce40c37b234b07a9c4a9072</p>\n    </section>\n\n    <section id=\"resolved-items\">\n        <h2>Resolved Items (3)</h2>\n        <table>\n            <thead>\n                <tr>\n                    <th>Item ID</th>\n                    <th>Root Cause</th>\n                    <th>Resolution</th>\n                    <th>Validation</th>\n                    <th>Released</th>\n                </tr>\n            </thead>\n            <tbody>\n        <tr>\n            <td>F-001</td>\n            <td>Python parser cannot compile this file.</td>\n            <td>Fixed via simulation on candidate copy</td>\n            <td>compileall validation passed</td>\n            <td>Yes</td>\n        </tr>\n        <tr>\n            <td>F-005</td>\n            <td>No lock file present despite having a dependency manifest.</td>\n            <td>Fixed via simulation on candidate copy</td>\n            <td>compileall validation passed</td>\n            <td>Yes</td>\n        </tr>\n        <tr>\n            <td>F-006</td>\n            <td>No Python version constraint declared in the project.</td>\n            <td>Fixed via simulation on candidate copy</td>\n            <td>compileall validation passed</td>\n            <td>Yes</td>\n        </tr>\n            </tbody>\n        </table>\n    </section>\n\n    <section id=\"unresolved-items\">\n        <h2>Unresolved Items (3)</h2>\n        <table>\n            <thead>\n                <tr>\n                    <th>Item ID</th>\n                    <th>Root Cause</th>\n                    <th>Why Unresolved</th>\n                    <th>What Was Tried</th>\n                    <th>Missing Information</th>\n                    <th>Next Steps</th>\n                </tr>\n            </thead>\n            <tbody>\n        <tr>\n            <td>F-002</td>\n            <td>Installed version 1.4 does not satisfy requirement &gt;=2.0.</td>\n            <td>Missing information prevents safe one-shot resolution</td>\n            <td>Automated analysis, Targeted research</td>\n            <td>External information required for safe resolution</td>\n            <td>Provide missing information, Re-run pipeline with additional context</td>\n        </tr>\n        <tr>\n            <td>F-003</td>\n            <td>[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_imports.py</td>\n            <td>Missing information prevents safe one-shot resolution</td>\n            <td>Automated analysis, Targeted research</td>\n            <td>External information required for safe resolution</td>\n            <td>Provide missing information, Re-run pipeline with additional context</td>\n        </tr>\n        <tr>\n            <td>F-004</td>\n            <td>[FindingCategory.AMBIGUOUS_IMPORT] in ambiguous_imports.py</td>\n            <td>Missing information prevents safe one-shot resolution</td>\n            <td>Automated analysis, Targeted research</td>\n            <td>External information required for safe resolution</td>\n            <td>Provide missing information, Re-run pipeline with additional context</td>\n        </tr>\n            </tbody>\n        </table>\n    </section>\n\n    <section id=\"hash-verification\">\n        <h2>Hash Verification</h2>\n        <table>\n            <thead>\n                <tr><th>Hash Type</th><th>Value</th></tr>\n            </thead>\n            <tbody>\n                <tr><td>Snapshot Hash</td><td class=\"hash\">5bcece0f050f0fe7310cd0ad6d1fa2ac7ca94be4f080de135b5ac255e3942584</td></tr>\n                <tr><td>Inspection Hash</td><td class=\"hash\">e0e60a47f34bacf0aa6c0d4831b6f7a5d3c9d71c76241c48c6ed64a288a136ba</td></tr>\n                <tr><td>Final Target Hash</td><td class=\"hash\">5a3837a6fea948ff66e226dff6926a32247defd1dce40c37b234b07a9c4a9072</td></tr>\n            </tbody>\n        </table>\n    </section>\n</body>\n</html>",
+    "completion_status": "partially_resolved",
+    "success_note": "",
+    "continuation_handoff": "3 of 6 issues resolved and released. 3 issues require continuation. See handoff report for step-by-step guidance.",
+    "snapshot_hash": "5bcece0f050f0fe7310cd0ad6d1fa2ac7ca94be4f080de135b5ac255e3942584",
+    "inspection_hash": "e0e60a47f34bacf0aa6c0d4831b6f7a5d3c9d71c76241c48c6ed64a288a136ba",
+    "final_target_hash": "5a3837a6fea948ff66e226dff6926a32247defd1dce40c37b234b07a9c4a9072",
+    "forward_traces": [
+      {
+        "item_id": "F-001",
+        "phase_0_snapshot": "e13d2c6b-6836-4e7e-9612-00829c4aee67",
+        "phase_1_finding": "F-001",
+        "phase_2_item": "analysis-F-001",
+        "phase_3_result": "",
+        "phase_4_inspection": "",
+        "phase_5_relay": "",
+        "phase_6_final": "final-demo-failure-F-001",
+        "trace_complete": false
+      },
+      {
+        "item_id": "F-005",
+        "phase_0_snapshot": "e13d2c6b-6836-4e7e-9612-00829c4aee67",
+        "phase_1_finding": "F-005",
+        "phase_2_item": "analysis-F-005",
+        "phase_3_result": "",
+        "phase_4_inspection": "",
+        "phase_5_relay": "",
+        "phase_6_final": "final-demo-failure-F-005",
+        "trace_complete": false
+      },
+      {
+        "item_id": "F-006",
+        "phase_0_snapshot": "e13d2c6b-6836-4e7e-9612-00829c4aee67",
+        "phase_1_finding": "F-006",
+        "phase_2_item": "analysis-F-006",
+        "phase_3_result": "",
+        "phase_4_inspection": "",
+        "phase_5_relay": "",
+        "phase_6_final": "final-demo-failure-F-006",
+        "trace_complete": false
+      },
+      {
+        "item_id": "F-002",
+        "phase_0_snapshot": "e13d2c6b-6836-4e7e-9612-00829c4aee67",
+        "phase_1_finding": "F-002",
+        "phase_2_item": "analysis-F-002",
+        "phase_3_result": "",
+        "phase_4_inspection": "",
+        "phase_5_relay": "",
+        "phase_6_final": "final-demo-failure-F-002",
+        "trace_complete": false
+      },
+      {
+        "item_id": "F-003",
+        "phase_0_snapshot": "e13d2c6b-6836-4e7e-9612-00829c4aee67",
+        "phase_1_finding": "F-003",
+        "phase_2_item": "analysis-F-003",
+        "phase_3_result": "",
+        "phase_4_inspection": "",
+        "phase_5_relay": "",
+        "phase_6_final": "final-demo-failure-F-003",
+        "trace_complete": false
+      },
+      {
+        "item_id": "F-004",
+        "phase_0_snapshot": "e13d2c6b-6836-4e7e-9612-00829c4aee67",
+        "phase_1_finding": "F-004",
+        "phase_2_item": "analysis-F-004",
+        "phase_3_result": "",
+        "phase_4_inspection": "",
+        "phase_5_relay": "",
+        "phase_6_final": "final-demo-failure-F-004",
+        "trace_complete": false
+      }
+    ],
+    "backward_traces": [
+      {
+        "item_id": "F-001",
+        "phase_6_final": "final-demo-failure-F-001",
+        "phase_5_relay": "",
+        "phase_4_inspection": "",
+        "phase_3_result": "",
+        "phase_2_item": "analysis-F-001",
+        "phase_1_finding": "F-001",
+        "phase_0_snapshot": "e13d2c6b-6836-4e7e-9612-00829c4aee67",
+        "trace_complete": false
+      },
+      {
+        "item_id": "F-005",
+        "phase_6_final": "final-demo-failure-F-005",
+        "phase_5_relay": "",
+        "phase_4_inspection": "",
+        "phase_3_result": "",
+        "phase_2_item": "analysis-F-005",
+        "phase_1_finding": "F-005",
+        "phase_0_snapshot": "e13d2c6b-6836-4e7e-9612-00829c4aee67",
+        "trace_complete": false
+      },
+      {
+        "item_id": "F-006",
+        "phase_6_final": "final-demo-failure-F-006",
+        "phase_5_relay": "",
+        "phase_4_inspection": "",
+        "phase_3_result": "",
+        "phase_2_item": "analysis-F-006",
+        "phase_1_finding": "F-006",
+        "phase_0_snapshot": "e13d2c6b-6836-4e7e-9612-00829c4aee67",
+        "trace_complete": false
+      },
+      {
+        "item_id": "F-002",
+        "phase_6_final": "final-demo-failure-F-002",
+        "phase_5_relay": "",
+        "phase_4_inspection": "",
+        "phase_3_result": "",
+        "phase_2_item": "analysis-F-002",
+        "phase_1_finding": "F-002",
+        "phase_0_snapshot": "e13d2c6b-6836-4e7e-9612-00829c4aee67",
+        "trace_complete": false
+      },
+      {
+        "item_id": "F-003",
+        "phase_6_final": "final-demo-failure-F-003",
+        "phase_5_relay": "",
+        "phase_4_inspection": "",
+        "phase_3_result": "",
+        "phase_2_item": "analysis-F-003",
+        "phase_1_finding": "F-003",
+        "phase_0_snapshot": "e13d2c6b-6836-4e7e-9612-00829c4aee67",
+        "trace_complete": false
+      },
+      {
+        "item_id": "F-004",
+        "phase_6_final": "final-demo-failure-F-004",
+        "phase_5_relay": "",
+        "phase_4_inspection": "",
+        "phase_3_result": "",
+        "phase_2_item": "analysis-F-004",
+        "phase_1_finding": "F-004",
+        "phase_0_snapshot": "e13d2c6b-6836-4e7e-9612-00829c4aee67",
+        "trace_complete": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A/B Isolation Harness Report</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #c9d1d9; padding: 2rem; }
+        h1 { color: #58a6ff; margin-bottom: 0.5rem; font-size: 1.6rem; }
+        .meta { color: #8b949e; margin-bottom: 2rem; font-size: 0.9rem; }
+        .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .summary-card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 1rem; text-align: center; }
+        .summary-card .value { font-size: 1.8rem; font-weight: bold; color: #58a6ff; }
+        .summary-card .label { font-size: 0.8rem; color: #8b949e; margin-top: 0.3rem; }
+        table { width: 100%; border-collapse: collapse; background: #161b22; border-radius: 8px; overflow: hidden; }
+        th { background: #21262d; color: #58a6ff; padding: 0.8rem; text-align: left; font-size: 0.85rem; text-transform: uppercase; }
+        td { padding: 0.7rem 0.8rem; border-top: 1px solid #21262d; font-size: 0.9rem; vertical-align: middle; }
+        .fixture-name { font-weight: 600; color: #f0f6fc; }
+        .bar-container { background: #21262d; border-radius: 4px; height: 20px; margin: 2px 0; position: relative; min-width: 200px; }
+        .bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 6px; font-size: 0.75rem; font-weight: bold; color: #fff; min-width: 40px; }
+        .bar-a { background: linear-gradient(90deg, #f85149, #da3633); }
+        .bar-b { background: linear-gradient(90deg, #3fb950, #238636); }
+        .delta.positive { color: #3fb950; font-weight: bold; }
+        .delta.negative { color: #f85149; font-weight: bold; }
+        .delta.neutral { color: #8b949e; }
+        .unlock { text-align: center; }
+        .intact { text-align: center; }
+        .threshold-line { position: absolute; left: 93.91%; top: 0; bottom: 0; border-left: 2px dashed #f0883e; z-index: 10; }
+        .legend { margin-top: 1.5rem; display: flex; gap: 2rem; font-size: 0.85rem; color: #8b949e; }
+        .legend-item { display: flex; align-items: center; gap: 0.4rem; }
+        .legend-swatch { width: 14px; height: 14px; border-radius: 3px; }
+        .swatch-a { background: #da3633; }
+        .swatch-b { background: #238636; }
+    </style>
+</head>
+<body>
+    <h1>A/B Isolation Harness Report</h1>
+    <div class="meta">
+        Generated: 2026-06-28T16:02:17.420283+00:00 | Fixtures: 5 | All Intact: True
+    </div>
+
+    <div class="summary">
+        <div class="summary-card">
+            <div class="value">83.3%</div>
+            <div class="label">Avg Score A (Off)</div>
+        </div>
+        <div class="summary-card">
+            <div class="value">96.8%</div>
+            <div class="label">Avg Score B (On)</div>
+        </div>
+        <div class="summary-card">
+            <div class="value">+13.4%</div>
+            <div class="label">Avg Delta</div>
+        </div>
+        <div class="summary-card">
+            <div class="value">3/5</div>
+            <div class="label">Improved</div>
+        </div>
+        <div class="summary-card">
+            <div class="value">2/5</div>
+            <div class="label">Unlocked Sim</div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Fixture</th>
+                <th>Score (A=red, B=green)</th>
+                <th>Delta</th>
+                <th>Ready Parts</th>
+                <th>Isolated Parts</th>
+                <th>Sim Unlock</th>
+                <th>Intact</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <td class="fixture-name">fixture_01_syntax_only</td>
+            <td>
+                <div class="bar-container">
+                    <div class="bar bar-a" style="width: 100%">100.0%</div>
+                </div>
+                <div class="bar-container">
+                    <div class="bar bar-b" style="width: 100%">100.0%</div>
+                </div>
+            </td>
+            <td class="delta neutral">+0.00%</td>
+            <td>2 &rarr; 2</td>
+            <td>0 &rarr; 0</td>
+            <td class="unlock">&#x2713; &rarr; &#x2713;</td>
+            <td class="intact">&#x2713;</td>
+        </tr>
+
+        <tr>
+            <td class="fixture-name">fixture_02_dependency_chain</td>
+            <td>
+                <div class="bar-container">
+                    <div class="bar bar-a" style="width: 80.0%">80.0%</div>
+                </div>
+                <div class="bar-container">
+                    <div class="bar bar-b" style="width: 95.0%">95.0%</div>
+                </div>
+            </td>
+            <td class="delta positive">+15.00%</td>
+            <td>3 &rarr; 4</td>
+            <td>1 &rarr; 0</td>
+            <td class="unlock">&#x2717; &rarr; &#x2713;</td>
+            <td class="intact">&#x2713;</td>
+        </tr>
+
+        <tr>
+            <td class="fixture-name">fixture_03_ambiguous_mix</td>
+            <td>
+                <div class="bar-container">
+                    <div class="bar bar-a" style="width: 52.5%">52.5%</div>
+                </div>
+                <div class="bar-container">
+                    <div class="bar bar-b" style="width: 92.5%">92.5%</div>
+                </div>
+            </td>
+            <td class="delta positive">+40.00%</td>
+            <td>1 &rarr; 3</td>
+            <td>2 &rarr; 0</td>
+            <td class="unlock">&#x2717; &rarr; &#x2717;</td>
+            <td class="intact">&#x2713;</td>
+        </tr>
+
+        <tr>
+            <td class="fixture-name">fixture_04_mixed_severity</td>
+            <td>
+                <div class="bar-container">
+                    <div class="bar bar-a" style="width: 100%">100.0%</div>
+                </div>
+                <div class="bar-container">
+                    <div class="bar bar-b" style="width: 100%">100.0%</div>
+                </div>
+            </td>
+            <td class="delta neutral">+0.00%</td>
+            <td>3 &rarr; 3</td>
+            <td>0 &rarr; 0</td>
+            <td class="unlock">&#x2713; &rarr; &#x2713;</td>
+            <td class="intact">&#x2713;</td>
+        </tr>
+
+        <tr>
+            <td class="fixture-name">fixture_05_chaos_combined</td>
+            <td>
+                <div class="bar-container">
+                    <div class="bar bar-a" style="width: 84.25%">84.2%</div>
+                </div>
+                <div class="bar-container">
+                    <div class="bar bar-b" style="width: 96.25%">96.2%</div>
+                </div>
+            </td>
+            <td class="delta positive">+12.00%</td>
+            <td>4 &rarr; 5</td>
+            <td>1 &rarr; 0</td>
+            <td class="unlock">&#x2717; &rarr; &#x2713;</td>
+            <td class="intact">&#x2713;</td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <div class="legend">
+        <div class="legend-item"><div class="legend-swatch swatch-a"></div> Run A (isolation OFF)</div>
+        <div class="legend-item"><div class="legend-swatch swatch-b"></div> Run B (isolation ON)</div>
+        <div class="legend-item">| Threshold: 93.91%</div>
+    </div>
+</body>
+</html>

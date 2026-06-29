@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NextFlow — Deterministic Pipeline Processing</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #c9d1d9; padding: 2rem; min-height: 100vh; }
+h1 { color: #58a6ff; font-size: 2.2rem; margin-bottom: 0.5rem; }
+.subtitle { color: #8b949e; margin-bottom: 2rem; font-size: 1.1rem; }
+.section { margin-bottom: 2rem; }
+.section h2 { color: #7ee787; font-size: 1.3rem; margin-bottom: 0.8rem; border-bottom: 1px solid #21262d; padding-bottom: 0.4rem; }
+.links { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+.card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 1.2rem; transition: border-color 0.2s; }
+.card:hover { border-color: #58a6ff; }
+.card a { color: #58a6ff; text-decoration: none; font-weight: 600; font-size: 1rem; }
+.card a:hover { text-decoration: underline; }
+.card p { color: #8b949e; font-size: 0.85rem; margin-top: 0.4rem; }
+.meta { color: #8b949e; font-size: 0.8rem; margin-top: 3rem; border-top: 1px solid #21262d; padding-top: 1rem; }
+.meta a { color: #58a6ff; }
+</style>
+</head>
+<body>
+
+<h1>NextFlow</h1>
+<p class="subtitle">Deterministic Pipeline Processing for AI-Generated Configuration Repairs<br>
+Team: The OneShot &middot; Author: Minh Le &middot; UiPath AgentHack Track 2</p>
+
+<div class="section">
+<h2>Presentation</h2>
+<div class="links">
+<div class="card">
+<a href="deck.html">NextFlow — Presentation Deck</a>
+<p>Full slide deck: problem, solution, architecture, demo, safety contract, and next steps.</p>
+</div>
+</div>
+</div>
+
+<div class="section">
+<h2>Pipeline Proof Reports</h2>
+<div class="links">
+<div class="card">
+<a href="reports/pipeline-report.html">Pipeline Execution Report</a>
+<p>Complete visual report: phase timings, scoring breakdown, isolation results, and final state.</p>
+</div>
+<div class="card">
+<a href="reports/ab_pipeline_demo.html">A/B Pipeline Demo</a>
+<p>Side-by-side comparison: isolation ON vs OFF. Proves isolation engine improves resolution quality.</p>
+</div>
+<div class="card">
+<a href="reports/ab_harness_report.html">A/B Harness Report</a>
+<p>5-fixture isolation experiment with detailed per-fixture scoring breakdown.</p>
+</div>
+<div class="card">
+<a href="reports/edge_scan_report.html">Edge Scan Report</a>
+<p>Confidence scoring, code graders, and weighted admission gate results.</p>
+</div>
+<div class="card">
+<a href="reports/resolution_report.html">Resolution Report</a>
+<p>Final resolution status: resolved items, unresolved items, and completion metrics.</p>
+</div>
+<div class="card">
+<a href="reports/pipeline-evidence-terminal.html">Terminal Execution Evidence</a>
+<p>Full terminal output of a live pipeline run proving 8/8 phase completion.</p>
+</div>
+</div>
+</div>
+
+<div class="section">
+<h2>Repository</h2>
+<div class="links">
+<div class="card">
+<a href="https://github.com/itz1508/hackathon-uipath">GitHub Repository</a>
+<p>Source code, contracts, BPMN processes, tests, and execution traces.</p>
+</div>
+</div>
+</div>
+
+<div class="meta">
+Copyright &copy; 2026 The OneShot &middot; Apache License 2.0 &middot; 
+<a href="https://github.com/itz1508/hackathon-uipath">github.com/itz1508/hackathon-uipath</a>
+</div>
+
+</body>
+</html>

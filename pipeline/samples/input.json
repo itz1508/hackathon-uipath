@@ -1,0 +1,7 @@
+{
+  "case_id": "demo-001",
+  "result_id": "result-001",
+  "result_hash": "0123456789abcdef",
+  "target_path": "config/application.json",
+  "requested_action": "prepare_approval"
+}

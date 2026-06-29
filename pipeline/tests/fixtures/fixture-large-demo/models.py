@@ -1,0 +1,4 @@
+"""Models."""
+
+class Item:
+    pass

@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/uipath/schemas/handoff.schema.json",
+  "title": "Handoff Statement",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "handoff_id", "current_stage", "completed_stage", "destination_stage", "status", "snapshot_ref", "raw_statement_ref", "recalibration_ref", "target", "scope", "classification", "missing_information", "unresolved_items", "auto_dependency", "isolation_required", "isolation_reasons", "next_action"],
+  "properties": {
+    "$schema_ref": {"const": "../../uipath/schemas/handoff.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "handoff_id": {"$ref": "#/$defs/nonEmptyString"},
+    "current_stage": {"const": "handoff_statement"},
+    "completed_stage": {"const": "02.25-recalibration"},
+    "destination_stage": {"const": "02.5-pre-simulation"},
+    "status": {"enum": ["ready", "blocked", "needs_input"]},
+    "snapshot_ref": {"$ref": "#/$defs/nonEmptyString"},
+    "raw_statement_ref": {"$ref": "#/$defs/nonEmptyString"},
+    "recalibration_ref": {"$ref": "#/$defs/nonEmptyString"},
+    "target": {"$ref": "#/$defs/nonEmptyString"},
+    "scope": {"$ref": "#/$defs/scope"},
+    "classification": {"$ref": "#/$defs/nonEmptyString"},
+    "missing_information": {"type": "array", "items": {"$ref": "#/$defs/nonEmptyString"}, "uniqueItems": true},
+    "unresolved_items": {"type": "array", "items": {"$ref": "#/$defs/nonEmptyString"}, "uniqueItems": true},
+    "auto_dependency": {"$ref": "#/$defs/autoDependency"},
+    "isolation_required": {"type": "boolean"},
+    "isolation_reasons": {"type": "array", "items": {"enum": ["dependency_identity_unclear", "dependency_requirement_unclear", "normal_tool_cannot_resolve", "pre_simulation_information_missing", "success_criteria_undefined"]}, "uniqueItems": true},
+    "next_action": {"enum": ["build_pre_simulation_package", "request_required_dependency", "prepare_declared_dependency", "build_isolation_addon", "resolve_missing_information"]}
+  },
+  "allOf": [
+    {"if": {"properties": {"isolation_required": {"const": true}}, "required": ["isolation_required"]}, "then": {"properties": {"isolation_reasons": {"minItems": 1}, "next_action": {"const": "build_isolation_addon"}}}},
+    {"if": {"properties": {"isolation_required": {"const": false}}, "required": ["isolation_required"]}, "then": {"properties": {"isolation_reasons": {"maxItems": 0}}}}
+  ],
+  "$defs": {
+    "nonEmptyString": {"type": "string", "minLength": 1},
+    "scope": {
+      "type": "object", "additionalProperties": false,
+      "required": ["description", "locked", "included_paths", "excluded_paths"],
+      "properties": {
+        "description": {"$ref": "#/$defs/nonEmptyString"}, "locked": {"const": true},
+        "included_paths": {"type": "array", "items": {"$ref": "#/$defs/nonEmptyString"}, "uniqueItems": true},
+        "excluded_paths": {"type": "array", "items": {"$ref": "#/$defs/nonEmptyString"}, "uniqueItems": true}
+      }
+    },
+    "failureInformation": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "object", "additionalProperties": false, "required": ["code", "message"], "properties": {"code": {"$ref": "#/$defs/nonEmptyString"}, "message": {"$ref": "#/$defs/nonEmptyString"}}}
+      ]
+    },
+    "dependency": {
+      "type": "object", "additionalProperties": false,
+      "required": ["dependency_id", "name", "reason_required", "required", "status", "source", "action_taken", "resulting_status", "required_action", "failure_information"],
+      "properties": {
+        "dependency_id": {"$ref": "#/$defs/nonEmptyString"}, "name": {"$ref": "#/$defs/nonEmptyString"},
+        "reason_required": {"$ref": "#/$defs/nonEmptyString"}, "required": {"type": "boolean"},
+        "status": {"enum": ["available", "missing", "unclear", "failed"]},
+        "source": {"$ref": "#/$defs/nonEmptyString"},
+        "action_taken": {"enum": ["none", "detected", "used", "prepared"]},
+        "resulting_status": {"enum": ["available", "missing", "unclear", "failed"]},
+        "required_action": {"$ref": "#/$defs/nonEmptyString"},
+        "failure_information": {"$ref": "#/$defs/failureInformation"}
+      }
+    },
+    "autoDependency": {
+      "type": "object", "additionalProperties": false,
+      "required": ["enabled", "status", "dependencies", "unresolved_dependencies"],
+      "properties": {
+        "enabled": {"type": "boolean"}, "status": {"enum": ["on", "off"]},
+        "dependencies": {"type": "array", "items": {"$ref": "#/$defs/dependency"}},
+        "unresolved_dependencies": {"type": "array", "items": {"$ref": "#/$defs/nonEmptyString"}, "uniqueItems": true}
+      },
+      "allOf": [
+        {"if": {"properties": {"enabled": {"const": true}}, "required": ["enabled"]}, "then": {"properties": {"status": {"const": "on"}}}},
+        {
+          "if": {"properties": {"enabled": {"const": false}}, "required": ["enabled"]},
+          "then": {
+            "properties": {
+              "status": {"const": "off"},
+              "dependencies": {"items": {"properties": {"action_taken": {"const": "none"}}}}
+            }
+          }
+        }
+      ]
+    }
+  }
+}

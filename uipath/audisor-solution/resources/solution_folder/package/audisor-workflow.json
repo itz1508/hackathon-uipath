@@ -1,0 +1,22 @@
+{
+  "docVersion": "1.0.0",
+  "resource": {
+    "name": "audisor-workflow",
+    "kind": "package",
+    "apiVersion": "orchestrator.uipath.com/v1",
+    "projectKey": "4f07a622-3506-4f37-a443-212e3315c4c5",
+    "dependencies": [],
+    "runtimeDependencies": [],
+    "folders": [
+      {
+        "fullyQualifiedName": "solution_folder"
+      }
+    ],
+    "spec": {
+      "name": "audisor-workflow"
+    },
+    "locks": [],
+    "key": "07363910-bc97-4357-aa17-d62f5fbbe2c8",
+    "files": []
+  }
+}

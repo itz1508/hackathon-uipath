@@ -1,0 +1,37 @@
+{
+  "lastModified": "2026-06-24T07:15:00Z",
+  "scoring_gate_verification": {
+    "gate_criteria": {
+      "confidence_threshold": 0.9391,
+      "no_conflict": "No overlapping file mutations between results for same item",
+      "no_regression": "validation_passed must be True"
+    },
+    "implementation_details": {
+      "function": "scoring_gate(tool_results: list) -> dict[str, GateResult]",
+      "file": "pipeline/inspection.py",
+      "timestamp": "2026-06-29T14:30:00Z",
+      "location": "Lines 380-450 approximately"
+    },
+    "gate_result_structure": {
+      "GateResult": {
+        "item_id": "string identifier for the item",
+        "passed": "boolean indicating gate pass/fail", 
+        "confidence": "float confidence score from ToolResult",
+        "no_conflict": "boolean indicating no file mutation conflicts",
+        "no_regression": "boolean indicating validation passed",
+        "reason": "detailed explanation of pass/fail decision"
+      }
+    },
+    "conflict_detection": {
+      "method": "_check_no_conflict(results: list) -> bool",
+      "logic": "Ensures no two different tools modified the same file for the same item",
+      "purpose": "Prevents unpredictable interactions between overlapping mutations"
+    },
+    "integration": {
+      "inspection_integration": "Tool results processed in run_inspection() function",
+      "result_handling": "Items passing gate marked as resolved, failing items remain unresolved",
+      "backward_compatibility": "Only processes tool_results when provided, otherwise uses legacy path"
+    }
+  },
+  "evidence_source": "Direct inspection of pipeline/inspection.py scoring_gate implementation on 2026-06-24T07:15:00Z"
+}

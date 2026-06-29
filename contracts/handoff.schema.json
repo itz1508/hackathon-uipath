@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://nextflow.local/contracts/handoff.schema.json","type":"object","additionalProperties":false,
+  "required":["current_stage","completed_stage","destination_stage","status","snapshot_ref","raw_statement_ref","target","scope","classification","missing_information","unresolved_items","auto_dependency","isolation_required","next_action"],
+  "properties":{
+    "current_stage":{"const":"handoff_statement"},"completed_stage":{"const":"02-analysis-classification-recalibration"},"destination_stage":{"const":"02.5-pre-simulation"},"status":{"enum":["ready","blocked","needs_input"]},
+    "snapshot_ref":{"type":"object"},"raw_statement_ref":{"type":"object"},"target":{"type":"object"},
+    "scope":{"type":"object","additionalProperties":false,"required":["locked","included","excluded"],"properties":{"locked":{"const":true},"included":{"type":"array","items":{"type":"string"},"uniqueItems":true},"excluded":{"type":"array","items":{"type":"string"},"uniqueItems":true}}},
+    "classification":{"type":"object"},"missing_information":{"type":"array"},"unresolved_items":{"type":"array"},
+    "auto_dependency":{"type":"object","additionalProperties":false,"required":["enabled","status","dependencies","unresolved_dependencies"],"properties":{"enabled":{"type":"boolean"},"status":{"enum":["on","off"]},"dependencies":{"type":"array"},"unresolved_dependencies":{"type":"array","items":{"type":"string"},"uniqueItems":true}},"allOf":[{"if":{"properties":{"enabled":{"const":true}}},"then":{"properties":{"status":{"const":"on"}}}},{"if":{"properties":{"enabled":{"const":false}}},"then":{"properties":{"status":{"const":"off"}}}}]},
+    "isolation_required":{"type":"boolean"},"next_action":{"enum":["build_pre_simulation_package","request_required_dependency","build_isolation_addon","resolve_missing_information"]}
+  }
+}

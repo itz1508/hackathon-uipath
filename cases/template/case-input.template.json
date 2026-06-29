@@ -1,0 +1,9 @@
+{
+  "case_id": "<case-id>",
+  "target_id": "<target-id>",
+  "allowed_scope": [],
+  "excluded_scope": [],
+  "dependency_policy": "off",
+  "decision_recipient": "<user-or-group>",
+  "successful_result": {}
+}

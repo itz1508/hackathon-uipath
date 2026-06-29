@@ -1,0 +1,5 @@
+{
+  "service_name": "sample-service",
+  "retry_limit": 3,
+  "enabled": true
+}
