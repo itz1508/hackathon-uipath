@@ -1,13 +1,13 @@
 {
   "harness": "isolation_ab_suite",
-  "timestamp": "2026-06-28T16:02:17.420283+00:00",
-  "suite_dir": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite",
+  "timestamp": "2026-06-29T21:37:23.604435+00:00",
+  "suite_dir": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite",
   "fixture_count": 5,
   "all_fixtures_intact": true,
   "results": [
     {
       "fixture": "fixture_01_syntax_only",
-      "fixture_path": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_01_syntax_only",
+      "fixture_path": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_01_syntax_only",
       "hash_before": "9f76fb7f0e9449c74f324c9f6ea515a48c70bf46161e85f1fe0321726a146321",
       "hash_after_a": "9f76fb7f0e9449c74f324c9f6ea515a48c70bf46161e85f1fe0321726a146321",
       "hash_after_b": "9f76fb7f0e9449c74f324c9f6ea515a48c70bf46161e85f1fe0321726a146321",
@@ -28,7 +28,7 @@
             "item_id": "F-002",
             "readiness": "ready",
             "category": "configuration_missing",
-            "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_01_syntax_only",
+            "file": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_01_syntax_only",
             "description": "No Python version constraint declared in the project."
           }
         ],
@@ -39,7 +39,7 @@
         "unresolved_count": 0,
         "completion_status": "fully_resolved",
         "pipeline_status": "succeeded",
-        "duration_ms": 3929,
+        "duration_ms": 446,
         "isolation_engine": {},
         "simulation_unlock": true
       },
@@ -59,7 +59,7 @@
             "item_id": "F-002",
             "readiness": "ready",
             "category": "configuration_missing",
-            "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_01_syntax_only",
+            "file": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_01_syntax_only",
             "description": "No Python version constraint declared in the project."
           }
         ],
@@ -70,7 +70,7 @@
         "unresolved_count": 0,
         "completion_status": "fully_resolved",
         "pipeline_status": "succeeded",
-        "duration_ms": 3478,
+        "duration_ms": 512,
         "isolation_engine": {},
         "simulation_unlock": true
       },
@@ -85,60 +85,13 @@
     },
     {
       "fixture": "fixture_02_dependency_chain",
-      "fixture_path": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_02_dependency_chain",
+      "fixture_path": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_02_dependency_chain",
       "hash_before": "49713509f34ce7865776d93f92bb3ee3157ba1d9aafc04f815a861cd6b54562c",
       "hash_after_a": "49713509f34ce7865776d93f92bb3ee3157ba1d9aafc04f815a861cd6b54562c",
       "hash_after_b": "49713509f34ce7865776d93f92bb3ee3157ba1d9aafc04f815a861cd6b54562c",
       "fixture_intact": true,
       "run_a": {
         "isolation_enabled": false,
-        "score": 80.0,
-        "simulation_ready": false,
-        "ready_parts": [
-          {
-            "item_id": "F-002",
-            "readiness": "ready",
-            "category": "missing_dependency",
-            "file": "service.py",
-            "description": "Module 'nonexistent_package_xyz' is imported but not declared as a dependency."
-          },
-          {
-            "item_id": "F-003",
-            "readiness": "ready",
-            "category": "configuration_missing",
-            "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_02_dependency_chain",
-            "description": "No lock file present despite having a dependency manifest."
-          },
-          {
-            "item_id": "F-004",
-            "readiness": "ready",
-            "category": "configuration_missing",
-            "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_02_dependency_chain",
-            "description": "No Python version constraint declared in the project."
-          }
-        ],
-        "isolated_parts": [
-          {
-            "item_id": "F-001",
-            "readiness": "awaiting_information",
-            "isolation_reason": "unconfirmed_root_cause",
-            "category": "ambiguous_import",
-            "file": "api.py",
-            "description": "[FindingCategory.AMBIGUOUS_IMPORT] in api.py"
-          }
-        ],
-        "ready_count": 3,
-        "isolated_count": 1,
-        "resolved_count": 3,
-        "unresolved_count": 1,
-        "completion_status": "partially_resolved",
-        "pipeline_status": "succeeded",
-        "duration_ms": 3691,
-        "isolation_engine": {},
-        "simulation_unlock": false
-      },
-      "run_b": {
-        "isolation_enabled": true,
         "score": 95.0,
         "simulation_ready": true,
         "ready_parts": [
@@ -153,14 +106,14 @@
             "item_id": "F-003",
             "readiness": "ready",
             "category": "configuration_missing",
-            "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_02_dependency_chain",
+            "file": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_02_dependency_chain",
             "description": "No lock file present despite having a dependency manifest."
           },
           {
             "item_id": "F-004",
             "readiness": "ready",
             "category": "configuration_missing",
-            "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_02_dependency_chain",
+            "file": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_02_dependency_chain",
             "description": "No Python version constraint declared in the project."
           },
           {
@@ -178,77 +131,128 @@
         "unresolved_count": 0,
         "completion_status": "",
         "pipeline_status": "failed",
-        "duration_ms": 4888,
+        "duration_ms": 483,
+        "isolation_engine": {},
+        "simulation_unlock": true
+      },
+      "run_b": {
+        "isolation_enabled": true,
+        "score": 95.0,
+        "simulation_ready": true,
+        "ready_parts": [
+          {
+            "item_id": "F-002",
+            "readiness": "ready",
+            "category": "missing_dependency",
+            "file": "service.py",
+            "description": "Module 'nonexistent_package_xyz' is imported but not declared as a dependency."
+          },
+          {
+            "item_id": "F-003",
+            "readiness": "ready",
+            "category": "configuration_missing",
+            "file": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_02_dependency_chain",
+            "description": "No lock file present despite having a dependency manifest."
+          },
+          {
+            "item_id": "F-004",
+            "readiness": "ready",
+            "category": "configuration_missing",
+            "file": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_02_dependency_chain",
+            "description": "No Python version constraint declared in the project."
+          },
+          {
+            "item_id": "F-001",
+            "readiness": "ready",
+            "category": "ambiguous_import",
+            "file": "api.py",
+            "description": "[FindingCategory.AMBIGUOUS_IMPORT] in api.py"
+          }
+        ],
+        "isolated_parts": [],
+        "ready_count": 4,
+        "isolated_count": 0,
+        "resolved_count": 0,
+        "unresolved_count": 0,
+        "completion_status": "",
+        "pipeline_status": "failed",
+        "duration_ms": 413,
         "isolation_engine": {},
         "simulation_unlock": true
       },
       "delta": {
-        "score": 15.0,
-        "ready_parts": 1,
-        "isolated_parts": -1,
-        "resolved": -3
+        "score": 0.0,
+        "ready_parts": 0,
+        "isolated_parts": 0,
+        "resolved": 0
       },
-      "simulation_unlock_a": false,
+      "simulation_unlock_a": true,
       "simulation_unlock_b": true
     },
     {
       "fixture": "fixture_03_ambiguous_mix",
-      "fixture_path": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_03_ambiguous_mix",
+      "fixture_path": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_03_ambiguous_mix",
       "hash_before": "6bf1d1d87df292bff297fe16a8cc6ebdb0d428fa56c6214d787173b14a606953",
       "hash_after_a": "6bf1d1d87df292bff297fe16a8cc6ebdb0d428fa56c6214d787173b14a606953",
       "hash_after_b": "6bf1d1d87df292bff297fe16a8cc6ebdb0d428fa56c6214d787173b14a606953",
       "fixture_intact": true,
       "run_a": {
         "isolation_enabled": false,
-        "score": 52.5,
+        "score": 80.0,
         "simulation_ready": false,
         "ready_parts": [
           {
             "item_id": "F-003",
             "readiness": "ready",
             "category": "configuration_missing",
-            "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_03_ambiguous_mix",
+            "file": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_03_ambiguous_mix",
             "description": "No Python version constraint declared in the project."
-          }
-        ],
-        "isolated_parts": [
+          },
           {
             "item_id": "F-001",
-            "readiness": "awaiting_information",
-            "isolation_reason": "unconfirmed_root_cause",
+            "readiness": "ready",
             "category": "ambiguous_import",
             "file": "app.py",
             "description": "[FindingCategory.AMBIGUOUS_IMPORT] in app.py"
           },
           {
             "item_id": "F-002",
-            "readiness": "awaiting_information",
-            "isolation_reason": "unconfirmed_root_cause",
+            "readiness": "ready",
             "category": "ambiguous_import",
             "file": "app.py",
             "description": "[FindingCategory.AMBIGUOUS_IMPORT] in app.py"
           }
         ],
-        "ready_count": 1,
-        "isolated_count": 2,
-        "resolved_count": 1,
-        "unresolved_count": 2,
-        "completion_status": "partially_resolved",
-        "pipeline_status": "succeeded",
-        "duration_ms": 3915,
+        "isolated_parts": [
+          {
+            "item_id": "F-004",
+            "readiness": "awaiting_information",
+            "isolation_reason": "unconfirmed_root_cause",
+            "category": "dead_code",
+            "file": "utils.py",
+            "description": "'helper' appears unused across the project."
+          }
+        ],
+        "ready_count": 3,
+        "isolated_count": 1,
+        "resolved_count": 0,
+        "unresolved_count": 0,
+        "completion_status": "",
+        "pipeline_status": "failed",
+        "duration_ms": 346,
         "isolation_engine": {},
         "simulation_unlock": false
       },
       "run_b": {
         "isolation_enabled": true,
-        "score": 92.5,
+        "score": 80.0,
         "simulation_ready": false,
         "ready_parts": [
           {
             "item_id": "F-003",
             "readiness": "ready",
             "category": "configuration_missing",
-            "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_03_ambiguous_mix",
+            "file": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_03_ambiguous_mix",
             "description": "No Python version constraint declared in the project."
           },
           {
@@ -266,29 +270,38 @@
             "description": "[FindingCategory.AMBIGUOUS_IMPORT] in app.py"
           }
         ],
-        "isolated_parts": [],
+        "isolated_parts": [
+          {
+            "item_id": "F-004",
+            "readiness": "awaiting_information",
+            "isolation_reason": "unconfirmed_root_cause",
+            "category": "dead_code",
+            "file": "utils.py",
+            "description": "'helper' appears unused across the project."
+          }
+        ],
         "ready_count": 3,
-        "isolated_count": 0,
+        "isolated_count": 1,
         "resolved_count": 0,
         "unresolved_count": 0,
         "completion_status": "",
         "pipeline_status": "failed",
-        "duration_ms": 3588,
+        "duration_ms": 329,
         "isolation_engine": {},
         "simulation_unlock": false
       },
       "delta": {
-        "score": 40.0,
-        "ready_parts": 2,
-        "isolated_parts": -2,
-        "resolved": -1
+        "score": 0.0,
+        "ready_parts": 0,
+        "isolated_parts": 0,
+        "resolved": 0
       },
       "simulation_unlock_a": false,
       "simulation_unlock_b": false
     },
     {
       "fixture": "fixture_04_mixed_severity",
-      "fixture_path": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_04_mixed_severity",
+      "fixture_path": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_04_mixed_severity",
       "hash_before": "33fd0fa23313641cb4a2aa598b83dc0791b96540a37d8ff2747db33323c91b37",
       "hash_after_a": "33fd0fa23313641cb4a2aa598b83dc0791b96540a37d8ff2747db33323c91b37",
       "hash_after_b": "33fd0fa23313641cb4a2aa598b83dc0791b96540a37d8ff2747db33323c91b37",
@@ -316,7 +329,7 @@
             "item_id": "F-003",
             "readiness": "ready",
             "category": "configuration_missing",
-            "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_04_mixed_severity",
+            "file": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_04_mixed_severity",
             "description": "No Python version constraint declared in the project."
           }
         ],
@@ -327,7 +340,7 @@
         "unresolved_count": 0,
         "completion_status": "fully_resolved",
         "pipeline_status": "succeeded",
-        "duration_ms": 2580,
+        "duration_ms": 361,
         "isolation_engine": {},
         "simulation_unlock": true
       },
@@ -354,7 +367,7 @@
             "item_id": "F-003",
             "readiness": "ready",
             "category": "configuration_missing",
-            "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_04_mixed_severity",
+            "file": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_04_mixed_severity",
             "description": "No Python version constraint declared in the project."
           }
         ],
@@ -365,7 +378,7 @@
         "unresolved_count": 0,
         "completion_status": "fully_resolved",
         "pipeline_status": "succeeded",
-        "duration_ms": 2496,
+        "duration_ms": 440,
         "isolation_engine": {},
         "simulation_unlock": true
       },
@@ -380,15 +393,15 @@
     },
     {
       "fixture": "fixture_05_chaos_combined",
-      "fixture_path": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_05_chaos_combined",
+      "fixture_path": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_05_chaos_combined",
       "hash_before": "157bc91fa4b9e9e397d139e9cc05f1c7dd31838d03c23a81d201e4ebffd16eff",
       "hash_after_a": "157bc91fa4b9e9e397d139e9cc05f1c7dd31838d03c23a81d201e4ebffd16eff",
       "hash_after_b": "157bc91fa4b9e9e397d139e9cc05f1c7dd31838d03c23a81d201e4ebffd16eff",
       "fixture_intact": true,
       "run_a": {
         "isolation_enabled": false,
-        "score": 84.25,
-        "simulation_ready": false,
+        "score": 96.25,
+        "simulation_ready": true,
         "ready_parts": [
           {
             "item_id": "F-001",
@@ -408,36 +421,34 @@
             "item_id": "F-004",
             "readiness": "ready",
             "category": "configuration_missing",
-            "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_05_chaos_combined",
+            "file": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_05_chaos_combined",
             "description": "No lock file present despite having a dependency manifest."
           },
           {
             "item_id": "F-005",
             "readiness": "ready",
             "category": "configuration_missing",
-            "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_05_chaos_combined",
+            "file": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_05_chaos_combined",
             "description": "No Python version constraint declared in the project."
-          }
-        ],
-        "isolated_parts": [
+          },
           {
             "item_id": "F-003",
-            "readiness": "awaiting_information",
-            "isolation_reason": "unconfirmed_root_cause",
+            "readiness": "ready",
             "category": "ambiguous_import",
             "file": "service.py",
             "description": "[FindingCategory.AMBIGUOUS_IMPORT] in service.py"
           }
         ],
-        "ready_count": 4,
-        "isolated_count": 1,
-        "resolved_count": 4,
-        "unresolved_count": 1,
-        "completion_status": "partially_resolved",
-        "pipeline_status": "succeeded",
-        "duration_ms": 3691,
+        "isolated_parts": [],
+        "ready_count": 5,
+        "isolated_count": 0,
+        "resolved_count": 0,
+        "unresolved_count": 0,
+        "completion_status": "",
+        "pipeline_status": "failed",
+        "duration_ms": 429,
         "isolation_engine": {},
-        "simulation_unlock": false
+        "simulation_unlock": true
       },
       "run_b": {
         "isolation_enabled": true,
@@ -462,14 +473,14 @@
             "item_id": "F-004",
             "readiness": "ready",
             "category": "configuration_missing",
-            "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_05_chaos_combined",
+            "file": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_05_chaos_combined",
             "description": "No lock file present despite having a dependency manifest."
           },
           {
             "item_id": "F-005",
             "readiness": "ready",
             "category": "configuration_missing",
-            "file": "D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_05_chaos_combined",
+            "file": "D:\\Dev\\hackaton-uipath-jun29\\pipeline\\tests\\fixtures\\isolation_ab_suite\\fixture_05_chaos_combined",
             "description": "No Python version constraint declared in the project."
           },
           {
@@ -487,25 +498,25 @@
         "unresolved_count": 0,
         "completion_status": "",
         "pipeline_status": "failed",
-        "duration_ms": 3272,
+        "duration_ms": 440,
         "isolation_engine": {},
         "simulation_unlock": true
       },
       "delta": {
-        "score": 12.0,
-        "ready_parts": 1,
-        "isolated_parts": -1,
-        "resolved": -4
+        "score": 0.0,
+        "ready_parts": 0,
+        "isolated_parts": 0,
+        "resolved": 0
       },
-      "simulation_unlock_a": false,
+      "simulation_unlock_a": true,
       "simulation_unlock_b": true
     }
   ],
   "summary": {
-    "avg_score_a": 83.35,
-    "avg_score_b": 96.75,
-    "avg_delta": 13.4,
-    "fixtures_with_improvement": 3,
-    "fixtures_with_unlock": 2
+    "avg_score_a": 94.25,
+    "avg_score_b": 94.25,
+    "avg_delta": 0.0,
+    "fixtures_with_improvement": 0,
+    "fixtures_with_unlock": 0
   }
 }

@@ -1,97 +1,777 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><title>Resolution Report</title>
-<style>
-body { font-family: monospace; font-size: 14px; padding: 2em; max-width: 900px; margin: 0 auto; }
-pre { white-space: pre-wrap; }
-</style></head><body><pre>
-RESOLUTION REPORT
-=================
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resolution Report — 84d6fdbf</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            padding: 2rem;
+            line-height: 1.5;
+        }
+        h1 {
+            color: #58a6ff;
+            font-size: 1.6rem;
+            margin-bottom: 0.3rem;
+        }
+        .meta {
+            color: #8b949e;
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+        .meta code {
+            background: #161b22;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        h2 {
+            color: #58a6ff;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 1px solid #21262d;
+        }
+        .section {
+            margin-bottom: 2.5rem;
+        }
 
-Report ID:    2cf10d99-dcb7-4a3f-b886-0002aac68062
-Fixture:      fixture-large-demo
-Fixture Hash: 9fc2ede5b95548b5...
-Mode:         A/B Comparison
-Generated:    2026-06-28T16:44:41Z
+        /* Summary Grid */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        .summary-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        .card-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #f0f6fc;
+        }
+        .card-value.delta-pos { color: #3fb950; }
+        .card-value.delta-neg { color: #f85149; }
+        .card-label {
+            font-size: 0.8rem;
+            color: #8b949e;
+            margin-top: 0.3rem;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .status-card { display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
-SUMMARY
--------
-  Initial Score (A):  80.00%
-  Final Score (B):    95.00%
-  Delta:              +15.00%
-  Total Issues:       16
-  Resolved:           15
-  Unresolved:         1
-  Status:             partially_resolved
+        /* Comparison */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .run-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        .run-card h3 {
+            color: #f0f6fc;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        .run-a { border-left: 3px solid #da3633; }
+        .run-b { border-left: 3px solid #238636; }
+        .run-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .stat {
+            font-size: 0.85rem;
+            color: #8b949e;
+        }
+        .stat-val {
+            color: #f0f6fc;
+            font-weight: 600;
+        }
 
-RUNS
-----
-  Run A (isolation OFF):
-    Score:            80.00%
-    Simulation Ready: False
-    Ready:            11
-    Isolated:         5
-    Resolved:         11
-    Unresolved:       5
+        /* Score bars */
+        .score-bar-container { margin-bottom: 0.5rem; }
+        .score-bar-label {
+            font-size: 0.75rem;
+            color: #8b949e;
+            margin-bottom: 0.2rem;
+        }
+        .score-bar-track {
+            position: relative;
+            background: #21262d;
+            border-radius: 4px;
+            height: 24px;
+            overflow: visible;
+        }
+        .score-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            padding-left: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #fff;
+            min-width: 50px;
+            transition: width 0.3s;
+        }
+        .threshold-marker {
+            position: absolute;
+            top: -2px;
+            bottom: -2px;
+            width: 2px;
+            background: #f0883e;
+            border-radius: 1px;
+        }
+        .threshold-marker::after {
+            content: '93.91%';
+            position: absolute;
+            top: -16px;
+            left: -14px;
+            font-size: 0.6rem;
+            color: #f0883e;
+            white-space: nowrap;
+        }
 
-  Run B (isolation ON):
-    Score:            95.00%
-    Simulation Ready: True
-    Ready:            15
-    Isolated:         1
-    Resolved:         15
-    Unresolved:       1
+        /* Diff table */
+        .diff-summary {
+            font-size: 0.9rem;
+            color: #8b949e;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background: #161b22;
+            border-radius: 6px;
+            border: 1px solid #30363d;
+        }
+        .diff-table, .resolution-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #161b22;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .diff-table th, .resolution-table th {
+            background: #21262d;
+            color: #58a6ff;
+            padding: 0.7rem 0.8rem;
+            text-align: left;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        .diff-table td, .resolution-table td {
+            padding: 0.6rem 0.8rem;
+            border-top: 1px solid #21262d;
+            font-size: 0.85rem;
+        }
+        .item-id { font-weight: 600; color: #f0f6fc; }
+        .status-cell { font-weight: 500; }
+        .status-resolved { color: #3fb950; }
+        .status-unresolved { color: #f85149; }
+        .status-not_run { color: #8b949e; }
+        .arrow-cell { text-align: center; color: #8b949e; }
+        .arrow-improved { color: #3fb950; font-weight: bold; }
+        .arrow-regressed { color: #f85149; font-weight: bold; }
+        tr.changed { background: #1c2128; }
 
-DIFF
-----
-  Score: 80.00% -> 95.00%
-  Ready: 11 -> 15
-  Isolated: 5 -> 1
+        /* Resolution table */
+        .result-cell { font-weight: 600; }
+        .result-resolved { color: #3fb950; }
+        .result-unresolved { color: #f85149; }
+        .result-isolated { color: #f0883e; }
 
-  Item        Status A      Status B
-  ----------  ------------  ------------
-  F-001       resolved      resolved
-  F-002       resolved      resolved
-  F-003       unresolved    isolated
-  F-004       unresolved    resolved      *changed
-  F-005       unresolved    resolved      *changed
-  F-006       unresolved    resolved      *changed
-  F-007       unresolved    resolved      *changed
-  F-008       resolved      resolved
-  F-009       resolved      resolved
-  F-010       resolved      resolved
-  F-011       resolved      resolved
-  F-012       resolved      resolved
-  F-013       resolved      resolved
-  F-014       resolved      resolved
-  F-015       resolved      resolved
-  F-016       resolved      resolved
+        /* Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+        }
+        .gauge-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        .gauge-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .gauge-label {
+            font-size: 0.75rem;
+            color: #8b949e;
+            margin: 0.3rem 0;
+        }
+        .gauge-track {
+            background: #21262d;
+            border-radius: 4px;
+            height: 6px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+        .gauge-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
 
-RESOLUTION
-----------
-  F-001  syntax_error         Python parser cannot compile             resolved
-  F-002  broken_dependency    Package flask pinned to fake version     resolved
-  F-003  dependency_conflict  Version 1.2 does not satisfy >=2.0      isolated
-  F-004  ambiguous_import     api_handler.py                          resolved (isolation)
-  F-005  ambiguous_import     auth_module.py                          resolved (isolation)
-  F-006  ambiguous_import     data_layer.py                           resolved (isolation)
-  F-007  ambiguous_import     event_bus.py                            resolved (isolation)
-  F-008  missing_dependency   pandas undeclared                       resolved
-  F-009  missing_dependency   matplotlib undeclared                   resolved
-  F-010  missing_dependency   utlis (typo) undeclared                 resolved
-  F-011  missing_dependency   confg (typo) undeclared                 resolved
-  F-012  missing_dependency   modles (typo) undeclared                resolved
-  F-013  missing_dependency   celery undeclared                       resolved
-  F-014  missing_dependency   redis undeclared                        resolved
-  F-015  configuration        No lock file                            resolved
-  F-016  configuration        No python version declared              resolved
+        /* Responsive */
+        @media (max-width: 768px) {
+            .comparison-grid { grid-template-columns: 1fr; }
+            .summary-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Resolution Report</h1>
+    <div class="meta">
+        ID: <code>84d6fdbf-d732-4999-97d1-0a14b8599306</code> |
+        Fixture: <code>D:\Dev\hackaton-uipath-jun29\pipeline\tests\fixtures\fixture-large-demo</code> |
+        Hash: <code>9fc2ede5b95548b5...</code> |
+        Generated: 2026-06-29T21:36:01.579247+00:00
+    </div>
 
-METRICS
--------
-  Scan Coverage:           93.8%
-  Analysis Confidence:     95.0%
-  Simulation Success:      93.8%
-  Isolation Effectiveness: 75.0%
-  Pipeline Stability:      100.0%
+    
+    <section class="section">
+        <h2>Summary</h2>
+        <div class="summary-grid">
+            <div class="summary-card">
+                <div class="card-value">0.00%</div>
+                <div class="card-label">Initial Score (A)</div>
+            </div>
+            <div class="summary-card">
+                <div class="card-value">68.66%</div>
+                <div class="card-label">Final Score (B)</div>
+            </div>
+            <div class="summary-card">
+                <div class="card-value delta-pos">+68.66%</div>
+                <div class="card-label">Delta</div>
+            </div>
+            <div class="summary-card">
+                <div class="card-value">18/28</div>
+                <div class="card-label">Resolved</div>
+            </div>
+            <div class="summary-card status-card">
+                <span class="status-badge" style="background:#f0883e;color:#0d1117;">Partially Resolved</span>
+                <div class="card-label">Status</div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section">
+        <h2>A vs B Comparison</h2>
+        <div class="comparison-grid">
+            <div class="run-card run-a">
+                <h3>Run A — Isolation OFF</h3>
+                
+    <div class="score-bar-container">
+        <div class="score-bar-label">Score</div>
+        <div class="score-bar-track">
+            <div class="score-bar-fill" style="width:2%;background:#da3633;">
+                0.00%
+            </div>
+            <div class="threshold-marker" style="left:93.91%;" title="93.91% threshold"></div>
+        </div>
+    </div>
+                <div class="run-stats">
+                    <div class="stat"><span class="stat-val">0</span> Ready</div>
+                    <div class="stat"><span class="stat-val">0</span> Isolated</div>
+                    <div class="stat"><span class="stat-val">0</span> Resolved</div>
+                    <div class="stat"><span class="stat-val">0</span> Unresolved</div>
+                    <div class="stat">Sim Ready: <span class="stat-val">✗</span></div>
+                </div>
+            </div>
+            <div class="run-card run-b">
+                <h3>Run B — Isolation ON</h3>
+                
+    <div class="score-bar-container">
+        <div class="score-bar-label">Score</div>
+        <div class="score-bar-track">
+            <div class="score-bar-fill" style="width:68.66%;background:#238636;">
+                68.66%
+            </div>
+            <div class="threshold-marker" style="left:93.91%;" title="93.91% threshold"></div>
+        </div>
+    </div>
+                <div class="run-stats">
+                    <div class="stat"><span class="stat-val">18</span> Ready</div>
+                    <div class="stat"><span class="stat-val">10</span> Isolated</div>
+                    <div class="stat"><span class="stat-val">18</span> Resolved</div>
+                    <div class="stat"><span class="stat-val">10</span> Unresolved</div>
+                    <div class="stat">Sim Ready: <span class="stat-val">✗</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section">
+        <h2>Diff — A vs B</h2>
+        <div class="diff-summary">
+            Score: 0.00% → 68.66%
+        </div>
+        <table class="diff-table">
+            <thead>
+                <tr>
+                    <th>Item ID</th>
+                    <th>Status A</th>
+                    <th></th>
+                    <th>Status B</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            <tr class="changed">
+                <td class="item-id">F-001</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell arrow-improved">→</td>
+                <td class="status-cell status-resolved">resolved</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-002</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell arrow-improved">→</td>
+                <td class="status-cell status-resolved">resolved</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-003</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell ">→</td>
+                <td class="status-cell status-isolated">isolated</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-004</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell arrow-improved">→</td>
+                <td class="status-cell status-resolved">resolved</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-005</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell arrow-improved">→</td>
+                <td class="status-cell status-resolved">resolved</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-006</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell arrow-improved">→</td>
+                <td class="status-cell status-resolved">resolved</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-007</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell arrow-improved">→</td>
+                <td class="status-cell status-resolved">resolved</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-008</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell arrow-improved">→</td>
+                <td class="status-cell status-resolved">resolved</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-009</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell arrow-improved">→</td>
+                <td class="status-cell status-resolved">resolved</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-010</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell arrow-improved">→</td>
+                <td class="status-cell status-resolved">resolved</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-011</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell arrow-improved">→</td>
+                <td class="status-cell status-resolved">resolved</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-012</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell arrow-improved">→</td>
+                <td class="status-cell status-resolved">resolved</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-013</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell arrow-improved">→</td>
+                <td class="status-cell status-resolved">resolved</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-014</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell arrow-improved">→</td>
+                <td class="status-cell status-resolved">resolved</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-015</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell arrow-improved">→</td>
+                <td class="status-cell status-resolved">resolved</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-016</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell arrow-improved">→</td>
+                <td class="status-cell status-resolved">resolved</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-017</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell arrow-improved">→</td>
+                <td class="status-cell status-resolved">resolved</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-018</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell ">→</td>
+                <td class="status-cell status-isolated">isolated</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-019</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell ">→</td>
+                <td class="status-cell status-isolated">isolated</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-020</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell ">→</td>
+                <td class="status-cell status-isolated">isolated</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-021</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell arrow-improved">→</td>
+                <td class="status-cell status-resolved">resolved</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-022</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell arrow-improved">→</td>
+                <td class="status-cell status-resolved">resolved</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-023</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell ">→</td>
+                <td class="status-cell status-isolated">isolated</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-024</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell ">→</td>
+                <td class="status-cell status-isolated">isolated</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-025</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell ">→</td>
+                <td class="status-cell status-isolated">isolated</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-026</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell ">→</td>
+                <td class="status-cell status-isolated">isolated</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-027</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell ">→</td>
+                <td class="status-cell status-isolated">isolated</td>
+            </tr>
+            <tr class="changed">
+                <td class="item-id">F-028</td>
+                <td class="status-cell status-not_seen">not_seen</td>
+                <td class="arrow-cell ">→</td>
+                <td class="status-cell status-isolated">isolated</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    
+    <section class="section">
+        <h2>Resolution Breakdown</h2>
+        <table class="resolution-table">
+            <thead>
+                <tr>
+                    <th>Issue ID</th>
+                    <th>Type</th>
+                    <th>Cause</th>
+                    <th>Action</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            <tr class="res-resolved">
+                <td class="item-id">F-001</td>
+                <td>FindingCategory.SYNTAX_ERROR</td>
+                <td>Python parser cannot compile this file.</td>
+                <td>resolved via isolation pipeline</td>
+                <td class="result-cell result-resolved">resolved</td>
+            </tr>
+            <tr class="res-resolved">
+                <td class="item-id">F-002</td>
+                <td>FindingCategory.BROKEN_DEPENDENCY</td>
+                <td>Package 'flask' is pinned to a non-existent version.</td>
+                <td>resolved via isolation pipeline</td>
+                <td class="result-cell result-resolved">resolved</td>
+            </tr>
+            <tr class="res-resolved">
+                <td class="item-id">F-008</td>
+                <td>FindingCategory.MISSING_DEPENDENCY</td>
+                <td>Module 'pandas' is imported but not declared as a dependency.</td>
+                <td>resolved via isolation pipeline</td>
+                <td class="result-cell result-resolved">resolved</td>
+            </tr>
+            <tr class="res-resolved">
+                <td class="item-id">F-009</td>
+                <td>FindingCategory.MISSING_DEPENDENCY</td>
+                <td>Module 'matplotlib' is imported but not declared as a dependency.</td>
+                <td>resolved via isolation pipeline</td>
+                <td class="result-cell result-resolved">resolved</td>
+            </tr>
+            <tr class="res-resolved">
+                <td class="item-id">F-010</td>
+                <td>FindingCategory.MISSING_DEPENDENCY</td>
+                <td>Module 'utlis' is imported but not declared as a dependency.</td>
+                <td>resolved via isolation pipeline</td>
+                <td class="result-cell result-resolved">resolved</td>
+            </tr>
+            <tr class="res-resolved">
+                <td class="item-id">F-011</td>
+                <td>FindingCategory.MISSING_DEPENDENCY</td>
+                <td>Module 'confg' is imported but not declared as a dependency.</td>
+                <td>resolved via isolation pipeline</td>
+                <td class="result-cell result-resolved">resolved</td>
+            </tr>
+            <tr class="res-resolved">
+                <td class="item-id">F-012</td>
+                <td>FindingCategory.MISSING_DEPENDENCY</td>
+                <td>Module 'modles' is imported but not declared as a dependency.</td>
+                <td>resolved via isolation pipeline</td>
+                <td class="result-cell result-resolved">resolved</td>
+            </tr>
+            <tr class="res-resolved">
+                <td class="item-id">F-013</td>
+                <td>FindingCategory.MISSING_DEPENDENCY</td>
+                <td>Module 'celery' is imported but not declared as a dependency.</td>
+                <td>resolved via isolation pipeline</td>
+                <td class="result-cell result-resolved">resolved</td>
+            </tr>
+            <tr class="res-resolved">
+                <td class="item-id">F-014</td>
+                <td>FindingCategory.MISSING_DEPENDENCY</td>
+                <td>Module 'redis' is imported but not declared as a dependency.</td>
+                <td>resolved via isolation pipeline</td>
+                <td class="result-cell result-resolved">resolved</td>
+            </tr>
+            <tr class="res-resolved">
+                <td class="item-id">F-015</td>
+                <td>FindingCategory.CONFIGURATION_MISSING</td>
+                <td>No lock file present despite having a dependency manifest.</td>
+                <td>resolved via isolation pipeline</td>
+                <td class="result-cell result-resolved">resolved</td>
+            </tr>
+            <tr class="res-resolved">
+                <td class="item-id">F-016</td>
+                <td>FindingCategory.CONFIGURATION_MISSING</td>
+                <td>No Python version constraint declared in the project.</td>
+                <td>resolved via isolation pipeline</td>
+                <td class="result-cell result-resolved">resolved</td>
+            </tr>
+            <tr class="res-resolved">
+                <td class="item-id">F-004</td>
+                <td>FindingCategory.AMBIGUOUS_IMPORT</td>
+                <td>[FindingCategory.AMBIGUOUS_IMPORT] in api_handler.py</td>
+                <td>resolved via isolation pipeline</td>
+                <td class="result-cell result-resolved">resolved</td>
+            </tr>
+            <tr class="res-resolved">
+                <td class="item-id">F-005</td>
+                <td>FindingCategory.AMBIGUOUS_IMPORT</td>
+                <td>[FindingCategory.AMBIGUOUS_IMPORT] in auth_module.py</td>
+                <td>resolved via isolation pipeline</td>
+                <td class="result-cell result-resolved">resolved</td>
+            </tr>
+            <tr class="res-resolved">
+                <td class="item-id">F-006</td>
+                <td>FindingCategory.AMBIGUOUS_IMPORT</td>
+                <td>[FindingCategory.AMBIGUOUS_IMPORT] in data_layer.py</td>
+                <td>resolved via isolation pipeline</td>
+                <td class="result-cell result-resolved">resolved</td>
+            </tr>
+            <tr class="res-resolved">
+                <td class="item-id">F-007</td>
+                <td>FindingCategory.AMBIGUOUS_IMPORT</td>
+                <td>[FindingCategory.AMBIGUOUS_IMPORT] in event_bus.py</td>
+                <td>resolved via isolation pipeline</td>
+                <td class="result-cell result-resolved">resolved</td>
+            </tr>
+            <tr class="res-resolved">
+                <td class="item-id">F-017</td>
+                <td>FindingCategory.DEAD_CODE</td>
+                <td>'authenticate' appears unused across the project.</td>
+                <td>resolved via isolation pipeline</td>
+                <td class="result-cell result-resolved">resolved</td>
+            </tr>
+            <tr class="res-resolved">
+                <td class="item-id">F-021</td>
+                <td>FindingCategory.DEAD_CODE</td>
+                <td>'get_data' appears unused across the project.</td>
+                <td>resolved via isolation pipeline</td>
+                <td class="result-cell result-resolved">resolved</td>
+            </tr>
+            <tr class="res-resolved">
+                <td class="item-id">F-022</td>
+                <td>FindingCategory.DEAD_CODE</td>
+                <td>'publish' appears unused across the project.</td>
+                <td>resolved via isolation pipeline</td>
+                <td class="result-cell result-resolved">resolved</td>
+            </tr>
+            <tr class="res-isolated">
+                <td class="item-id">F-003</td>
+                <td>FindingCategory.DEPENDENCY_CONFLICT</td>
+                <td>Installed version 1.2 does not satisfy requirement &gt;=2.0.</td>
+                <td>isolated — requires external review</td>
+                <td class="result-cell result-isolated">isolated</td>
+            </tr>
+            <tr class="res-isolated">
+                <td class="item-id">F-018</td>
+                <td>FindingCategory.DEAD_CODE</td>
+                <td>'function_3' appears unused across the project.</td>
+                <td>isolated — requires external review</td>
+                <td class="result-cell result-isolated">isolated</td>
+            </tr>
+            <tr class="res-isolated">
+                <td class="item-id">F-019</td>
+                <td>FindingCategory.DEAD_CODE</td>
+                <td>'function_4' appears unused across the project.</td>
+                <td>isolated — requires external review</td>
+                <td class="result-cell result-isolated">isolated</td>
+            </tr>
+            <tr class="res-isolated">
+                <td class="item-id">F-020</td>
+                <td>FindingCategory.DEAD_CODE</td>
+                <td>'function_5' appears unused across the project.</td>
+                <td>isolated — requires external review</td>
+                <td class="result-cell result-isolated">isolated</td>
+            </tr>
+            <tr class="res-isolated">
+                <td class="item-id">F-023</td>
+                <td>FindingCategory.DEAD_CODE</td>
+                <td>'main' appears unused across the project.</td>
+                <td>isolated — requires external review</td>
+                <td class="result-cell result-isolated">isolated</td>
+            </tr>
+            <tr class="res-isolated">
+                <td class="item-id">F-024</td>
+                <td>FindingCategory.DEAD_CODE</td>
+                <td>'generate_report' appears unused across the project.</td>
+                <td>isolated — requires external review</td>
+                <td class="result-cell result-isolated">isolated</td>
+            </tr>
+            <tr class="res-isolated">
+                <td class="item-id">F-025</td>
+                <td>FindingCategory.DEAD_CODE</td>
+                <td>'run_a' appears unused across the project.</td>
+                <td>isolated — requires external review</td>
+                <td class="result-cell result-isolated">isolated</td>
+            </tr>
+            <tr class="res-isolated">
+                <td class="item-id">F-026</td>
+                <td>FindingCategory.DEAD_CODE</td>
+                <td>'run_b' appears unused across the project.</td>
+                <td>isolated — requires external review</td>
+                <td class="result-cell result-isolated">isolated</td>
+            </tr>
+            <tr class="res-isolated">
+                <td class="item-id">F-027</td>
+                <td>FindingCategory.DEAD_CODE</td>
+                <td>'run_c' appears unused across the project.</td>
+                <td>isolated — requires external review</td>
+                <td class="result-cell result-isolated">isolated</td>
+            </tr>
+            <tr class="res-isolated">
+                <td class="item-id">F-028</td>
+                <td>FindingCategory.DEAD_CODE</td>
+                <td>'run_task' appears unused across the project.</td>
+                <td>isolated — requires external review</td>
+                <td class="result-cell result-isolated">isolated</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    
+    <section class="section">
+        <h2>Metrics</h2>
+        <div class="metrics-grid">
+            
+    <div class="gauge-card">
+        <div class="gauge-value" style="color:#f0883e;">64.3%</div>
+        <div class="gauge-label">Scan Coverage</div>
+        <div class="gauge-track">
+            <div class="gauge-fill" style="width:64.29%;background:#f0883e;"></div>
+        </div>
+    </div>
+            
+    <div class="gauge-card">
+        <div class="gauge-value" style="color:#f0883e;">68.7%</div>
+        <div class="gauge-label">Analysis Confidence</div>
+        <div class="gauge-track">
+            <div class="gauge-fill" style="width:68.66%;background:#f0883e;"></div>
+        </div>
+    </div>
+            
+    <div class="gauge-card">
+        <div class="gauge-value" style="color:#f0883e;">64.3%</div>
+        <div class="gauge-label">Simulation Success</div>
+        <div class="gauge-track">
+            <div class="gauge-fill" style="width:64.29%;background:#f0883e;"></div>
+        </div>
+    </div>
+            
+    <div class="gauge-card">
+        <div class="gauge-value" style="color:#f0883e;">68.7%</div>
+        <div class="gauge-label">Isolation Effectiveness</div>
+        <div class="gauge-track">
+            <div class="gauge-fill" style="width:68.66%;background:#f0883e;"></div>
+        </div>
+    </div>
+            
+    <div class="gauge-card">
+        <div class="gauge-value" style="color:#f0883e;">50.0%</div>
+        <div class="gauge-label">Pipeline Stability</div>
+        <div class="gauge-track">
+            <div class="gauge-fill" style="width:50.0%;background:#f0883e;"></div>
+        </div>
+    </div>
+        </div>
+    </section>
 
-END
-</pre></body></html>
+    <div class="meta" style="margin-top:2rem;text-align:center;">
+        Resolution Report — A/B Comparison Mode — Pipeline Proof Object
+    </div>
+</body>
+</html>

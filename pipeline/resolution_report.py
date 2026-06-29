@@ -357,6 +357,14 @@ def generate_report(
     # Populate a placeholder run_a for compatibility in downstream diffs
     run_a = RunRecord(isolation=False, score=0.0, simulation_ready=False, ready_count=0, isolated_count=0, resolved_count=0, unresolved_count=0, final_state="")
 
+    # No isolation-off run; create a minimal placeholder state for diff compatibility
+    class _PlaceholderState:
+        final_output: dict = {}
+        simulation_package: dict = {}
+    state_a = _PlaceholderState()
+    state_a.final_output = {}
+    state_a.simulation_package = {}
+
     # Build components
     resolution_items = _build_resolution_items(state_a, state_b)
     diff = _build_diff(run_a, run_b, state_a, state_b)
