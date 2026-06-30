@@ -42,3 +42,5 @@ outputs/
 **/SolutionUserState.json
 
 .vscode/
+
+proof/
