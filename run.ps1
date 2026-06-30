@@ -26,13 +26,13 @@ foreach ($slide in $slides) {
 }
 
 Write-Host "`n  Running pipeline..." -ForegroundColor Green
-& .\.venv\Scripts\python.exe pipeline\_run_e2e.py cases\sample-config-repair\source
+& .\.venv\Scripts\python.exe pipeline\_run_e2e.py system\cases\sample-config-repair\source
 
 Write-Host "`n  Opening pipeline evidence..." -ForegroundColor Green
-Start-Process (Resolve-Path "docs\reports\pipeline-evidence-terminal.html")
+Start-Process (Resolve-Path "step-3\pipeline-evidence-terminal.html")
 Read-Host "`n  Press ENTER for Step 3"
 
 # STEP 3: Interactive test menu
 Write-Host "`n  STEP 3: Try It Yourself" -ForegroundColor Magenta
-Start-Process (Resolve-Path "docs\index.html")
+Start-Process (Resolve-Path "step-3\index.html")
 Write-Host "  Done. Run any test from the menu.`n" -ForegroundColor Green
