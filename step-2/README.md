@@ -1,9 +1,7 @@
-# Step 2: Run Pipeline on Mixed Input
+# Step 2: NextFlow Slides + Live Pipeline
 
-Runs against a folder with overlapping issue types (syntax errors, missing deps, ambiguous imports).
+12-slide auto-cycling presentation followed by a live pipeline run.
 
-**Expected result:** `Status: succeeded`, 8/8 phases, `partially_resolved` (3 resolved, 1 unresolved)
+Opens `pipeline-evidence-terminal.html` as proof of execution.
 
-```powershell
-.\run.ps1
-```
+Run by `run.ps1` automatically.

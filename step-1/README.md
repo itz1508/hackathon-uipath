@@ -1,9 +1,5 @@
-# Step 1: Run Pipeline on Clean Input
+# Step 1: Audisor Execution Flow
 
-Runs the full 8-phase deterministic pipeline against a sample configuration file.
+Video demo of the pipeline running end-to-end.
 
-**Expected result:** `Status: succeeded`, 8/8 phases, `fully_resolved`
-
-```powershell
-.\run.ps1
-```
+Played automatically by `run.ps1`.

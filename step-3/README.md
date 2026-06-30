@@ -1,9 +1,5 @@
-# Step 3: Run Pipeline on Chaos Input
+# Step 3: Try It Yourself
 
-Runs against 10 different failure modes (syntax breaks, missing deps, import cycles, invalid configs, runtime exceptions, tool failures, event corruption, partial state, snapshot corruption, dead tool calls).
+Open `index.html` — pick any test and run it in your terminal.
 
-**Expected result:** `Status: succeeded`, 8/8 phases, `partially_resolved` (6 resolved, 3 unresolved)
-
-```powershell
-.\run.ps1
-```
+All tests are ready. Copy the command, paste, run. Each takes under 2 seconds.
