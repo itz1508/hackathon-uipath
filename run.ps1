@@ -1,47 +1,71 @@
 #!/usr/bin/env pwsh
-# NextFlow — One-click demo for judges
+# NextFlow — Judge Demo Runner
 # Right-click → Run with PowerShell, or: ./run.ps1
 $ErrorActionPreference = 'Stop'
+$Root = $PSScriptRoot
 
 Write-Host ""
 Write-Host "  ╔══════════════════════════════════════════════════════╗" -ForegroundColor Cyan
 Write-Host "  ║  NextFlow — Deterministic Pipeline Processing       ║" -ForegroundColor Cyan
-Write-Host "  ║  Team: The OneShot | Minh Le | Apache 2.0           ║" -ForegroundColor Cyan
+Write-Host "  ║  Team: The OneShot | Minh Le                        ║" -ForegroundColor Cyan
 Write-Host "  ╚══════════════════════════════════════════════════════╝" -ForegroundColor Cyan
 Write-Host ""
 
-# Setup
+# Setup venv if needed
 if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
-    Write-Host "  [!] 'uv' required. Install: https://docs.astral.sh/uv/" -ForegroundColor Yellow
+    Write-Host "  [!] 'uv' required: https://docs.astral.sh/uv/" -ForegroundColor Yellow
     exit 1
 }
-if (-not (Test-Path ".venv\Scripts\python.exe")) {
+if (-not (Test-Path "$Root\.venv\Scripts\python.exe")) {
     Write-Host "  [setup] Creating venv + installing pydantic..." -ForegroundColor DarkGray
-    & uv venv .venv --python 3.11
-    & uv pip install pydantic --python .venv\Scripts\python.exe
+    & uv venv "$Root\.venv" --python 3.11
+    & uv pip install pydantic --python "$Root\.venv\Scripts\python.exe"
     Write-Host ""
 }
 
-# Step 1
-Write-Host "  ── Step 1: Clean input (fully_resolved) ──" -ForegroundColor Green
-& .\.venv\Scripts\python.exe pipeline\_run_e2e.py cases\sample-config-repair\source
-Write-Host ""
-Read-Host "  Press ENTER to continue to Step 2"
+$python = "$Root\.venv\Scripts\python.exe"
 
-# Step 2
-Write-Host "  ── Step 2: Mixed input (partially_resolved) ──" -ForegroundColor Green
-& .\.venv\Scripts\python.exe pipeline\_run_e2e.py pipeline\tests\fixtures\fixture-g-mixed
-Write-Host ""
-Read-Host "  Press ENTER to continue to Step 3"
-
-# Step 3
-Write-Host "  ── Step 3: Chaos input — 10 failure modes ──" -ForegroundColor Green
-& .\.venv\Scripts\python.exe pipeline\_run_e2e.py pipeline\tests\fixtures\fixture-chaos-10
+# ═══════════════════════════════════════════════
+# STEP 1: Run Pipeline → Show Evidence
+# ═══════════════════════════════════════════════
+Write-Host "  ┌─────────────────────────────────────────────────────┐" -ForegroundColor Green
+Write-Host "  │  STEP 1: Run 8-phase pipeline on sample config      │" -ForegroundColor Green
+Write-Host "  └─────────────────────────────────────────────────────┘" -ForegroundColor Green
 Write-Host ""
 
+& $python "$Root\pipeline\_run_e2e.py" "$Root\cases\sample-config-repair\source"
+
+Write-Host ""
+Write-Host "  Opening pipeline evidence in browser..." -ForegroundColor DarkGray
+Start-Process "$Root\docs\reports\pipeline-evidence-terminal.html"
+Write-Host ""
+Read-Host "  Press ENTER for Step 2"
+
+# ═══════════════════════════════════════════════
+# STEP 2: Open NextFlow Slide Deck
+# ═══════════════════════════════════════════════
+Write-Host "  ┌─────────────────────────────────────────────────────┐" -ForegroundColor Cyan
+Write-Host "  │  STEP 2: NextFlow Presentation Deck                 │" -ForegroundColor Cyan
+Write-Host "  └─────────────────────────────────────────────────────┘" -ForegroundColor Cyan
+Write-Host ""
+
+Start-Process "$Root\NextFlow_Deck.pptx"
+Write-Host "  Opened slide deck." -ForegroundColor DarkGray
+Write-Host ""
+Read-Host "  Press ENTER for Step 3"
+
+# ═══════════════════════════════════════════════
+# STEP 3: Open Test Runner (judge explores)
+# ═══════════════════════════════════════════════
+Write-Host "  ┌─────────────────────────────────────────────────────┐" -ForegroundColor Yellow
+Write-Host "  │  STEP 3: Interactive — run tests yourself            │" -ForegroundColor Yellow
+Write-Host "  └─────────────────────────────────────────────────────┘" -ForegroundColor Yellow
+Write-Host ""
+
+Start-Process "$Root\docs\index.html"
+Write-Host "  Opened test runner in browser. Try the different scenarios!" -ForegroundColor DarkGray
+Write-Host ""
 Write-Host "  ╔══════════════════════════════════════════════════════╗" -ForegroundColor Green
-Write-Host "  ║  Done. All 3 runs complete.                         ║" -ForegroundColor Green
-Write-Host "  ║  Execution traces: ./proof/                         ║" -ForegroundColor Green
-Write-Host "  ║  Live reports: itz1508.github.io/hackathon-uipath   ║" -ForegroundColor Green
+Write-Host "  ║  Demo complete. Thank you for reviewing NextFlow!   ║" -ForegroundColor Green
 Write-Host "  ╚══════════════════════════════════════════════════════╝" -ForegroundColor Green
 Write-Host ""

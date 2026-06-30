@@ -1,35 +1,88 @@
 # NextFlow — Deterministic Pipeline Processing
 
-**See the result before you apply it. No guessing. No surprises.**
+> **Live reports:** [itz1508.github.io/hackathon-uipath](https://itz1508.github.io/hackathon-uipath/)
 
-AI generates config fixes fast — but proving one exact result is safe requires deterministic admission, isolated simulation, cryptographic proof, and human authority. NextFlow enforces all four.
+See the result before you apply it. No guessing. No surprises.
 
-## How to Run
+**Team:** The OneShot | **Author:** Minh Le | **Track:** UiPath Maestro BPMN
 
-**Requires:** Python 3.11+, [uv](https://docs.astral.sh/uv/getting-started/installation/)
+---
+
+## 3 Steps to Try
+
+### Step 1 — Run the pipeline
 
 ```powershell
-git clone https://github.com/itz1508/hackathon-uipath.git
-cd hackathon-uipath
-./run.ps1
+.\run.ps1
+```
+Or double-click `run.bat`. Auto-installs Python 3.11 venv + pydantic, then runs the full 8-phase pipeline.
+
+**You'll see:**
+```
+Phase 0 (snapshot) completed
+Phase 1 (scan) completed
+Phase 2 (analysis) completed
+Phase 3 (pre_simulation) completed
+Phase 4 (simulation) completed
+Phase 5 (inspection) completed
+Phase 6 (relay) completed
+Phase 7 (final_output) completed
+
+Status: succeeded
+completion_status: fully_resolved
 ```
 
-Or double-click `run.bat`.
+### Step 2 — View the presentation
 
-The script runs three demos back-to-back:
+Open in browser: [`docs/deck.html`](docs/deck.html)
 
-| Step | Input | Expected Result |
-|------|-------|-----------------|
-| 1 | Clean config (1 issue) | `fully_resolved` — 1 resolved, 0 unresolved |
-| 2 | Mixed severity (3 issues) | `partially_resolved` — 3 resolved, 1 unresolved |
-| 3 | Chaos (10 failure types) | `partially_resolved` — 6 resolved, 3 unresolved |
+10 slides covering problem, solution, architecture, safety contract, demo results, and UiPath components.
 
-Each step runs the full 8-phase pipeline: Snapshot → Scan → Analysis → Pre-Simulation → Simulation → Inspection → Relay → Final Output.
+### Step 3 — Review execution evidence
 
-## Live Reports
+Open in browser: [`docs/reports/pipeline-report.html`](docs/reports/pipeline-report.html)
 
-[itz1508.github.io/hackathon-uipath](https://itz1508.github.io/hackathon-uipath/)
+Visual report with phase timings, scoring breakdown, isolation results, and final locked state.
 
-## Team
+More reports in `docs/reports/`:
+- `ab_pipeline_demo.html` — A/B isolation comparison
+- `ab_harness_report.html` — 5-fixture experiment
+- `edge_scan_report.html` — admission gate scoring
+- `resolution_report.html` — final resolution breakdown
 
-**The OneShot** — Minh Le — cs1508.4ever@gmail.com — Apache License 2.0
+---
+
+## What is NextFlow?
+
+AI generates configuration fixes fast. Proving one exact result is safe — that's the bottleneck.
+
+NextFlow solves this with an 8-phase deterministic pipeline:
+
+1. **Snapshot** — hash the target (read-only)
+2. **Scan** — detect issues
+3. **Analysis** — AI classifies (advisory only, zero authority)
+4. **Pre-Simulation** — deterministic admission gate (≥93.91% confidence required)
+5. **Simulation** — execute fix in isolated sandbox
+6. **Inspection** — verify convergence
+7. **Relay** — human decision (Apply/Cancel via Action Center)
+8. **Final Output** — locked immutable record
+
+AI recommends. Gates admit. Humans authorize. Nothing else mutates production.
+
+---
+
+## Repository Structure
+
+```
+/                       ← You are here
+├── run.ps1, run.bat    ← One-click pipeline runner
+├── README.md           ← This file
+├── docs/               ← Presentation deck + proof reports (HTML)
+├── pipeline/           ← 8-phase engine source code
+├── submission/         ← DevPost materials
+└── system/             ← Internal: contracts, tests, schemas, BPMN
+```
+
+---
+
+**License:** Apache 2.0 | **Copyright © 2026 The OneShot**
