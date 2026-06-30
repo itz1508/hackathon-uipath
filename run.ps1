@@ -2,70 +2,66 @@
 # NextFlow — Judge Demo Runner
 # Right-click → Run with PowerShell, or: ./run.ps1
 $ErrorActionPreference = 'Stop'
-$Root = $PSScriptRoot
 
 Write-Host ""
-Write-Host "  ╔══════════════════════════════════════════════════════╗" -ForegroundColor Cyan
-Write-Host "  ║  NextFlow — Deterministic Pipeline Processing       ║" -ForegroundColor Cyan
-Write-Host "  ║  Team: The OneShot | Minh Le                        ║" -ForegroundColor Cyan
-Write-Host "  ╚══════════════════════════════════════════════════════╝" -ForegroundColor Cyan
+Write-Host "  NextFlow — Deterministic Pipeline Processing" -ForegroundColor Cyan
+Write-Host "  Team: The OneShot | Minh Le" -ForegroundColor DarkGray
 Write-Host ""
 
-# Setup venv if needed
+# Setup
 if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
     Write-Host "  [!] 'uv' required: https://docs.astral.sh/uv/" -ForegroundColor Yellow
     exit 1
 }
-if (-not (Test-Path "$Root\.venv\Scripts\python.exe")) {
+if (-not (Test-Path ".venv\Scripts\python.exe")) {
     Write-Host "  [setup] Creating venv + installing pydantic..." -ForegroundColor DarkGray
-    & uv venv "$Root\.venv" --python 3.11
-    & uv pip install pydantic --python "$Root\.venv\Scripts\python.exe"
+    & uv venv .venv --python 3.11
+    & uv pip install pydantic --python .venv\Scripts\python.exe
     Write-Host ""
 }
 
-$python = "$Root\.venv\Scripts\python.exe"
-
-# ═══════════════════════════════════════════════
-# STEP 1: Run Pipeline → Show Evidence
-# ═══════════════════════════════════════════════
-Write-Host "  ┌─────────────────────────────────────────────────────┐" -ForegroundColor Green
-Write-Host "  │  STEP 1: Run 8-phase pipeline on sample config      │" -ForegroundColor Green
-Write-Host "  └─────────────────────────────────────────────────────┘" -ForegroundColor Green
+# ═══════════════════════════════════════════════════════
+# STEP 1: Run pipeline → open evidence
+# ═══════════════════════════════════════════════════════
+Write-Host "  ┌─────────────────────────────────────────┐" -ForegroundColor Green
+Write-Host "  │  STEP 1: Run Pipeline (clean input)     │" -ForegroundColor Green
+Write-Host "  └─────────────────────────────────────────┘" -ForegroundColor Green
 Write-Host ""
 
-& $python "$Root\pipeline\_run_e2e.py" "$Root\cases\sample-config-repair\source"
+& .\.venv\Scripts\python.exe pipeline\_run_e2e.py cases\sample-config-repair\source
 
 Write-Host ""
-Write-Host "  Opening pipeline evidence in browser..." -ForegroundColor DarkGray
-Start-Process "$Root\docs\reports\pipeline-evidence-terminal.html"
+Write-Host "  Opening pipeline evidence..." -ForegroundColor DarkGray
+Start-Process (Resolve-Path "docs\reports\pipeline-evidence-terminal.html")
+
 Write-Host ""
 Read-Host "  Press ENTER for Step 2"
 
-# ═══════════════════════════════════════════════
-# STEP 2: Open NextFlow Slide Deck
-# ═══════════════════════════════════════════════
-Write-Host "  ┌─────────────────────────────────────────────────────┐" -ForegroundColor Cyan
-Write-Host "  │  STEP 2: NextFlow Presentation Deck                 │" -ForegroundColor Cyan
-Write-Host "  └─────────────────────────────────────────────────────┘" -ForegroundColor Cyan
+# ═══════════════════════════════════════════════════════
+# STEP 2: Show the slide
+# ═══════════════════════════════════════════════════════
+Write-Host "  ┌─────────────────────────────────────────┐" -ForegroundColor Cyan
+Write-Host "  │  STEP 2: NextFlow Architecture          │" -ForegroundColor Cyan
+Write-Host "  └─────────────────────────────────────────┘" -ForegroundColor Cyan
 Write-Host ""
 
-Start-Process "$Root\NextFlow_Deck.pptx"
-Write-Host "  Opened slide deck." -ForegroundColor DarkGray
+Start-Process (Resolve-Path "NextFlow-Slide.png")
+Write-Host "  Slide opened. Review the 8-phase architecture." -ForegroundColor DarkGray
+
 Write-Host ""
 Read-Host "  Press ENTER for Step 3"
 
-# ═══════════════════════════════════════════════
-# STEP 3: Open Test Runner (judge explores)
-# ═══════════════════════════════════════════════
-Write-Host "  ┌─────────────────────────────────────────────────────┐" -ForegroundColor Yellow
-Write-Host "  │  STEP 3: Interactive — run tests yourself            │" -ForegroundColor Yellow
-Write-Host "  └─────────────────────────────────────────────────────┘" -ForegroundColor Yellow
+# ═══════════════════════════════════════════════════════
+# STEP 3: Open test menu → judge runs tests themselves
+# ═══════════════════════════════════════════════════════
+Write-Host "  ┌─────────────────────────────────────────┐" -ForegroundColor Magenta
+Write-Host "  │  STEP 3: Try It Yourself                │" -ForegroundColor Magenta
+Write-Host "  └─────────────────────────────────────────┘" -ForegroundColor Magenta
 Write-Host ""
+Write-Host "  Opening test menu — pick any test and run it." -ForegroundColor DarkGray
 
-Start-Process "$Root\docs\index.html"
-Write-Host "  Opened test runner in browser. Try the different scenarios!" -ForegroundColor DarkGray
+Start-Process (Resolve-Path "docs\index.html")
+
 Write-Host ""
-Write-Host "  ╔══════════════════════════════════════════════════════╗" -ForegroundColor Green
-Write-Host "  ║  Demo complete. Thank you for reviewing NextFlow!   ║" -ForegroundColor Green
-Write-Host "  ╚══════════════════════════════════════════════════════╝" -ForegroundColor Green
+Write-Host "  Done. Copy commands from the page and run in this terminal." -ForegroundColor Green
 Write-Host ""
