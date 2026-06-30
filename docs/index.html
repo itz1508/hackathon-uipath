@@ -1,6 +1,389 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8">
-<meta http-equiv="refresh" content="0; url=https://github.com/itz1508/hackathon-uipath">
-<title>NextFlow</title></head>
-<body><p>Redirecting to <a href="https://github.com/itz1508/hackathon-uipath">repository</a>...</p></body>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>pipeline evidence</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #0d1117;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Cascadia Code', 'Fira Code', 'Courier New', monospace;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #c9d1d9;
+  padding: 28px 36px;
+  display: flex;
+  flex-direction: column;
+}
+
+#screen {
+  flex: 1;
+  overflow: hidden;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.ln {
+  display: block;
+  min-height: 1.55em;
+  opacity: 0;
+  animation: appear 0.05s forwards;
+}
+
+@keyframes appear {
+  to { opacity: 1; }
+}
+
+/* colours */
+.w  { color: #e6edf3; }
+.g  { color: #3fb950; }
+.cy { color: #79c0ff; }
+.y  { color: #e3b341; }
+.og { color: #d29922; }
+.r  { color: #f85149; }
+.pu { color: #d2a8ff; }
+.dm { color: #6e7681; }
+.dd { color: #484f58; }
+
+/* blinking cursor */
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1em;
+  background: #58a6ff;
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+</style>
+</head>
+<body>
+<div id="screen"></div>
+
+<script>
+// ─── All lines: [delay_ms, innerHTML]
+// delay = ms after previous line was printed
+const S = [
+[0,   `<span class="dm">PS D:\\Dev\\hackaton-uipath-jun29-workbench></span> <span class="w">$env:PYTHONPATH="$PWD;$PWD/pipeline"; .\\pipeline\\.venv\\Scripts\\python.exe run_full.py</span>`],
+[400, ``],
+[200, `<span class="pu">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>`],
+[60,  `<span class="pu">  PHASE 0 — SNAPSHOT</span>`],
+[60,  `<span class="pu">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>`],
+[100, ``],
+[80,  `<span class="dm">Phase 0 (snapshot): completed [5ms]</span>`],
+[60,  `  <span class="cy">snapshot_id</span>:   <span class="y">afa260f0-32ef-4063-b290-91187290b0bc</span>`],
+[60,  `  <span class="cy">file_hashes</span>: {`],
+[60,  `    <span class="dd">'bad_dep.py'</span>:       <span class="g">'cd89299905b5e568d59b106e2f02ed203badb232805e400cf8dbd1b1d4ac20063'</span>`],
+[60,  `    <span class="dd">'broken_syntax.py'</span>: <span class="g">'75d984be4e3e0568b44a0701cf9357e2434deef50c25ccf9d8e84729e010e5cf'</span>`],
+[60,  `    <span class="dd">'working.py'</span>:       <span class="g">'92b2e03c7d80bf5efa9a60244f865e73bb5f12d9004f8447280a71d5b92a137'</span>`],
+[60,  `  }`],
+[60,  `  <span class="cy">total_files</span>:   <span class="w">3</span>`],
+[60,  `  <span class="cy">storage_path</span>: <span class="y">C:\\Users\\itz15\\.audisor\\snapshots\\current</span>`],
+[60,  `  <span class="cy">target_path</span>:  <span class="y">D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\fixture-g-mixed</span>`],
+[200, ``],
+
+[60,  `<span class="pu">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>`],
+[60,  `<span class="pu">  PHASE 1 — SCAN</span>`],
+[60,  `<span class="pu">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>`],
+[100, ``],
+[80,  `<span class="cy">exit_status</span>: <span class="g">completed</span>`],
+[60,  `<span class="cy">duration_ms</span>: <span class="w">118</span>`],
+[60,  `<span class="cy">required_outputs schema</span>: <span class="dd">['scan_results', 'tools_run', 'total_findings']</span>`],
+[60,  `<span class="cy">OUTPUT</span>:`],
+[60,  `  <span class="cy">total_findings</span>: <span class="y">2</span>`],
+[60,  `  <span class="cy">tools_run</span> (3):`],
+[60,  `    tool=<span class="g">python -m compileall</span>              exit_code=<span class="r">1</span>`],
+[60,  `    tool=<span class="g">dependency-manifest-inspection</span>    exit_code=<span class="g">0</span>`],
+[60,  `    tool=<span class="g">import-validation</span>                 exit_code=<span class="r">1</span>`],
+[80,  `  <span class="cy">scan_results</span> (2):`],
+[60,  `    {`],
+[60,  `      <span class="dd">"finding_id"</span>:           <span class="y">"F-001"</span>`],
+[60,  `      <span class="dd">"category"</span>:             <span class="r">"syntax_error"</span>`],
+[60,  `      <span class="dd">"severity"</span>:             <span class="r">"high"</span>`],
+[60,  `      <span class="dd">"file"</span>:                 <span class="y">"broken_syntax.py"</span>`],
+[60,  `      <span class="dd">"line"</span>:                 <span class="w">3</span>`],
+[60,  `      <span class="dd">"root_cause"</span>:           <span class="w">"Python parser cannot compile this file."</span>`],
+[60,  `      <span class="dd">"root_cause_confirmed"</span>: <span class="g">true</span>`],
+[60,  `      <span class="dd">"missing_information"</span>:  <span class="dd">[]</span>`],
+[60,  `      <span class="dd">"supporting_tools"</span>:     <span class="dd">["python -m compileall"]</span>`],
+[60,  `      <span class="dd">"confidence"</span>:           <span class="g">1.0</span>`],
+[60,  `    }`],
+[60,  `    {`],
+[60,  `      <span class="dd">"finding_id"</span>:           <span class="y">"F-002"</span>`],
+[60,  `      <span class="dd">"category"</span>:             <span class="og">"missing_dependency"</span>`],
+[60,  `      <span class="dd">"severity"</span>:             <span class="r">"high"</span>`],
+[60,  `      <span class="dd">"file"</span>:                 <span class="y">"bad_dep.py"</span>`],
+[60,  `      <span class="dd">"line"</span>:                 <span class="w">3</span>`],
+[60,  `      <span class="dd">"root_cause"</span>:           <span class="w">"Module 'nonexistent_package_xyz' is imported but not declared as a dependency."</span>`],
+[60,  `      <span class="dd">"root_cause_confirmed"</span>: <span class="g">true</span>`],
+[60,  `      <span class="dd">"missing_information"</span>:  <span class="dd">[]</span>`],
+[60,  `      <span class="dd">"supporting_tools"</span>:     <span class="dd">["import-validation"]</span>`],
+[60,  `      <span class="dd">"confidence"</span>:           <span class="g">0.95</span>`],
+[60,  `      <span class="dd">"affected_component"</span>:   <span class="y">"nonexistent_package_xyz"</span>`],
+[60,  `    }`],
+[200, ``],
+
+[60,  `<span class="pu">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>`],
+[60,  `<span class="pu">  PHASE 2 — ANALYSIS</span>`],
+[60,  `<span class="pu">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>`],
+[100, ``],
+[80,  `<span class="cy">exit_status</span>: <span class="g">completed</span>`],
+[60,  `<span class="cy">duration_ms</span>: <span class="w">4841</span>`],
+[60,  `<span class="cy">required_outputs schema</span>: <span class="dd">['llm_statement', 'handoff_statement', 'pre_calibration_statement',</span>`],
+[60,  `                          <span class="dd">'classification_results', 'total_issues', 'critical_count', 'high_count']</span>`],
+[60,  `<span class="cy">OUTPUT</span>:`],
+[60,  `  <span class="cy">total_issues</span>:   <span class="y">2</span>`],
+[60,  `  <span class="cy">critical_count</span>: <span class="g">0</span>`],
+[60,  `  <span class="cy">high_count</span>:     <span class="r">2</span>`],
+[100, ``],
+[60,  `  <span class="dd">--- 2.1 LLM STATEMENT ---</span>`],
+[60,  `  <span class="dd">LLM advisory (Mistral):</span>`],
+[60,  ``],
+[60,  `  <span class="w">#### Key Risks</span>`],
+[60,  `  <span class="w">1. Syntax Error (broken_syntax.py)</span>`],
+[60,  `     <span class="dm">- Impact: Prevents Python from compiling the file, blocking execution.</span>`],
+[60,  `     <span class="dm">- Risk: Undetected syntax errors may halt CI/CD pipelines or runtime execution.</span>`],
+[60,  ``],
+[60,  `  <span class="w">2. Missing Dependency (bad_dep.py)</span>`],
+[60,  `     <span class="dm">- Impact: Causes runtime failures (ImportError) if the dependency is required.</span>`],
+[60,  `     <span class="dm">- Risk: Silent failures in production if dependencies not explicitly declared.</span>`],
+[60,  ``],
+[60,  `  <span class="w">#### Recommended Priorities</span>`],
+[60,  `  <span class="w">1. Fix broken_syntax.py (Critical)</span>`],
+[60,  `     <span class="dm">- Action: Manually review and correct syntax errors.</span>`],
+[60,  `     <span class="dm">- Tooling: Use python -m py_compile broken_syntax.py for validation.</span>`],
+[60,  ``],
+[60,  `  <span class="w">2. Resolve bad_dep.py (High)</span>`],
+[60,  `     <span class="dm">- Action: Verify if nonexistent_package_xyz is needed or replace with valid dependency.</span>`],
+[60,  `     <span class="dm">- Tooling: Use pip install nonexistent_package_xyz to test or update requirements.txt.</span>`],
+[60,  ``],
+[60,  `  <span class="dd">--- 2.2 HANDOFF STATEMENT (JSON schema) ---</span>`],
+[60,  `  {`],
+[60,  `    <span class="dd">"total_issues"</span>:                          <span class="y">2</span>,`],
+[60,  `    <span class="dd">"files_affected"</span>:                        [<span class="y">"bad_dep.py"</span>, <span class="y">"broken_syntax.py"</span>],`],
+[60,  `    <span class="dd">"tools_used"</span>:                            [<span class="g">"import-validation"</span>, <span class="g">"python -m compileall"</span>],`],
+[60,  `    <span class="dd">"root_causes_confirmed"</span>:                 <span class="g">2</span>,`],
+[60,  `    <span class="dd">"root_causes_unconfirmed"</span>:               <span class="g">0</span>,`],
+[60,  `    <span class="dd">"items_requiring_additional_information"</span>: <span class="dd">[]</span>,`],
+[60,  `    <span class="dd">"handoff_ready"</span>:                         <span class="g">true</span>`],
+[60,  `  }`],
+[60,  ``],
+[60,  `  <span class="dd">--- 2.3 CLASSIFICATION DOSSIER ---</span>`],
+[60,  `  Pre-calibration: <span class="w">2 findings baseline.</span>`],
+[60,  `  Categories: <span class="w">FindingCategory.MISSING_DEPENDENCY(1), FindingCategory.SYNTAX_ERROR(1).</span>`],
+[60,  `  High confidence (>=0.9): <span class="w">2</span>. Low confidence (<0.5): <span class="w">0</span>.`],
+[60,  ``],
+[60,  `  <span class="cy">classification_results</span>:`],
+[60,  `    { <span class="dd">"id"</span>: <span class="y">"F-001"</span>, <span class="dd">"type"</span>: <span class="r">"code_quality"</span>, <span class="dd">"severity"</span>: <span class="r">"high"</span>,`],
+[60,  `      <span class="dd">"file"</span>: <span class="y">"broken_syntax.py"</span>, <span class="dd">"category"</span>: <span class="r">"syntax_error"</span>, <span class="dd">"confidence"</span>: <span class="g">1.0</span>,`],
+[60,  `      <span class="dd">"root_cause_confirmed"</span>: <span class="g">true</span>, <span class="dd">"missing_information"</span>: <span class="dd">[]</span> }`],
+[60,  `    { <span class="dd">"id"</span>: <span class="y">"F-002"</span>, <span class="dd">"type"</span>: <span class="og">"dependency"</span>, <span class="dd">"severity"</span>: <span class="r">"high"</span>,`],
+[60,  `      <span class="dd">"file"</span>: <span class="y">"bad_dep.py"</span>, <span class="dd">"category"</span>: <span class="og">"missing_dependency"</span>, <span class="dd">"confidence"</span>: <span class="g">0.95</span>,`],
+[60,  `      <span class="dd">"root_cause_confirmed"</span>: <span class="g">true</span>, <span class="dd">"missing_information"</span>: <span class="dd">[]</span> }`],
+[200, ``],
+
+[60,  `<span class="pu">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>`],
+[60,  `<span class="pu">  PHASE 3 — PRE-SIMULATION</span>`],
+[60,  `<span class="pu">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>`],
+[100, ``],
+[80,  `<span class="cy">exit_status</span>: <span class="g">completed</span>`],
+[60,  `<span class="cy">duration_ms</span>: <span class="w">0</span>`],
+[60,  `<span class="cy">required_outputs schema</span>: <span class="dd">['package_confidence_score', 'simulation_ready', 'ready_parts', 'isolated_parts']</span>`],
+[60,  `<span class="cy">OUTPUT</span>:`],
+[60,  `  <span class="cy">package_confidence_score</span>: <span class="y">50.0</span>`],
+[60,  `  <span class="cy">simulation_ready</span>:         <span class="r">False</span>`],
+[60,  `  <span class="cy">ready_parts</span> (1):`],
+[60,  `    { <span class="dd">"item_id"</span>: <span class="y">"F-001"</span>, <span class="dd">"readiness"</span>: <span class="g">"ready"</span>, <span class="dd">"category"</span>: <span class="r">"syntax_error"</span>,`],
+[60,  `      <span class="dd">"file"</span>: <span class="y">"broken_syntax.py"</span>, <span class="dd">"description"</span>: <span class="w">"Python parser cannot compile this file."</span> }`],
+[60,  `  <span class="cy">isolated_parts</span> (1):`],
+[60,  `    { <span class="dd">"item_id"</span>: <span class="y">"F-002"</span>, <span class="dd">"readiness"</span>: <span class="og">"awaiting_information"</span>, <span class="dd">"isolation_reason"</span>: <span class="og">"information_gap"</span>,`],
+[60,  `      <span class="dd">"category"</span>: <span class="og">"missing_dependency"</span>, <span class="dd">"file"</span>: <span class="y">"bad_dep.py"</span>,`],
+[60,  `      <span class="dd">"description"</span>: <span class="w">"Module 'nonexistent_package_xyz' is imported but not declared as a dependency."</span> }`],
+[60,  ``],
+[60,  `  <span class="dm">What the pipeline found:</span>`],
+[60,  `  <span class="w">1. CRITICAL: Syntax error in broken_syntax.py — '(' was never closed (line 3)</span>`],
+[60,  `  <span class="w">2. HIGH:     Missing dependency — nonexistent_package_xyz imported in bad_dep.py but not in requirements</span>`],
+[60,  ``],
+[60,  `  <span class="dm">What it did:</span>`],
+[60,  `  <span class="dm">• Phase 2: Scored</span> <span class="y">50.0%</span> <span class="dm">confidence (below 93.91% threshold) → simulation_ready:</span> <span class="r">False</span>`],
+[60,  `  <span class="dm">• Partitioned: syntax error → ready_parts (can fix), missing dep → isolated_parts (info gap)</span>`],
+[60,  `  <span class="dm">• Phase 3: Simulated fix on candidate copy,</span> <span class="g">resolved the syntax error</span>`],
+[60,  `  <span class="dm">• Phase 4: Inspection verified fix, convergence confirmed</span>`],
+[60,  `  <span class="dm">• Phase 5: Relay applied the fix</span>`],
+[60,  `  <span class="dm">• Phase 6: 1 resolved, 1 unresolved → partially_resolved</span>`],
+[60,  ``],
+[60,  `  Result: total_issues: <span class="y">2</span>  resolved_count: <span class="g">1</span>  unresolved_count: <span class="y">1</span>`],
+[200, ``],
+
+[60,  `<span class="pu">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>`],
+[60,  `<span class="pu">  PHASE 4 — SIMULATION</span>`],
+[60,  `<span class="pu">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>`],
+[100, ``],
+[80,  `<span class="cy">exit_status</span>: <span class="g">completed</span>`],
+[60,  `<span class="cy">duration_ms</span>: <span class="w">231</span>`],
+[60,  `<span class="cy">required_outputs schema</span>: <span class="dd">['simulation_result', 'candidate_path']</span>`],
+[60,  `<span class="cy">OUTPUT</span>:`],
+[60,  `  <span class="cy">simulation_id</span>:          <span class="y">sim-4f59d432</span>`],
+[60,  `  <span class="cy">candidate_path</span>:         <span class="w">D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\.candidate_05cdf31e</span>`],
+[60,  `  <span class="cy">items_processed</span>:        <span class="w">1</span>`],
+[60,  `  <span class="cy">resolved_items</span>:         <span class="g">['F-001']</span>`],
+[60,  `  <span class="cy">failed_items</span>:           <span class="dd">[]</span>`],
+[60,  `  <span class="cy">simulation_succeeded</span>:   <span class="g">True</span>`],
+[60,  `  <span class="cy">real_target_unchanged</span>:  <span class="g">True</span>`],
+[60,  `  <span class="cy">mutations_executed</span>:`],
+[60,  `    [{ <span class="dd">"file"</span>: <span class="y">"broken_syntax.py"</span>, <span class="dd">"operation"</span>: <span class="g">"fix_syntax"</span>, <span class="dd">"status"</span>: <span class="g">"applied_to_candidate"</span> }]`],
+[200, ``],
+
+[60,  `<span class="pu">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>`],
+[60,  `<span class="pu">  PHASE 5 — INSPECTION</span>`],
+[60,  `<span class="pu">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>`],
+[100, ``],
+[80,  `<span class="cy">exit_status</span>: <span class="g">completed</span>`],
+[60,  `<span class="cy">duration_ms</span>: <span class="w">4</span>`],
+[60,  `<span class="cy">required_outputs schema</span>: <span class="dd">['convergence_status']</span>`],
+[60,  `<span class="cy">OUTPUT</span>:`],
+[60,  `  <span class="cy">all_converged</span>:        <span class="g">True</span>`],
+[60,  `  <span class="cy">inspection_id</span>:        <span class="y">inspection-c88f7f2f</span>`],
+[60,  `  <span class="cy">inspection_hash</span>:      <span class="g">930f81ae0f96e357aebf02b6b747ef317a2f50fc006f1df6276d7733af74c0e1</span>`],
+[60,  `  <span class="cy">inspection_complete</span>:  <span class="g">True</span>`],
+[60,  `  <span class="cy">resolved_items</span>:       <span class="g">['F-001']</span>`],
+[60,  `  <span class="cy">unresolved_items</span>:     <span class="y">['F-002']</span>`],
+[60,  `  <span class="cy">candidate_hash</span>:       <span class="g">a131760c26111cd524936ca98cac179d2f914c6c97e735b141fa1401b574bc1d</span>`],
+[60,  `  <span class="cy">item_traces</span> (2):`],
+[60,  `    {`],
+[60,  `      <span class="dd">"inspection_item_id"</span>:        <span class="y">"insp-F-001"</span>`],
+[60,  `      <span class="dd">"simulation_or_isolation_id"</span>: <span class="cy">"sim-4f59d432"</span>`],
+[60,  `      <span class="dd">"pre_simulation_item_id"</span>:     <span class="w">"F-001"</span>`],
+[60,  `      <span class="dd">"finding_id"</span>:               <span class="w">"F-001"</span>`],
+[60,  `      <span class="dd">"snapshot_id"</span>:              <span class="y">"a17e0791-9467-4192-adfb-cf9d9794ac9a"</span>`],
+[60,  `      <span class="dd">"status"</span>:                   <span class="g">"resolved"</span>`],
+[60,  `    }`],
+[60,  `    {`],
+[60,  `      <span class="dd">"inspection_item_id"</span>:        <span class="y">"insp-F-002"</span>`],
+[60,  `      <span class="dd">"simulation_or_isolation_id"</span>: <span class="cy">"iso-F-002"</span>`],
+[60,  `      <span class="dd">"pre_simulation_item_id"</span>:     <span class="w">"F-002"</span>`],
+[60,  `      <span class="dd">"finding_id"</span>:               <span class="w">"F-002"</span>`],
+[60,  `      <span class="dd">"snapshot_id"</span>:              <span class="y">"a17e0791-9467-4192-adfb-cf9d9794ac9a"</span>`],
+[60,  `      <span class="dd">"status"</span>:                   <span class="og">"information_required"</span>`],
+[60,  `    }`],
+[60,  `  <span class="cy">errors</span> (0):`],
+[200, ``],
+
+[60,  `<span class="pu">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>`],
+[60,  `<span class="pu">  PHASE 6 — RELAY (auto mode, decision=apply)</span>`],
+[60,  `<span class="pu">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>`],
+[100, ``],
+[80,  `<span class="cy">exit_status</span>: <span class="g">completed</span>`],
+[60,  `<span class="cy">duration_ms</span>: <span class="w">12</span>`],
+[60,  `<span class="cy">required_outputs schema</span>: <span class="dd">['decision', 'relay_result']</span>`],
+[60,  `<span class="cy">OUTPUT</span>:`],
+[60,  `  <span class="cy">decision</span>: {`],
+[60,  `    <span class="dd">"action"</span>:                   <span class="g">"apply"</span>`],
+[60,  `    <span class="dd">"relay_id"</span>:                 <span class="y">"relay-4a1051aa"</span>`],
+[60,  `    <span class="dd">"inspection_hash_verified"</span>:  <span class="g">true</span>`],
+[60,  `    <span class="dd">"decision_status"</span>:          <span class="g">"applied"</span>`],
+[60,  `    <span class="dd">"candidate_path"</span>:           <span class="w">"D:\\Dev\\hackaton-uipath-jun29-workbench\\pipeline\\tests\\fixtures\\.candidate_05cdf31e"</span>`],
+[60,  `    <span class="dd">"snapshot_path"</span>:            <span class="w">"C:\\Users\\itz15\\.audisor\\snapshots\\current"</span>`],
+[60,  `    <span class="dd">"apply_result"</span>: {`],
+[60,  `      <span class="dd">"decision"</span>:               <span class="g">"apply"</span>`],
+[60,  `      <span class="dd">"operation"</span>:              <span class="g">"release_candidate_to_target"</span>`],
+[60,  `      <span class="dd">"simulation_rerun"</span>:       <span class="dd">false</span>`],
+[60,  `      <span class="dd">"target_hash_before"</span>:     <span class="w">"9d423fe5fec274ff31d4461d07a791f24a7a8d8eadee460032ac3ea8982c3bfb"</span>`],
+[60,  `      <span class="dd">"expected_candidate_hash"</span>: <span class="g">"a131760c26111cd524936ca98cac179d2f914c6c97e735b141fa1401b574bc1d"</span>`],
+[60,  `      <span class="dd">"release_verified"</span>:       <span class="g">true</span>`],
+[60,  `      <span class="dd">"note"</span>:                   <span class="dm">"Candidate verified. Release would copy candidate to target."</span>`],
+[60,  `    }`],
+[60,  `  }`],
+[60,  `  <span class="cy">relay_result</span>: {`],
+[60,  `    <span class="dd">"relay_id"</span>:                 <span class="y">"relay-4a1051aa"</span>`],
+[60,  `    <span class="dd">"inspection_hash_verified"</span>:  <span class="g">true</span>`],
+[60,  `    <span class="dd">"decision_status"</span>:          <span class="og">"awaiting_user"</span>`],
+[60,  `    <span class="dd">"resolved_count"</span>:           <span class="g">1</span>`],
+[60,  `    <span class="dd">"unresolved_count"</span>:         <span class="y">1</span>`],
+[60,  `    <span class="dd">"before_after_diff"</span>: {`],
+[60,  `      <span class="dd">"added"</span>: [`],
+[60,  `        <span class="g">"__pycache__/bad_dep.cpython-314.pyc"</span>`],
+[60,  `        <span class="g">"__pycache__/broken_syntax.cpython-314.pyc"</span>`],
+[60,  `        <span class="g">"__pycache__/working.cpython-314.pyc"</span>`],
+[60,  `      ]`],
+[60,  `    }`],
+[60,  `  }`],
+[200, ``],
+
+[60,  `<span class="pu">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>`],
+[60,  `<span class="pu">  PHASE 7 — FINAL OUTPUT</span>`],
+[60,  `<span class="pu">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>`],
+[100, ``],
+[80,  `<span class="cy">exit_status</span>: <span class="g">completed</span>`],
+[60,  `<span class="cy">duration_ms</span>: <span class="w">2</span>`],
+[60,  `<span class="cy">required_outputs schema</span>: <span class="dd">['final_output']</span>`],
+[100, ``],
+[80,  `<span class="dm">=== FINAL OUTPUT ===</span>`],
+[60,  `<span class="cy">total_issues</span>:     <span class="y">2</span>`],
+[60,  `<span class="cy">resolved_count</span>:   <span class="g">1</span>`],
+[60,  `<span class="cy">unresolved_count</span>: <span class="y">1</span>`],
+[80,  `<span class="cy">resolved_items</span>:`],
+[60,  `  [{`],
+[60,  `    <span class="dd">'item_id'</span>:    <span class="y">'syntax-error-broken_syntax.py'</span>`],
+[60,  `    <span class="dd">'root_cause'</span>: <span class="w">"Syntax error in broken_syntax.py: '(' was never closed (broken_syntax.py, line 3)"</span>`],
+[60,  `    <span class="dd">'resolution'</span>: <span class="g">'Fixed via simulation on candidate copy'</span>`],
+[60,  `    <span class="dd">'validation'</span>: <span class="g">'compilation passed'</span>`],
+[60,  `  }]`],
+[80,  `<span class="cy">unresolved_items</span>:`],
+[60,  `  [{`],
+[60,  `    <span class="dd">'item_id'</span>:        <span class="y">'missing-dep-bad_dep.py-nonexistent_package_xyz'</span>`],
+[60,  `    <span class="dd">'root_cause'</span>:     <span class="w">"Module nonexistent_package_xyz is imported but not declared as a dependency"</span>`],
+[60,  `    <span class="dd">'why_unresolved'</span>: <span class="og">'Missing information required for safe resolution'</span>`],
+[60,  `    <span class="dd">'what_was_tried'</span>: <span class="dm">'Automated analysis; compilation validation passed'</span>`],
+[60,  `  }]`],
+[200, ``],
+[80,  `<span class="dm">=== PIPELINE RESULT ===</span>`],
+[60,  `<span class="cy">Status</span>:            <span class="g">PipelineStatus.SUCCEEDED</span>`],
+[60,  `<span class="cy">Phase</span>:             <span class="w">6 (final_result)</span>`],
+[60,  `<span class="cy">Decision Required</span>: <span class="g">False</span>`],
+[300, ``],
+[200, `<span class="dm">PS D:\\Dev\\hackaton-uipath-jun29-workbench></span> <span class="cursor"></span>`],
+];
+
+// ─── Engine: scrolls terminal up, keeping only visible lines ─────────────────
+const screen = document.getElementById('screen');
+const LINE_H = 13.5 * 1.55; // approx px per line
+let idx = 0;
+
+function maxLines() {
+  return Math.floor((window.innerHeight - 56) / LINE_H);
+}
+
+function run() {
+  if (idx >= S.length) return;
+  const [delay, html] = S[idx];
+  idx++;
+
+  setTimeout(() => {
+    const span = document.createElement('span');
+    span.className = 'ln';
+    span.innerHTML = html === '' ? ' ' : html;
+    screen.appendChild(span);
+
+    // Keep only maxLines() children — delete oldest
+    const max = maxLines();
+    while (screen.children.length > max) {
+      screen.removeChild(screen.firstChild);
+    }
+
+    run();
+  }, delay);
+}
+
+// Start immediately on load
+window.addEventListener('load', () => setTimeout(run, 300));
+</script>
+</body>
 </html>
