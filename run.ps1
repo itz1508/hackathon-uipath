@@ -13,13 +13,13 @@ if (-not (Test-Path ".venv\Scripts\python.exe")) {
 
 # STEP 1: Play video
 Write-Host "  STEP 1: Audisor Execution Flow" -ForegroundColor Green
-Start-Process "Audisor_Execution_Flow.mp4"
+Start-Process "step-1\Audisor_Execution_Flow.mp4"
 Read-Host "`n  Press ENTER when video is done"
 
 # STEP 2: Slide show + pipeline run + evidence
 Write-Host "`n  STEP 2: NextFlow Slides + Live Pipeline" -ForegroundColor Cyan
 
-$slides = Get-ChildItem "NextFlow_Slide_Images" -Filter "*.png" | Sort-Object Name
+$slides = Get-ChildItem "step-2\NextFlow_Slide_Images" -Filter "*.png" | Sort-Object Name
 foreach ($slide in $slides) {
     Start-Process $slide.FullName
     Start-Sleep 3
