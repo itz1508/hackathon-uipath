@@ -26,7 +26,7 @@ foreach ($slide in $slides) {
 }
 
 Write-Host "`n  Running pipeline..." -ForegroundColor Green
-& .\.venv\Scripts\python.exe pipeline\_run_e2e.py system\cases\sample-config-repair\source
+& .\.venv\Scripts\python.exe system\pipeline\_run_e2e.py system\cases\sample-config-repair\source
 
 Write-Host "`n  Opening pipeline evidence..." -ForegroundColor Green
 Start-Process (Resolve-Path "step-3\pipeline-evidence-terminal.html")
