@@ -1,0 +1,44 @@
+# Downloaded reference material; not part of the UiPath template implementation.
+Build a Local Desktop Operator with PySide6 and C++/
+
+# Removed UiPath automation projects (not part of submission).
+LongRunningAutomation/
+maestro/
+Solution/
+Solution1/
+TheOneShotTemplate/
+
+# Local validation caches.
+__pycache__/
+.pytest_cache/
+*.py[cod]
+
+# Generated deployment and presentation artifacts.
+dist/*.nupkg
+outputs/
+
+# UiPath generated/cache files - never track these
+**/.local/
+**/.settings/
+**/.project/
+**/.objects/
+**/.templates/
+**/.tmh/
+**/.entities/
+**/bin/
+**/obj/
+**/*.dll
+**/*.db
+**/*.cache
+**/.build-state
+**/nuget.cache
+**/PackageCache.json
+**/AllDependencies.json
+**/ProjectSettings.json
+**/WorkflowFileValidator.cache
+**/GlobalVariablesT1PNoYwrqg.dll
+
+# UiPath solution user state
+**/SolutionUserState.json
+
+.vscode/
