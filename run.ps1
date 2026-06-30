@@ -9,9 +9,12 @@ if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
 }
 if (-not (Test-Path (Join-Path $root ".venv\Scripts\python.exe"))) {
     & uv venv (Join-Path $root ".venv") --python 3.11
+    if ($LASTEXITCODE -ne 0) { throw "uv venv failed (exit $LASTEXITCODE)" }
     & uv pip install pydantic --python (Join-Path $root ".venv\Scripts\python.exe")
+    if ($LASTEXITCODE -ne 0) { throw "uv pip install failed (exit $LASTEXITCODE)" }
 }
 $python = Join-Path $root ".venv\Scripts\python.exe"
+if (-not (Test-Path $python)) { throw "Python interpreter not found after setup: $python" }
 
 # ---------- STEP 1: Video ----------
 Write-Host "`n=== STEP 1: Audisor Execution Flow (video) ===" -ForegroundColor Cyan
