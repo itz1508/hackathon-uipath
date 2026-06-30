@@ -1,67 +1,38 @@
 #!/usr/bin/env pwsh
-# NextFlow — Judge Demo Runner
-# Right-click → Run with PowerShell, or: ./run.ps1
 $ErrorActionPreference = 'Stop'
 
-Write-Host ""
-Write-Host "  NextFlow — Deterministic Pipeline Processing" -ForegroundColor Cyan
-Write-Host "  Team: The OneShot | Minh Le" -ForegroundColor DarkGray
-Write-Host ""
+Write-Host "`n  NextFlow — Deterministic Pipeline Processing" -ForegroundColor Cyan
+Write-Host "  Team: The OneShot | Minh Le`n" -ForegroundColor DarkGray
 
 # Setup
-if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
-    Write-Host "  [!] 'uv' required: https://docs.astral.sh/uv/" -ForegroundColor Yellow
-    exit 1
-}
+if (-not (Get-Command uv -ErrorAction SilentlyContinue)) { Write-Host "  [!] uv required: https://docs.astral.sh/uv/" -ForegroundColor Yellow; exit 1 }
 if (-not (Test-Path ".venv\Scripts\python.exe")) {
-    Write-Host "  [setup] Creating venv + installing pydantic..." -ForegroundColor DarkGray
     & uv venv .venv --python 3.11
     & uv pip install pydantic --python .venv\Scripts\python.exe
-    Write-Host ""
 }
 
-# ═══════════════════════════════════════════════════════
-# STEP 1: Run pipeline → open evidence
-# ═══════════════════════════════════════════════════════
-Write-Host "  ┌─────────────────────────────────────────┐" -ForegroundColor Green
-Write-Host "  │  STEP 1: Run Pipeline (clean input)     │" -ForegroundColor Green
-Write-Host "  └─────────────────────────────────────────┘" -ForegroundColor Green
-Write-Host ""
+# STEP 1: Play video
+Write-Host "  STEP 1: Audisor Execution Flow" -ForegroundColor Green
+Start-Process "Audisor_Execution_Flow.mp4"
+Read-Host "`n  Press ENTER when video is done"
 
+# STEP 2: Slide show + pipeline run + evidence
+Write-Host "`n  STEP 2: NextFlow Slides + Live Pipeline" -ForegroundColor Cyan
+
+$slides = Get-ChildItem "NextFlow_Slide_Images" -Filter "*.png" | Sort-Object Name
+foreach ($slide in $slides) {
+    Start-Process $slide.FullName
+    Start-Sleep 3
+}
+
+Write-Host "`n  Running pipeline..." -ForegroundColor Green
 & .\.venv\Scripts\python.exe pipeline\_run_e2e.py cases\sample-config-repair\source
 
-Write-Host ""
-Write-Host "  Opening pipeline evidence..." -ForegroundColor DarkGray
+Write-Host "`n  Opening pipeline evidence..." -ForegroundColor Green
 Start-Process (Resolve-Path "docs\reports\pipeline-evidence-terminal.html")
+Read-Host "`n  Press ENTER for Step 3"
 
-Write-Host ""
-Read-Host "  Press ENTER for Step 2"
-
-# ═══════════════════════════════════════════════════════
-# STEP 2: Show the slide
-# ═══════════════════════════════════════════════════════
-Write-Host "  ┌─────────────────────────────────────────┐" -ForegroundColor Cyan
-Write-Host "  │  STEP 2: NextFlow Architecture          │" -ForegroundColor Cyan
-Write-Host "  └─────────────────────────────────────────┘" -ForegroundColor Cyan
-Write-Host ""
-
-Start-Process (Resolve-Path "NextFlow-Slide.png")
-Write-Host "  Slide opened. Review the 8-phase architecture." -ForegroundColor DarkGray
-
-Write-Host ""
-Read-Host "  Press ENTER for Step 3"
-
-# ═══════════════════════════════════════════════════════
-# STEP 3: Open test menu → judge runs tests themselves
-# ═══════════════════════════════════════════════════════
-Write-Host "  ┌─────────────────────────────────────────┐" -ForegroundColor Magenta
-Write-Host "  │  STEP 3: Try It Yourself                │" -ForegroundColor Magenta
-Write-Host "  └─────────────────────────────────────────┘" -ForegroundColor Magenta
-Write-Host ""
-Write-Host "  Opening test menu — pick any test and run it." -ForegroundColor DarkGray
-
+# STEP 3: Interactive test menu
+Write-Host "`n  STEP 3: Try It Yourself" -ForegroundColor Magenta
 Start-Process (Resolve-Path "docs\index.html")
-
-Write-Host ""
-Write-Host "  Done. Copy commands from the page and run in this terminal." -ForegroundColor Green
-Write-Host ""
+Write-Host "  Done. Run any test from the menu.`n" -ForegroundColor Green
