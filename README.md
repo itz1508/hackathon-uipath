@@ -4,6 +4,8 @@
 
 ## Project Description
 
+NextFlow is the deterministic pipeline engine built by team **The OneShot**; "Audisor" refers to the demo execution flow shown in the setup video (Step 1).
+
 NextFlow solves the problem of unverified AI-generated configuration repairs reaching production. AI can propose fixes fast, but enterprises need **proof** that one exact result is safe and **explicit human authority** before applying it.
 
 NextFlow enforces a deterministic 8-phase pipeline: Snapshot → Scan → Analysis → Pre-Simulation → Simulation → Inspection → Relay → Final Output. Each phase must pass exit validation before the next begins. The pipeline produces cryptographic execution traces as proof-of-work.
