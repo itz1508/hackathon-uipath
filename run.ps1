@@ -67,7 +67,7 @@ if ($LASTEXITCODE -ne 0) {
     Write-Host "Pipeline exited non-zero ($LASTEXITCODE)." -ForegroundColor Red
 }
 
-$evidence = Join-Path $root "step-3\pipeline-evidence-terminal.html"
+$evidence = Join-Path $root "step-3\docs\reports\pipeline-evidence-terminal.html"
 if (-not (Test-Path $evidence)) { throw "Missing: $evidence" }
 Start-Process $evidence
 
